@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/theme_trello_default.tres" type="Theme" id=1]
+[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/List.gd" type="Script" id=4]
+
+[node name="List" type="PanelContainer"]
+anchor_bottom = 1.0
+margin_right = 252.0
+rect_min_size = Vector2( 280, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 274.0
+margin_bottom = 596.0
+rect_min_size = Vector2( 240, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VerticalContent" type="VBoxContainer" parent="Panel/MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 260.0
+margin_bottom = 584.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ListNameLabel" type="Label" parent="Panel/MarginContainer/VerticalContent"]
+margin_right = 252.0
+margin_bottom = 25.0
+theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "List Name"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VerticalContent"]
+margin_top = 29.0
+margin_right = 252.0
+margin_bottom = 547.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="CardsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VerticalContent/ScrollContainer"]
+margin_right = 252.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Card3" parent="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer" instance=ExtResource( 3 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_right = 252.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ToolButton" type="ToolButton" parent="Panel/MarginContainer/VerticalContent"]
+margin_top = 551.0
+margin_right = 252.0
+margin_bottom = 576.0
+text = "+ Add a card"
+align = 0

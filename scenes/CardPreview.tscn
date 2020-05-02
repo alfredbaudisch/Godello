@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/theme_trello_default.tres" type="Theme" id=1]
+[ext_resource path="res://assets/style_panel_card.tres" type="StyleBox" id=2]
+[ext_resource path="res://scripts/CardPreview.gd" type="Script" id=4]
+
+[node name="Card" type="MarginContainer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -126.0
+margin_right = 126.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+custom_constants/margin_right = 1
+custom_constants/margin_top = 2
+custom_constants/margin_left = 1
+custom_constants/margin_bottom = 4
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 1.0
+margin_top = 2.0
+margin_right = 251.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Panel/HBoxContainer"]
+margin_right = 242.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+autowrap = true
+clip_text = true
+max_lines_visible = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
