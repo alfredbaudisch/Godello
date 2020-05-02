@@ -46,8 +46,74 @@ anchor_bottom = 0.0
 margin_right = 280.0
 margin_bottom = 580.0
 
+[node name="Panel" parent="MarginContainer/ScrollContainer/ListContainer/List" index="0"]
+margin_bottom = 576.0
+
+[node name="VerticalContent" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer" index="0"]
+margin_bottom = 564.0
+
+[node name="ListNameLabel" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent" index="0"]
+text = "TO DO"
+
+[node name="ListCardContainer" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent" index="1"]
+margin_bottom = 527.0
+
+[node name="Title" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card3/Panel/HBoxContainer" index="0"]
+text = "Add data model"
+
+[node name="Title" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card4/Panel/HBoxContainer" index="0"]
+text = "Move data when dropping"
+
+[node name="Title" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card5/Panel/HBoxContainer" index="0"]
+text = "Backend and backend integration"
+
+[node name="ToolButton" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent" index="2"]
+margin_top = 531.0
+margin_bottom = 556.0
+
 [node name="List2" parent="MarginContainer/ScrollContainer/ListContainer" instance=ExtResource( 1 )]
 anchor_bottom = 0.0
 margin_left = 284.0
 margin_right = 564.0
 margin_bottom = 580.0
+
+[node name="Panel" parent="MarginContainer/ScrollContainer/ListContainer/List2" index="0"]
+margin_bottom = 576.0
+
+[node name="VerticalContent" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer" index="0"]
+margin_bottom = 564.0
+
+[node name="ListNameLabel" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent" index="0"]
+text = "Done"
+
+[node name="ListCardContainer" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent" index="1"]
+margin_bottom = 527.0
+
+[node name="Title" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card3/Panel/HBoxContainer" index="0"]
+text = "List UI"
+
+[node name="Title" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card4/Panel/HBoxContainer" index="0"]
+text = "Card UI"
+
+[node name="Title" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card5/Panel/HBoxContainer" index="0"]
+text = "Drag and Drop"
+
+[node name="ToolButton" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent" index="2"]
+margin_top = 531.0
+margin_bottom = 556.0
+
+[editable path="MarginContainer/ScrollContainer/ListContainer/List"]
+
+[editable path="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card3"]
+
+[editable path="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card4"]
+
+[editable path="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card5"]
+
+[editable path="MarginContainer/ScrollContainer/ListContainer/List2"]
+
+[editable path="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card3"]
+
+[editable path="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card4"]
+
+[editable path="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card5"]

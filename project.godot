@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Object",
+"base": "Model",
 "class": "CardModel",
 "language": "GDScript",
 "path": "res://scripts/models/CardModel.gd"
@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/CardPreview.gd"
 }, {
-"base": "Object",
+"base": "Model",
 "class": "ListModel",
 "language": "GDScript",
 "path": "res://scripts/models/ListModel.gd"
@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "ListPreview",
 "language": "GDScript",
 "path": "res://scripts/ListPreview.gd"
+}, {
+"base": "Object",
+"class": "Model",
+"language": "GDScript",
+"path": "res://scripts/models/Model.gd"
 } ]
 _global_script_class_icons={
 "CardModel": "",
 "CardPreview": "",
 "ListModel": "",
-"ListPreview": ""
+"ListPreview": "",
+"Model": ""
 }
 
 [application]

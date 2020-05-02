@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/theme_trello_default.tres" type="Theme" id=1]
 [ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/List.gd" type="Script" id=4]
+[ext_resource path="res://scenes/ListCardContainer.gd" type="Script" id=5]
 
 [node name="List" type="PanelContainer"]
 anchor_bottom = 1.0
@@ -56,24 +57,45 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "List Name"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VerticalContent"]
+[node name="ListCardContainer" type="ScrollContainer" parent="Panel/MarginContainer/VerticalContent"]
 margin_top = 29.0
 margin_right = 252.0
 margin_bottom = 547.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
+script = ExtResource( 5 )
 
-[node name="CardsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VerticalContent/ScrollContainer"]
+[node name="CardsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VerticalContent/ListCardContainer"]
 margin_right = 252.0
-margin_bottom = 40.0
+margin_bottom = 128.0
 size_flags_horizontal = 3
 
-[node name="Card3" parent="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer" instance=ExtResource( 3 )]
+[node name="Card3" parent="Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer" instance=ExtResource( 3 )]
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
 margin_right = 252.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Card4" parent="Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer" instance=ExtResource( 3 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 44.0
+margin_right = 252.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Card5" parent="Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer" instance=ExtResource( 3 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 88.0
+margin_right = 252.0
+margin_bottom = 128.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
