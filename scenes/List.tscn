@@ -25,7 +25,6 @@ rect_min_size = Vector2( 240, 80 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 1 )
-script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -37,6 +36,7 @@ custom_constants/margin_right = 8
 custom_constants/margin_top = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

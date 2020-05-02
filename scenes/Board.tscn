@@ -37,11 +37,17 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ListContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer"]
-margin_right = 280.0
+margin_right = 564.0
 margin_bottom = 580.0
 size_flags_vertical = 3
 
 [node name="List" parent="MarginContainer/ScrollContainer/ListContainer" instance=ExtResource( 1 )]
 anchor_bottom = 0.0
 margin_right = 280.0
+margin_bottom = 580.0
+
+[node name="List2" parent="MarginContainer/ScrollContainer/ListContainer" instance=ExtResource( 1 )]
+anchor_bottom = 0.0
+margin_left = 284.0
+margin_right = 564.0
 margin_bottom = 580.0

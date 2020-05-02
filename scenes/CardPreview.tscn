@@ -11,6 +11,7 @@ margin_left = -126.0
 margin_right = 126.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
+rect_rotation = 3.5
 custom_constants/margin_right = 1
 custom_constants/margin_top = 2
 custom_constants/margin_left = 1

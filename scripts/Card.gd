@@ -18,7 +18,7 @@ func _on_Card_mouse_exited():
 func get_drag_data(_pos):
 	var card = card_scene.instance()
 	get_parent().add_child(card)
-	card.set_card_data(CardModel.new("123", "This is the title"))
+	card.set_data(CardModel.new("123", "This is the title"))
 	get_parent().remove_child(card)
 	set_drag_preview(card)
 	return card
@@ -27,8 +27,8 @@ func can_drop_data(_pos, data):
 	if data.card_data:
 		print("IT IS A CARD, CAN BE DROPPED")
 		return true
-	
-	
+
+
 
 func drop_data(_pos, data):
 	pass

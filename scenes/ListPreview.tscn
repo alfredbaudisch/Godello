@@ -1,16 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/theme_trello_default.tres" type="Theme" id=1]
 [ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/ListPreview.gd" type="Script" id=4]
+[ext_resource path="res://assets/style_panel_list_dragged.tres" type="StyleBox" id=5]
 
 [node name="List" type="PanelContainer"]
-anchor_bottom = 1.0
-margin_right = 252.0
+margin_right = 280.0
+margin_bottom = 160.0
 rect_min_size = Vector2( 280, 0 )
+rect_rotation = 3.5
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 1 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -19,11 +23,12 @@ __meta__ = {
 margin_left = 6.0
 margin_top = 4.0
 margin_right = 274.0
-margin_bottom = 596.0
+margin_bottom = 156.0
 rect_min_size = Vector2( 240, 80 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 1 )
+custom_styles/panel = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -43,7 +48,7 @@ __meta__ = {
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 260.0
-margin_bottom = 584.0
+margin_bottom = 144.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -57,7 +62,7 @@ text = "List Name"
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VerticalContent"]
 margin_top = 29.0
 margin_right = 252.0
-margin_bottom = 576.0
+margin_bottom = 136.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
@@ -72,10 +77,8 @@ anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
 margin_right = 252.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="Title" parent="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer/Card/Panel/HBoxContainer" index="0"]
-text = ""
+text = "	"
 
 [editable path="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer/Card"]
