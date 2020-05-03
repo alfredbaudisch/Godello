@@ -47,13 +47,13 @@ __meta__ = {
 [node name="VerticalContent" type="VBoxContainer" parent="Panel/MarginContainer"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 260.0
+margin_right = 280.0
 margin_bottom = 144.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ListNameLabel" type="Label" parent="Panel/MarginContainer/VerticalContent"]
-margin_right = 252.0
+margin_right = 272.0
 margin_bottom = 25.0
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
@@ -61,14 +61,14 @@ text = "List Name"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VerticalContent"]
 margin_top = 29.0
-margin_right = 252.0
+margin_right = 272.0
 margin_bottom = 136.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="CardsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VerticalContent/ScrollContainer"]
-margin_right = 252.0
+margin_right = 272.0
 margin_bottom = 41.0
 size_flags_horizontal = 3
 
@@ -77,25 +77,25 @@ anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 252.0
+margin_right = 272.0
 margin_bottom = 41.0
 
 [node name="MarginContainer" parent="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer/Card" index="0"]
-margin_right = 252.0
+margin_right = 272.0
 margin_bottom = 41.0
 
 [node name="HBoxContainer" parent="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer/Card/MarginContainer" index="0"]
-margin_right = 244.0
+margin_right = 264.0
 margin_bottom = 33.0
 
 [node name="Title" parent="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer/Card/MarginContainer/HBoxContainer" index="0"]
-margin_right = 214.0
+margin_right = 234.0
 margin_bottom = 25.0
 text = ""
 
 [node name="EditIcon" parent="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer/Card/MarginContainer/HBoxContainer" index="1"]
-margin_left = 218.0
-margin_right = 236.0
+margin_left = 238.0
+margin_right = 256.0
 margin_bottom = 25.0
 
 [editable path="Panel/MarginContainer/VerticalContent/ScrollContainer/CardsContainer/Card"]
