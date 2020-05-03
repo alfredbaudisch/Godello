@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/theme_trello_default.tres" type="Theme" id=1]
 [ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/style_empty.tres" type="StyleBox" id=3]
 [ext_resource path="res://scripts/List.gd" type="Script" id=4]
 [ext_resource path="res://scenes/ListCardContainer.gd" type="Script" id=5]
 [ext_resource path="res://scenes/CardExpandable.tscn" type="PackedScene" id=6]
@@ -50,6 +51,7 @@ margin_right = 264.0
 margin_bottom = 558.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/bg = ExtResource( 3 )
 scroll_horizontal_enabled = false
 script = ExtResource( 5 )
 
@@ -97,5 +99,6 @@ margin_right = 264.0
 margin_bottom = 584.0
 text = "+ Add a card"
 align = 0
+[connection signal="mouse_exited" from="MarginContainer/VerticalContent/ListCardContainer" to="MarginContainer/VerticalContent/ListCardContainer" method="_on_ListCardContainer_mouse_exited"]
 
 [editable path="MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card"]

@@ -37,78 +37,47 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ListContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer"]
-margin_right = 564.0
+margin_right = 568.0
 margin_bottom = 580.0
 size_flags_vertical = 3
+custom_constants/separation = 8
 
 [node name="List" parent="MarginContainer/ScrollContainer/ListContainer" instance=ExtResource( 1 )]
 anchor_bottom = 0.0
 margin_right = 280.0
 margin_bottom = 580.0
 
-[node name="Panel" parent="MarginContainer/ScrollContainer/ListContainer/List" index="0"]
-margin_bottom = 576.0
+[node name="MarginContainer" parent="MarginContainer/ScrollContainer/ListContainer/List" index="0"]
+margin_bottom = 580.0
 
-[node name="VerticalContent" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer" index="0"]
-margin_right = 270.0
+[node name="VerticalContent" parent="MarginContainer/ScrollContainer/ListContainer/List/MarginContainer" index="0"]
+margin_bottom = 572.0
+
+[node name="ListCardContainer" parent="MarginContainer/ScrollContainer/ListContainer/List/MarginContainer/VerticalContent" index="1"]
+margin_bottom = 538.0
+
+[node name="ToolButton" parent="MarginContainer/ScrollContainer/ListContainer/List/MarginContainer/VerticalContent" index="2"]
+margin_top = 542.0
 margin_bottom = 564.0
-
-[node name="ListNameLabel" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent" index="0"]
-margin_right = 262.0
-text = "TO DO"
-
-[node name="ListCardContainer" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent" index="1"]
-margin_right = 262.0
-margin_bottom = 527.0
-
-[node name="CardsContainer" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer" index="0"]
-margin_right = 262.0
-
-[node name="Card" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer" index="0"]
-margin_right = 262.0
-
-[node name="Card2" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer" index="1"]
-margin_right = 262.0
-
-[node name="ToolButton" parent="MarginContainer/ScrollContainer/ListContainer/List/Panel/MarginContainer/VerticalContent" index="2"]
-margin_top = 531.0
-margin_right = 262.0
-margin_bottom = 556.0
 
 [node name="List2" parent="MarginContainer/ScrollContainer/ListContainer" instance=ExtResource( 1 )]
 anchor_bottom = 0.0
-margin_left = 284.0
-margin_right = 564.0
+margin_left = 288.0
+margin_right = 568.0
 margin_bottom = 580.0
 
-[node name="Panel" parent="MarginContainer/ScrollContainer/ListContainer/List2" index="0"]
-margin_bottom = 576.0
+[node name="MarginContainer" parent="MarginContainer/ScrollContainer/ListContainer/List2" index="0"]
+margin_bottom = 580.0
 
-[node name="VerticalContent" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer" index="0"]
-margin_right = 270.0
+[node name="VerticalContent" parent="MarginContainer/ScrollContainer/ListContainer/List2/MarginContainer" index="0"]
+margin_bottom = 572.0
+
+[node name="ListCardContainer" parent="MarginContainer/ScrollContainer/ListContainer/List2/MarginContainer/VerticalContent" index="1"]
+margin_bottom = 538.0
+
+[node name="ToolButton" parent="MarginContainer/ScrollContainer/ListContainer/List2/MarginContainer/VerticalContent" index="2"]
+margin_top = 542.0
 margin_bottom = 564.0
-
-[node name="ListNameLabel" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent" index="0"]
-margin_right = 262.0
-text = "Done"
-
-[node name="ListCardContainer" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent" index="1"]
-margin_right = 262.0
-margin_bottom = 527.0
-
-[node name="CardsContainer" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer" index="0"]
-margin_right = 262.0
-
-[node name="Card" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer" index="0"]
-margin_right = 262.0
-
-[node name="Card2" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent/ListCardContainer/CardsContainer" index="1"]
-margin_right = 262.0
-
-[node name="ToolButton" parent="MarginContainer/ScrollContainer/ListContainer/List2/Panel/MarginContainer/VerticalContent" index="2"]
-margin_top = 531.0
-margin_right = 262.0
-margin_bottom = 556.0
 
 [editable path="MarginContainer/ScrollContainer/ListContainer/List"]
 
