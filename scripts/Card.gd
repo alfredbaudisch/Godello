@@ -1,4 +1,4 @@
-extends Panel
+extends MarginContainer
 
 onready var panel = $"."
 onready var edit_icon = $HBoxContainer/EditIcon

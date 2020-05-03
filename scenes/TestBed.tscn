@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/style_panel_card.tres" type="StyleBox" id=1]
+
+[node name="Control" type="PanelContainer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -125.0
+margin_top = 10.0
+margin_right = 125.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 250, 40 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 250.0
+margin_bottom = 40.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 242.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Card title"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

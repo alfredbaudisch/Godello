@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/style_panel_card.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/icons/toolPencil.png" type="Texture" id=2]
+[ext_resource path="res://scripts/Card.gd" type="Script" id=3]
+
+[node name="Card" type="PanelContainer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -125.0
+margin_top = 10.0
+margin_right = 115.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 260, 40 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 260.0
+margin_bottom = 40.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+script = ExtResource( 3 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 252.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( -661, -267 )
+
+[node name="Title" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_right = 222.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Card Title	"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EditIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+margin_left = 226.0
+margin_right = 244.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 18, 18 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+[connection signal="mouse_entered" from="MarginContainer" to="MarginContainer" method="_on_Card_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer" to="MarginContainer" method="_on_Card_mouse_exited"]
