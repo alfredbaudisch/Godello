@@ -31,6 +31,12 @@ func set_model(_model : CardModel):
 func get_model():
 	return model
 
+func _unhandled_input(event):
+	# Since Godot doesn't handle drops in failed places,
+	# we have to handle this by ourselves
+	if event is InputEventMouseButton and is_dragged:
+		set_is_dragged(false)
+		
 func set_is_dragged(value := true):	
 	if value:
 		content_container.set("custom_styles/panel", style_dragged)
@@ -71,7 +77,7 @@ func _on_card_dragged(_node, _model):
 	is_any_data_dragged = true
 	_ignore_mouse()
 	
-func _on_card_dropped(drop_data):
+func _on_card_dropped(drop_data, _new_owner):
 	is_any_data_dragged = false
 	_default_mouse()
 	

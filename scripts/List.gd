@@ -35,6 +35,12 @@ func set_model(_model : ListModel):
 func get_model():
 	return model
 	
+func _unhandled_input(event):
+	# Since Godot doesn't handle drops in failed places,
+	# we have to handle this by ourselves
+	if event is InputEventMouseButton and is_dragged:
+		set_is_dragged(false)
+	
 func set_is_dragged(value := true):	
 	if value:
 		set("custom_styles/panel", style_dragged)

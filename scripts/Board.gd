@@ -24,7 +24,7 @@ func _ready():
 		lists.append(list)
 		list_container.add_child(list_element)
 		list_element.set_model(list)
-
+		
 func can_drop_data(mouse_pos, data):
 	if data.model.model_type == Model.ModelTypes.LIST:
 		is_receiving_drag_data = true
