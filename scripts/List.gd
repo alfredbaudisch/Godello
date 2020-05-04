@@ -2,6 +2,7 @@ extends PanelContainer
 
 onready var card_scene := preload("res://scenes/Card.tscn")
 onready var card_container := $MarginContainer/VerticalContent/CardContainerScroll/CardContainer
+onready var card_container_scroll := $MarginContainer/VerticalContent/CardContainerScroll
 
 onready var list_drag_preview := preload("res://scenes/ListPreview.tscn")
 
@@ -70,10 +71,11 @@ func _find_closest_card(pos, compare_to):
 	var closest_card
 	var last_distance : float = -1
 	var is_before := true
+	var scrolled_pos := Vector2(pos.x, pos.y + card_container_scroll.get_v_scroll())
 
-	for child in card_container.get_children():	
-		var distance : float = child.get_position().distance_to(pos)
-		
+	for child in card_container.get_children():			
+		var distance : float = child.get_position().distance_to(scrolled_pos)
+				
 		if last_distance == -1 or (distance < last_distance):
 			last_distance = distance
 			closest_card = child
@@ -81,5 +83,5 @@ func _find_closest_card(pos, compare_to):
 	if closest_card:
 		var y = closest_card.get_position().y
 		var height = closest_card.get_size().y		
-		is_before = pos.y <= (y + height)		
+		is_before = scrolled_pos.y <= (y + height)
 		return {"card": closest_card, "is_before": is_before}
