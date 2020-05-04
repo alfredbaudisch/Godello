@@ -61,6 +61,7 @@ func can_drop_data(_pos, data):
 func drop_data(_pos, data):
 	if data.model.model_type == Model.ModelTypes.CARD:
 		print("DROPPED CARD", data.model)
+		Events.emit_signal("card_dropped", data.model)
 
 func _find_closest_card(pos, compare_to):
 	var closest_card
