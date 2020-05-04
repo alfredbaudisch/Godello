@@ -50,7 +50,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="GD Trello"
+config/name="GodoTrello"
 run/main_scene="res://scenes/Board.tscn"
 config/icon="res://icon.png"
 

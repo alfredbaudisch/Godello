@@ -17,10 +17,10 @@ func _ready():
 		var cards := []		
 		for c in range(1, 10):
 			var id = str(OS.get_ticks_usec())
-			var card = CardModel.new(id, list_id, ("Card Title " + id).repeat(c))
+			var card = CardModel.new(id, list_id, ("Card Title " + id + ", ").repeat(c))
 			cards.append(card)
 		
-		var list = ListModel.new(list_id, "List " + list_id, cards)
+		var list = ListModel.new(list_id, "TODO List " + list_id, cards)
 		lists.append(list)
 		list_container.add_child(list_element)
 		list_element.set_model(list)

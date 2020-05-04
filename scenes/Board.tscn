@@ -5,6 +5,7 @@
 [node name="Board" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -36,7 +37,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 1014.0
 margin_bottom = 590.0
-mouse_filter = 2
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
