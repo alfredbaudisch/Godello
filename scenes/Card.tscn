@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/icons/toolPencil.png" type="Texture" id=1]
 [ext_resource path="res://assets/style_panel_card.tres" type="StyleBox" id=2]
-[ext_resource path="res://scripts/CardDragger.gd" type="Script" id=3]
 [ext_resource path="res://scripts/Card.gd" type="Script" id=4]
 
 [node name="Card" type="MarginContainer"]
@@ -24,6 +23,7 @@ margin_top = 5.0
 margin_right = 242.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 240, 40 )
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = ExtResource( 2 )
@@ -34,11 +34,11 @@ __meta__ = {
 [node name="InnerPadding" type="MarginContainer" parent="CardContent"]
 margin_right = 240.0
 margin_bottom = 40.0
+mouse_filter = 2
 custom_constants/margin_right = 8
 custom_constants/margin_top = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
-script = ExtResource( 3 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CardContent/InnerPadding"]
 margin_left = 8.0
@@ -74,5 +74,5 @@ rect_min_size = Vector2( 18, 18 )
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 5
-[connection signal="mouse_entered" from="CardContent/InnerPadding" to="CardContent/InnerPadding" method="_on_Card_mouse_entered"]
-[connection signal="mouse_exited" from="CardContent/InnerPadding" to="CardContent/InnerPadding" method="_on_Card_mouse_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_Card_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Card_mouse_exited"]
