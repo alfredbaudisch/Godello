@@ -4,8 +4,8 @@
 [ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/style_empty.tres" type="StyleBox" id=3]
 [ext_resource path="res://scripts/List.gd" type="Script" id=4]
-[ext_resource path="res://scenes/ListCardContainer.gd" type="Script" id=5]
-[ext_resource path="res://scenes/CardExpandable.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scripts/ListCardContainer.gd" type="Script" id=5]
+[ext_resource path="res://scripts/ListDragger.gd" type="Script" id=7]
 
 [node name="List" type="PanelContainer"]
 anchor_bottom = 1.0
@@ -13,6 +13,7 @@ margin_right = 252.0
 rect_min_size = Vector2( 280, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -25,7 +26,7 @@ custom_constants/margin_right = 8
 custom_constants/margin_top = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
-script = ExtResource( 4 )
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -45,7 +46,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "List Name"
 
-[node name="ListCardContainer" type="ScrollContainer" parent="MarginContainer/VerticalContent"]
+[node name="CardContainerScroll" type="ScrollContainer" parent="MarginContainer/VerticalContent"]
 margin_top = 29.0
 margin_right = 264.0
 margin_bottom = 558.0
@@ -55,50 +56,16 @@ custom_styles/bg = ExtResource( 3 )
 scroll_horizontal_enabled = false
 script = ExtResource( 5 )
 
-[node name="CardsContainer" type="VBoxContainer" parent="MarginContainer/VerticalContent/ListCardContainer"]
+[node name="CardContainer" type="VBoxContainer" parent="MarginContainer/VerticalContent/CardContainerScroll"]
 margin_right = 264.0
-margin_bottom = 160.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
 
-[node name="Card" parent="MarginContainer/VerticalContent/ListCardContainer/CardsContainer" instance=ExtResource( 6 )]
-margin_right = 264.0
-margin_bottom = 111.0
-
-[node name="CardContent" parent="MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card" index="0"]
-margin_right = 262.0
-margin_bottom = 111.0
-
-[node name="InnerPadding" parent="MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card/CardContent" index="0"]
-margin_right = 260.0
-margin_bottom = 106.0
-
-[node name="HBoxContainer" parent="MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card/CardContent/InnerPadding" index="0"]
-margin_right = 252.0
-margin_bottom = 98.0
-
-[node name="Title" parent="MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card/CardContent/InnerPadding/HBoxContainer" index="0"]
-margin_right = 222.0
-margin_bottom = 90.0
-text = "Card Title Card Title Card Title Card Title Card Title Card Title Card Title Card Title Card Title Card Title Card Title Card Title Card Title Card Title Card Title "
-
-[node name="EditIcon" parent="MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card/CardContent/InnerPadding/HBoxContainer" index="2"]
-margin_left = 226.0
-margin_right = 244.0
-margin_bottom = 90.0
-
-[node name="Card2" parent="MarginContainer/VerticalContent/ListCardContainer/CardsContainer" instance=ExtResource( 6 )]
-margin_top = 115.0
-margin_right = 264.0
-margin_bottom = 160.0
-
-[node name="ToolButton" type="ToolButton" parent="MarginContainer/VerticalContent"]
+[node name="AddCardButton" type="ToolButton" parent="MarginContainer/VerticalContent"]
 margin_top = 562.0
 margin_right = 264.0
 margin_bottom = 584.0
 text = "+ Add a card"
 align = 0
-[connection signal="mouse_exited" from="MarginContainer/VerticalContent/ListCardContainer" to="MarginContainer/VerticalContent/ListCardContainer" method="_on_ListCardContainer_mouse_exited"]
-
-[editable path="MarginContainer/VerticalContent/ListCardContainer/CardsContainer/Card"]
+[connection signal="mouse_exited" from="MarginContainer/VerticalContent/CardContainerScroll" to="MarginContainer/VerticalContent/CardContainerScroll" method="_on_ListCardContainer_mouse_exited"]

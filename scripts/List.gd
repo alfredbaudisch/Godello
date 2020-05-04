@@ -1,17 +1,24 @@
-extends MarginContainer
+extends PanelContainer
 
-onready var title_label = $VerticalContent/ListNameLabel
+onready var card_scene := preload("res://scenes/Card.tscn")
+onready var card_container := $MarginContainer/VerticalContent/CardContainerScroll/CardContainer
 
-var list_preview_scene = preload("res://scenes/ListPreview.tscn")
+onready var title_label := $MarginContainer/VerticalContent/ListNameLabel
+onready var add_card_button := $MarginContainer/VerticalContent/AddCardButton
 
-func _ready():
-	print("List Ready")
+var model : ListModel setget set_model, get_model
 
-func get_drag_data(_pos):
-	print(_pos)
-	var list = list_preview_scene.instance()
-	get_parent().add_child(list)
-	list.set_data(ListModel.new("123", title_label.get_text()))
-	get_parent().remove_child(list)
-	set_drag_preview(list)
-	return list
+func set_model(_model : ListModel):
+	model = _model
+	title_label.set_text(model.title)
+	
+	for card in model.cards:
+		add_card(card)
+
+func get_model():
+	return model
+	
+func add_card(card : CardModel):
+	var card_element = card_scene.instance()
+	card_container.add_child(card_element)
+	card_element.set_model(card)

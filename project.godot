@@ -48,10 +48,15 @@ config/name="GD Trello"
 run/main_scene="res://scenes/Board.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Events="*res://scripts/Events.gd"
+
 [gui]
 
 theme/custom="res://assets/theme_trello_default.tres"
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 environment/default_environment="res://default_env.tres"
