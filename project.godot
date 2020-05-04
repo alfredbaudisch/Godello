@@ -29,7 +29,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/ListPreview.gd"
 }, {
-"base": "Object",
+"base": "Reference",
 "class": "Model",
 "language": "GDScript",
 "path": "res://scripts/models/Model.gd"
@@ -51,6 +51,10 @@ config/icon="res://icon.png"
 [autoload]
 
 Events="*res://scripts/Events.gd"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "open-external-editor" )
 
 [gui]
 
