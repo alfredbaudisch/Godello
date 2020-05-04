@@ -74,9 +74,9 @@ func can_drop_data(mouse_pos, data):
 		# This List has more than 1 children, we need to calculate where to re-position
 		# this Card relative to the closest Card in relation to the mouse position
 		if card_container.get_child_count() > 1:
-			var closest_card = _find_closest_card(mouse_pos, card_node)
+			var closest_card = DragUtils.find_closest_vertical_child(mouse_pos, card_node, card_container, card_container_scroll)
 			
-			if closest_card:
+			if closest_card[0]:
 				var curr_idx = card_node.get_index()		
 				var closest_idx = closest_card[0].get_index()					
 				var next_idx = max(0, closest_idx + (-1 if closest_card[1] else 0))
@@ -90,29 +90,6 @@ func can_drop_data(mouse_pos, data):
 func drop_data(_pos, data):
 	if data.model.model_type == Model.ModelTypes.CARD:
 		Events.emit_signal("card_dropped", data)
-
-func _find_closest_card(mouse_pos, compare_to):
-	var closest_card
-	var last_distance : float = -1
-	var is_before := true
-	
-	# Add the scroll value to the mouse y-position.
-	# The items in the list already account position with the amount scroll,
-	# but the mouse position happens in screen space, that's why we need to add it.
-	var scrolled_mouse_pos := Vector2(mouse_pos.x, mouse_pos.y + card_container_scroll.get_v_scroll())
-
-	for child in card_container.get_children():
-		var distance : float = child.get_position().distance_to(scrolled_mouse_pos)
-				
-		if last_distance == -1 or (distance < last_distance):
-			last_distance = distance
-			closest_card = child
-			
-	if closest_card:
-		var y = closest_card.get_position().y
-		var height = closest_card.get_size().y		
-		is_before = scrolled_mouse_pos.y <= (y + height)
-		return [closest_card, is_before]
 
 func _on_card_dragged(_node, _model):
 	is_any_data_dragged = true
