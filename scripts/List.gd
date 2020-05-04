@@ -38,7 +38,21 @@ func get_drag_data(_pos):
 func can_drop_data(_pos, data):
 	if data.model.model_type == Model.ModelTypes.CARD:
 		is_receiving_data = true
-		print("IT IS A CARD, IT CAN ALSO CAN BE DROPPED")
+		
+		var card_node = data.origin_node
+		if card_node.get_parent() == card_container:			
+			if card_container.get_child_count() > 1:
+				var closest_card = _find_closest_card(_pos, card_node)
+				
+				if closest_card:
+					var curr_idx = card_node.get_index()		
+					var closest_idx = closest_card["card"].get_index()					
+					var next_idx = max(0, closest_idx + (-1 if closest_card["is_before"] else 0))
+					card_container.move_child(card_node, next_idx)
+		else:
+			# todo: remove from the other list and add to this one
+			pass
+								
 		return true	
 		
 	is_receiving_data = false
@@ -47,3 +61,21 @@ func can_drop_data(_pos, data):
 func drop_data(_pos, data):
 	if data.model.model_type == Model.ModelTypes.CARD:
 		print("DROPPED CARD", data.model)
+
+func _find_closest_card(pos, compare_to):
+	var closest_card
+	var last_distance : float = -1
+	var is_before := true
+
+	for child in card_container.get_children():	
+		var distance : float = child.get_position().distance_to(pos)
+		
+		if last_distance == -1 or (distance < last_distance):
+			last_distance = distance
+			closest_card = child
+			
+	if closest_card:
+		var y = closest_card.get_position().y
+		var height = closest_card.get_size().y		
+		is_before = pos.y <= (y + height)		
+		return {"card": closest_card, "is_before": is_before}

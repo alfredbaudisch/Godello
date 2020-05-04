@@ -1,4 +1,4 @@
 extends Node
 
-signal card_dragged()
-signal card_dropped()
+signal card_dragged(node, model)
+signal card_dropped(model)
