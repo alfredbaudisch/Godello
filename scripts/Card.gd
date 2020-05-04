@@ -31,10 +31,10 @@ func get_model():
 
 func set_is_dragged(value := true):	
 	if value:
-		content_container.set("custom_styles/panel", style_dragged)		
+		content_container.set("custom_styles/panel", style_dragged)
 		title_label.set_visible_characters(0)
 	else:
-		content_container.set("custom_styles/panel", style_default)		
+		content_container.set("custom_styles/panel", style_default)
 		title_label.set_visible_characters(-1)		
 		
 	is_dragged = value
