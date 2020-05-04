@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "MarginContainer",
 "class": "CardPreview",
 "language": "GDScript",
-"path": "res://scripts/CardPreview.gd"
+"path": "res://scripts/CardMousePreview.gd"
 }, {
 "base": "Object",
 "class": "DragUtils",

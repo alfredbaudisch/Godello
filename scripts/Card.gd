@@ -13,7 +13,7 @@ onready var title_label := $CardContent/InnerPadding/HBoxContainer/Title
 onready var edit_icon := $CardContent/InnerPadding/HBoxContainer/EditIcon
 onready var split := $CardContent/InnerPadding/HBoxContainer/Split
 
-onready var card_drag_preview := preload("res://scenes/CardPreview.tscn")
+onready var card_drag_preview := preload("res://scenes/CardMousePreview.tscn")
 
 func _ready():
 	Events.connect("card_dragged", self, "_on_card_dragged")

@@ -21,6 +21,7 @@ func _ready():
 			cards.append(card)
 		
 		var list = ListModel.new(list_id, "List " + list_id, cards)
+		lists.append(list)
 		list_container.add_child(list_element)
 		list_element.set_model(list)
 

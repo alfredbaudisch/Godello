@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/CardMousePreview.gd" type="Script" id=1]
+[ext_resource path="res://assets/style_panel_card.tres" type="StyleBox" id=2]
+
+[node name="Card" type="MarginContainer"]
+rect_min_size = Vector2( 240, 40 )
+rect_rotation = 3.5
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 2
+custom_constants/margin_top = 5
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CardContent" type="PanelContainer" parent="."]
+margin_left = 2.0
+margin_top = 5.0
+margin_right = 242.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 240, 40 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="InnerPadding" type="MarginContainer" parent="CardContent"]
+margin_right = 240.0
+margin_bottom = 40.0
+mouse_filter = 2
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CardContent/InnerPadding"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 232.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( -661, -267 )
+
+[node name="Title" type="Label" parent="CardContent/InnerPadding/HBoxContainer"]
+margin_right = 202.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Card Title"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Split" type="HSplitContainer" parent="CardContent/InnerPadding/HBoxContainer"]
+margin_left = 206.0
+margin_right = 224.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 18, 18 )
+dragger_visibility = 1

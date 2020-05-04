@@ -4,6 +4,7 @@ var is_receiving_drag_data := false
 var model : ListModel setget set_model, get_model
 var is_dragged := false setget set_is_dragged
 var is_any_data_dragged := false
+var origin_node
 
 onready var list_content := $MarginContainer
 
@@ -22,6 +23,7 @@ func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	Events.connect("list_dragged", self, "_on_list_dragged")
 	Events.connect("list_dropped", self, "_on_list_dropped")
+	origin_node = self
 
 func set_model(_model : ListModel):
 	model = _model
@@ -52,7 +54,7 @@ func get_drag_data(_pos):
 	get_parent().add_child(list)
 	list.set_data(self, get_model())
 	get_parent().remove_child(list)
-	set_drag_preview(list)
+	set_drag_preview(list)	
 
 	set_is_dragged()
 
@@ -89,13 +91,18 @@ func can_drop_data(mouse_pos, data):
 
 func drop_data(_pos, data):
 	if data.model.model_type == Model.ModelTypes.CARD:
-		Events.emit_signal("card_dropped", data)
+		Events.emit_signal("card_dropped", data, model)
 
 func _on_card_dragged(_node, _model):
 	is_any_data_dragged = true
 	
-func _on_card_dropped(drop_data):
+func _on_card_dropped(drop_data, into_list):
 	is_any_data_dragged = false
+	
+	if drop_data.model.list_id != into_list.id and into_list.id == model.id:
+		model.add_card(drop_data.model)
+	elif drop_data.model.list_id == model.id and into_list.id != model.id: 
+		model.remove_card(drop_data.model)
 
 func _on_list_dragged(_node, _model):
 	is_any_data_dragged = true
