@@ -13,7 +13,7 @@ onready var card_container := $MarginContainer/VerticalContent/CardContainerScro
 onready var card_container_scroll := $MarginContainer/VerticalContent/CardContainerScroll
 
 onready var style_dragged := preload("res://assets/style_panel_list_dragged.tres")
-onready var list_drag_preview := preload("res://scenes/ListPreview.tscn")
+onready var list_drag_preview := preload("res://scenes/ListMousePreview.tscn")
 
 onready var title_label := $MarginContainer/VerticalContent/ListNameLabel
 onready var add_card_button := $MarginContainer/VerticalContent/AddCardButton

@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "PanelContainer",
 "class": "ListPreview",
 "language": "GDScript",
-"path": "res://scripts/ListPreview.gd"
+"path": "res://scripts/ListMousePreview.gd"
 }, {
 "base": "Reference",
 "class": "Model",

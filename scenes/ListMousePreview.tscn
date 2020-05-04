@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/theme_trello_default.tres" type="Theme" id=1]
-[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
-[ext_resource path="res://assets/style_panel_card.tres" type="StyleBox" id=3]
-[ext_resource path="res://scripts/ListPreview.gd" type="Script" id=4]
-[ext_resource path="res://assets/style_panel_list_drag_preview.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/style_panel_list_drag_preview.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/style_panel_card.tres" type="StyleBox" id=4]
+[ext_resource path="res://scripts/ListMousePreview.gd" type="Script" id=5]
 
 [node name="List" type="PanelContainer"]
 margin_right = 280.0
@@ -14,7 +14,7 @@ rect_rotation = 3.5
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 1 )
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -26,7 +26,7 @@ rect_min_size = Vector2( 240, 80 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 1 )
-custom_styles/panel = ExtResource( 5 )
+custom_styles/panel = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -54,7 +54,7 @@ size_flags_vertical = 3
 margin_right = 264.0
 margin_bottom = 25.0
 theme = ExtResource( 1 )
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = ExtResource( 3 )
 text = "List Name"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VerticalContent"]
@@ -93,7 +93,7 @@ rect_min_size = Vector2( 240, 40 )
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = ExtResource( 3 )
+custom_styles/panel = ExtResource( 4 )
 __meta__ = {
 "_editor_description_": ""
 }
