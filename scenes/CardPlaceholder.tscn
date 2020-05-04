@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/style_list_receive_drag.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/style_panel_card_dragged.tres" type="StyleBox" id=1]
 [ext_resource path="res://scripts/Card.gd" type="Script" id=4]
 
 [node name="Card" type="MarginContainer"]
