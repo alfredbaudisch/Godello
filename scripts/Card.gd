@@ -30,15 +30,11 @@ func set_is_dragged(value := true):
 	if value:
 		content_container.set("custom_styles/panel", style_dragged)		
 		title_label.set_visible_characters(0)		
-		set("mouse_filter", MOUSE_FILTER_PASS)
-		content_container.set("mouse_filter", MOUSE_FILTER_PASS)
-		content_padding_container.set("mouse_filter", MOUSE_FILTER_PASS)		
+		set("mouse_filter", MOUSE_FILTER_PASS)		
 	else:
 		content_container.set("custom_styles/panel", style_default)		
 		title_label.set_visible_characters(-1)		
 		set("mouse_filter", MOUSE_FILTER_STOP)
-		content_container.set("mouse_filter", MOUSE_FILTER_STOP)
-		content_padding_container.set("mouse_filter", MOUSE_FILTER_STOP)
 		
 	is_dragged = value
 

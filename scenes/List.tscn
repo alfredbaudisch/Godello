@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/theme_trello_default.tres" type="Theme" id=1]
 [ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/style_empty.tres" type="StyleBox" id=3]
 [ext_resource path="res://scripts/List.gd" type="Script" id=4]
-[ext_resource path="res://scripts/ListCardContainer.gd" type="Script" id=5]
-[ext_resource path="res://scripts/ListDragger.gd" type="Script" id=7]
 
 [node name="List" type="PanelContainer"]
 anchor_bottom = 1.0
@@ -21,12 +19,12 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_right = 280.0
 margin_bottom = 600.0
+mouse_filter = 2
 size_flags_vertical = 3
 custom_constants/margin_right = 8
 custom_constants/margin_top = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
-script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -50,11 +48,11 @@ text = "List Name"
 margin_top = 29.0
 margin_right = 264.0
 margin_bottom = 558.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/bg = ExtResource( 3 )
 scroll_horizontal_enabled = false
-script = ExtResource( 5 )
 
 [node name="CardContainer" type="VBoxContainer" parent="MarginContainer/VerticalContent/CardContainerScroll"]
 margin_right = 264.0
@@ -68,4 +66,3 @@ margin_right = 264.0
 margin_bottom = 584.0
 text = "+ Add a card"
 align = 0
-[connection signal="mouse_exited" from="MarginContainer/VerticalContent/CardContainerScroll" to="MarginContainer/VerticalContent/CardContainerScroll" method="_on_ListCardContainer_mouse_exited"]
