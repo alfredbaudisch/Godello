@@ -2,7 +2,7 @@ extends MarginContainer
 
 var model : CardModel setget set_model, get_model
 var is_dragged := false setget set_is_dragged
-var is_any_card_dragged := false
+var is_any_data_dragged := false
 
 onready var style_default := preload("res://assets/style_panel_card.tres")
 onready var style_dragged := preload("res://assets/style_panel_card_dragged.tres")
@@ -18,6 +18,8 @@ onready var card_drag_preview := preload("res://scenes/CardPreview.tscn")
 func _ready():
 	Events.connect("card_dragged", self, "_on_card_dragged")
 	Events.connect("card_dropped", self, "_on_card_dropped")
+	Events.connect("list_dragged", self, "_on_list_dragged")
+	Events.connect("list_dropped", self, "_on_list_dropped")
 	
 	split.set_visible(true)
 	edit_icon.set_visible(false)
@@ -58,20 +60,34 @@ func set_edit_icon_visibility(is_visible : bool):
 	split.set_visible(not is_visible)
 
 func _on_Card_mouse_entered():
-	if not is_dragged and not is_any_card_dragged:
+	if not is_dragged and not is_any_data_dragged:
 		set_edit_icon_visibility(true)
 
 func _on_Card_mouse_exited():
-	if not is_dragged and not is_any_card_dragged:
+	if not is_dragged and not is_any_data_dragged:
 		set_edit_icon_visibility(false)
 
 func _on_card_dragged(_node, _model):
-	is_any_card_dragged = true
-	set("mouse_filter", MOUSE_FILTER_PASS)
+	is_any_data_dragged = true
+	_ignore_mouse()
 	
 func _on_card_dropped(drop_data):
-	is_any_card_dragged = false
-	set("mouse_filter", MOUSE_FILTER_STOP)
+	is_any_data_dragged = false
+	_default_mouse()
 	
 	if drop_data and drop_data.origin_node == self:
 		set_is_dragged(false)
+
+func _on_list_dragged(_node, _model):
+	is_any_data_dragged = true
+	_ignore_mouse()
+
+func _on_list_dropped(_drop_data):
+	is_any_data_dragged = false
+	_default_mouse()
+
+func _ignore_mouse():
+	set("mouse_filter", MOUSE_FILTER_PASS)
+
+func _default_mouse():
+	set("mouse_filter", MOUSE_FILTER_STOP)

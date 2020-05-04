@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://assets/style_board_receive_drag.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/style_panel_list_dragged.tres" type="StyleBox" id=1]
 
 [node name="ListPlaceholder" type="PanelContainer"]
 anchor_bottom = 1.0

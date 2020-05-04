@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scripts/ListContainer.gd" type="Script" id=2]
 [ext_resource path="res://scripts/Board.gd" type="Script" id=3]
 
 [node name="Board" type="Control"]
@@ -14,6 +13,7 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 color = Color( 0, 0.47451, 0.74902, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -22,6 +22,7 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -30,16 +31,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+[node name="ListContainerScroll" type="ScrollContainer" parent="MarginContainer"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 1014.0
 margin_bottom = 590.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 2 )
 
-[node name="ListContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer"]
+[node name="ListContainer" type="HBoxContainer" parent="MarginContainer/ListContainerScroll"]
 margin_bottom = 580.0
 size_flags_vertical = 3
 custom_constants/separation = 10
