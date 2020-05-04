@@ -35,23 +35,27 @@ func get_drag_data(_pos):
 	set_drag_preview(list)
 	return list
 
-func can_drop_data(_pos, data):
+func can_drop_data(mouse_pos, data):
 	if data.model.model_type == Model.ModelTypes.CARD:
 		is_receiving_data = true
 		
 		var card_node = data.origin_node
-		if card_node.get_parent() == card_container:			
-			if card_container.get_child_count() > 1:
-				var closest_card = _find_closest_card(_pos, card_node)
-				
-				if closest_card:
-					var curr_idx = card_node.get_index()		
-					var closest_idx = closest_card["card"].get_index()					
-					var next_idx = max(0, closest_idx + (-1 if closest_card["is_before"] else 0))
-					card_container.move_child(card_node, next_idx)
-		else:
-			# todo: remove from the other list and add to this one
-			pass
+		
+		# If the Card comes from another List, reparent it
+		if card_node.get_parent() != card_container:
+			card_node.get_parent().remove_child(card_node)
+			card_container.add_child(card_node)			
+			
+		# This List has more than 1 children, we need to calculate where to re-position
+		# this Card relative to the closest Card in relation to the mouse position
+		if card_container.get_child_count() > 1:
+			var closest_card = _find_closest_card(mouse_pos, card_node)
+			
+			if closest_card:
+				var curr_idx = card_node.get_index()		
+				var closest_idx = closest_card["card"].get_index()					
+				var next_idx = max(0, closest_idx + (-1 if closest_card["is_before"] else 0))
+				card_container.move_child(card_node, next_idx)
 								
 		return true	
 		
@@ -60,8 +64,7 @@ func can_drop_data(_pos, data):
 
 func drop_data(_pos, data):
 	if data.model.model_type == Model.ModelTypes.CARD:
-		print("DROPPED CARD", data.model)
-		Events.emit_signal("card_dropped", data.model)
+		Events.emit_signal("card_dropped", data)
 
 func _find_closest_card(pos, compare_to):
 	var closest_card

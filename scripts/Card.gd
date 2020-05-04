@@ -32,12 +32,10 @@ func get_model():
 func set_is_dragged(value := true):	
 	if value:
 		content_container.set("custom_styles/panel", style_dragged)		
-		title_label.set_visible_characters(0)		
-		set("mouse_filter", MOUSE_FILTER_PASS)		
+		title_label.set_visible_characters(0)
 	else:
 		content_container.set("custom_styles/panel", style_default)		
 		title_label.set_visible_characters(-1)		
-		set("mouse_filter", MOUSE_FILTER_STOP)
 		
 	is_dragged = value
 
@@ -49,28 +47,31 @@ func get_drag_data(_pos):
 	set_drag_preview(card)
 	
 	set_is_dragged()
-	_invert_edit_icon_visibility()
+	set_edit_icon_visibility(false)
 	
 	Events.emit_signal("card_dragged", self, get_model())
 	
 	return card
 	
-func _invert_edit_icon_visibility():
-	edit_icon.set_visible(not edit_icon.is_visible())
-	split.set_visible(not split.is_visible())
+func set_edit_icon_visibility(is_visible : bool):
+	edit_icon.set_visible(is_visible)
+	split.set_visible(not is_visible)
 
 func _on_Card_mouse_entered():
 	if not is_dragged and not is_any_card_dragged:
-		_invert_edit_icon_visibility()
+		set_edit_icon_visibility(true)
 
 func _on_Card_mouse_exited():
 	if not is_dragged and not is_any_card_dragged:
-		_invert_edit_icon_visibility()
+		set_edit_icon_visibility(false)
 
 func _on_card_dragged(_node, _model):
 	is_any_card_dragged = true
-	set("mouse_filter", MOUSE_FILTER_IGNORE)
+	set("mouse_filter", MOUSE_FILTER_PASS)
 	
-func _on_card_dropped(_model):
+func _on_card_dropped(drop_data):
 	is_any_card_dragged = false
 	set("mouse_filter", MOUSE_FILTER_STOP)
+	
+	if drop_data and drop_data.origin_node == self:
+		set_is_dragged(false)
