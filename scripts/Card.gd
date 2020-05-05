@@ -28,6 +28,7 @@ func _ready():
 func set_model(_model : CardModel):
 	model = _model
 	title_label.set_text(model.title)
+	DataRepository.set_card_node(model, self)
 
 func get_model():
 	return model
@@ -102,3 +103,8 @@ func _ignore_mouse():
 
 func _default_mouse():
 	set("mouse_filter", MOUSE_FILTER_STOP)
+
+
+func _on_Card_gui_input(event):
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_pressed():
+		Events.emit_signal("card_clicked", model)

@@ -2,14 +2,18 @@ extends Control
 
 var is_receiving_drag_data = true
 
-var lists : Array = []
 var list_id_to_container : Dictionary = {}
 
 onready var list_scene := preload("res://scenes/List.tscn")
 onready var list_container := $MarginContainer/ListContainerScroll/ListContainer
 onready var list_container_scroll := $MarginContainer/ListContainerScroll
 
+onready var open_card_container := $OpenCardContainer
+
 func _ready():	
+	Events.connect("card_clicked", self, "_on_card_clicked")
+	open_card_container.set_visible(false)
+	
 	for n in range(1, 3): # todo: iterate through existing lists
 		var list_element = list_scene.instance()
 		var list_id = str(n)
@@ -21,9 +25,8 @@ func _ready():
 			cards.append(card)
 		
 		var list = ListModel.new(list_id, "TODO List " + list_id, cards)
-		lists.append(list)
 		list_container.add_child(list_element)
-		DataRepository.add_list(list)
+		DataRepository.add_list(list, list_element)
 		
 		list_element.set_model(list)
 		
@@ -54,3 +57,9 @@ func can_drop_data(mouse_pos, data):
 func drop_data(_pos, data):
 	if data.drag_data["model"].model_type == Model.ModelTypes.LIST:
 		Events.emit_signal("list_dropped", data.drag_data)
+
+func _on_card_clicked(model):	
+	assert("load card details: " + model.title)
+	open_card_container.set_visible(true)
+	
+	

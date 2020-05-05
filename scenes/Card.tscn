@@ -74,5 +74,6 @@ rect_min_size = Vector2( 18, 18 )
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 5
+[connection signal="gui_input" from="." to="." method="_on_Card_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_Card_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Card_mouse_exited"]
