@@ -87,7 +87,6 @@ func _on_card_dropped(drop_data, _new_owner):
 	_default_mouse()
 	
 	if drop_data and drop_data["node"] == self:
-		print("IT WAS ME: _on_card_dropped: ", model.id)
 		set_is_dragged(false)
 
 func _on_list_dragged(_node, _model):

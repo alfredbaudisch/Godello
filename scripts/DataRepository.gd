@@ -22,12 +22,8 @@ func move_card_to_list(card : CardModel, list : ListModel):
 	if from_list and to_list:
 		to_list.add_card(card)
 		from_list.remove_card(card)
-		print("=> CARD MOVED: ", card.title, ". ",
-		"From: ", from_list.title, " (", from_list.cards.size(), "). ",
-		"To: ", to_list.title, " (", to_list.cards.size(), ")")
 
 func _on_card_dropped(drop_data, into_list):
-	print("DataRepository._on_card_dropped: ", drop_data["model"].title, ", from list: ", drop_data["model"].list_id, ", to list: ", into_list.id)
 	if drop_data["model"].list_id != into_list.id:
 		move_card_to_list(drop_data["model"], into_list)
 
