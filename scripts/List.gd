@@ -4,7 +4,6 @@ var is_receiving_drag_data := false
 var model : ListModel setget set_model, get_model
 var is_dragged := false setget set_is_dragged
 var is_any_data_dragged := false
-var origin_node
 
 onready var list_content := $MarginContainer
 
@@ -23,7 +22,6 @@ func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	Events.connect("list_dragged", self, "_on_list_dragged")
 	Events.connect("list_dropped", self, "_on_list_dropped")
-	origin_node = self
 
 func set_model(_model : ListModel):
 	model = _model
@@ -69,15 +67,17 @@ func get_drag_data(_pos):
 	return list
 
 func can_drop_data(mouse_pos, data):
-	if data.model.model_type == Model.ModelTypes.CARD:
+	if data.drag_data["model"].model_type == Model.ModelTypes.CARD:
 		is_receiving_drag_data = true
 		
-		var card_node = data.origin_node
+		var card_node = data.drag_data["node"]
 		
 		# If the Card comes from another List, reparent it
 		if card_node.get_parent() != card_container:
 			card_node.get_parent().remove_child(card_node)
 			card_container.add_child(card_node)			
+		
+		card_node.set_dragged_to_list(model)
 			
 		# This List has more than 1 children, we need to calculate where to re-position
 		# this Card relative to the closest Card in relation to the mouse position
@@ -96,19 +96,14 @@ func can_drop_data(mouse_pos, data):
 	return false
 
 func drop_data(_pos, data):
-	if data.model.model_type == Model.ModelTypes.CARD:
-		Events.emit_signal("card_dropped", data, model)
+	if data.drag_data["model"].model_type == Model.ModelTypes.CARD:
+		Events.emit_signal("card_dropped", data.drag_data, model)
 
 func _on_card_dragged(_node, _model):
 	is_any_data_dragged = true
 	
 func _on_card_dropped(drop_data, into_list):
 	is_any_data_dragged = false
-	
-	if drop_data.model.list_id != into_list.id and into_list.id == model.id:
-		model.add_card(drop_data.model)
-	elif drop_data.model.list_id == model.id and into_list.id != model.id: 
-		model.remove_card(drop_data.model)
 
 func _on_list_dragged(_node, _model):
 	is_any_data_dragged = true
@@ -118,5 +113,5 @@ func _on_list_dropped(drop_data):
 	is_any_data_dragged = false
 	set("mouse_filter", MOUSE_FILTER_STOP)
 	
-	if drop_data and drop_data.origin_node == self:
+	if drop_data and drop_data["node"] == self:
 		set_is_dragged(false)

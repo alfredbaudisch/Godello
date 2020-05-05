@@ -2,6 +2,7 @@ extends MarginContainer
 
 var model : CardModel setget set_model, get_model
 var is_dragged := false setget set_is_dragged
+var is_dragged_to_list setget set_dragged_to_list
 var is_any_data_dragged := false
 
 onready var style_default := preload("res://assets/style_panel_card.tres")
@@ -34,8 +35,8 @@ func get_model():
 func _unhandled_input(event):
 	# Since Godot doesn't handle drops in failed places,
 	# we have to handle this by ourselves
-	if event is InputEventMouseButton and is_dragged:
-		set_is_dragged(false)
+	if event is InputEventMouseButton and is_dragged:		
+		Events.emit_signal("card_dropped", DragUtils.get_drag_data(self, model), is_dragged_to_list)
 		
 func set_is_dragged(value := true):	
 	if value:
@@ -44,8 +45,12 @@ func set_is_dragged(value := true):
 	else:
 		content_container.set("custom_styles/panel", style_default)
 		title_label.set_visible_characters(-1)		
+		is_dragged_to_list = null
 		
 	is_dragged = value
+	
+func set_dragged_to_list(list):
+	is_dragged_to_list = list
 
 func get_drag_data(_pos):	
 	var card = card_drag_preview.instance()
@@ -81,7 +86,8 @@ func _on_card_dropped(drop_data, _new_owner):
 	is_any_data_dragged = false
 	_default_mouse()
 	
-	if drop_data and drop_data.origin_node == self:
+	if drop_data and drop_data["node"] == self:
+		print("IT WAS ME: _on_card_dropped: ", model.id)
 		set_is_dragged(false)
 
 func _on_list_dragged(_node, _model):

@@ -8,3 +8,9 @@ func _init(_id : String, _list_id : String, _title : String, _description : Stri
 	list_id = _list_id
 	title = _title
 	description = _description
+
+func get_drag_data(_node) -> Dictionary:
+	return {
+		["node"]: _node,
+		["model"]: self
+	}

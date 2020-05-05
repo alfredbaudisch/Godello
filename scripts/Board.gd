@@ -10,26 +10,28 @@ onready var list_container := $MarginContainer/ListContainerScroll/ListContainer
 onready var list_container_scroll := $MarginContainer/ListContainerScroll
 
 func _ready():	
-	for n in range(1, 20): # todo: iterate through existing lists
+	for n in range(1, 3): # todo: iterate through existing lists
 		var list_element = list_scene.instance()
 		var list_id = str(n)
 		
 		var cards := []		
-		for c in range(1, 10):
-			var id = str(OS.get_ticks_usec())
-			var card = CardModel.new(id, list_id, ("Card Title " + id + ", ").repeat(c))
+		for c in range(1, 5):
+			var id = str(n) + " - " + str(c)# str(OS.get_ticks_usec())
+			var card = CardModel.new(id, list_id, ("Card Title " + id))
 			cards.append(card)
 		
 		var list = ListModel.new(list_id, "TODO List " + list_id, cards)
 		lists.append(list)
 		list_container.add_child(list_element)
+		DataRepository.add_list(list)
+		
 		list_element.set_model(list)
 		
 func can_drop_data(mouse_pos, data):
-	if data.model.model_type == Model.ModelTypes.LIST:
+	if data.drag_data["model"].model_type == Model.ModelTypes.LIST:
 		is_receiving_drag_data = true
 
-		var list_node = data.origin_node
+		var list_node = data.drag_data["node"]
 
 		if list_node.get_parent() != list_container:
 			list_node.get_parent().remove_child(list_node)
@@ -50,5 +52,5 @@ func can_drop_data(mouse_pos, data):
 	return false
 
 func drop_data(_pos, data):
-	if data.model.model_type == Model.ModelTypes.LIST:
-		Events.emit_signal("list_dropped", data)
+	if data.drag_data["model"].model_type == Model.ModelTypes.LIST:
+		Events.emit_signal("list_dropped", data.drag_data)

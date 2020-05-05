@@ -1,5 +1,11 @@
 class_name DragUtils extends Object
 
+static func get_drag_data(_node, _model) -> Dictionary:
+	return {
+		"node": _node,
+		"model": _model
+	}
+
 static func find_closest_horizontal_child(mouse_pos, compare_to, container, container_scroll) -> Array:
 	var closest_child
 	var last_distance : float = -1

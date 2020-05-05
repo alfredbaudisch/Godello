@@ -34,7 +34,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/ListMousePreview.gd"
 }, {
-"base": "Reference",
+"base": "Object",
 "class": "Model",
 "language": "GDScript",
 "path": "res://scripts/models/Model.gd"
@@ -52,15 +52,23 @@ _global_script_class_icons={
 
 config/name="GodoTrello"
 run/main_scene="res://scenes/Board.tscn"
+run/low_processor_mode=true
+run/low_processor_mode_sleep_usec=25000
 config/icon="res://icon.png"
 
 [autoload]
 
 Events="*res://scripts/Events.gd"
+DataRepository="*res://scripts/DataRepository.gd"
 
 [editor_plugins]
 
 enabled=PoolStringArray( "open-external-editor" )
+
+[global]
+
+low=false
+processor=false
 
 [gui]
 

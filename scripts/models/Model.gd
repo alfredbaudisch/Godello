@@ -1,4 +1,4 @@
-class_name Model
+class_name Model extends Object
 
 enum ModelTypes {BOARD, LIST, CARD}
 
