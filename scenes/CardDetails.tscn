@@ -20,13 +20,11 @@ __meta__ = {
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
 margin_left = -352.0
-margin_top = -260.0
+margin_top = 40.0
 margin_right = 352.0
-margin_bottom = 260.0
+margin_bottom = 520.0
 rect_min_size = Vector2( 600, 400 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -34,7 +32,7 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 margin_right = 704.0
-margin_bottom = 777.0
+margin_bottom = 807.0
 custom_constants/margin_right = 18
 custom_constants/margin_top = 18
 custom_constants/margin_left = 18
@@ -44,7 +42,7 @@ custom_constants/margin_bottom = 18
 margin_left = 18.0
 margin_top = 18.0
 margin_right = 686.0
-margin_bottom = 759.0
+margin_bottom = 789.0
 custom_constants/separation = 24
 
 [node name="TitleRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
@@ -108,14 +106,14 @@ expand = true
 [node name="ContentRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 85.0
 margin_right = 668.0
-margin_bottom = 741.0
+margin_bottom = 771.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 20
 
 [node name="DetailsCol" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
 margin_right = 550.0
-margin_bottom = 656.0
+margin_bottom = 686.0
 size_flags_horizontal = 3
 custom_constants/separation = 24
 
@@ -184,12 +182,12 @@ expand = true
 [node name="ChecklistRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
 margin_top = 183.0
 margin_right = 550.0
-margin_bottom = 296.0
+margin_bottom = 686.0
 custom_constants/separation = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
 margin_right = 16.0
-margin_bottom = 113.0
+margin_bottom = 503.0
 custom_constants/margin_top = 3
 
 [node name="TextureRect2" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/MarginContainer"]
@@ -207,7 +205,7 @@ stretch_mode = 1
 [node name="ChecklistContent" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
 margin_left = 24.0
 margin_right = 550.0
-margin_bottom = 113.0
+margin_bottom = 503.0
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
@@ -225,10 +223,88 @@ margin_right = 526.0
 margin_bottom = 55.0
 text = "TODO ITEM"
 
-[node name="InputContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+[node name="CheckItem2" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
 margin_top = 61.0
 margin_right = 526.0
-margin_bottom = 113.0
+margin_bottom = 85.0
+text = "TODO ITEM"
+
+[node name="CheckItem3" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 91.0
+margin_right = 526.0
+margin_bottom = 115.0
+text = "TODO ITEM"
+
+[node name="CheckItem4" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 121.0
+margin_right = 526.0
+margin_bottom = 145.0
+text = "TODO ITEM"
+
+[node name="CheckItem5" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 151.0
+margin_right = 526.0
+margin_bottom = 175.0
+text = "TODO ITEM"
+
+[node name="CheckItem6" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 181.0
+margin_right = 526.0
+margin_bottom = 205.0
+text = "TODO ITEM"
+
+[node name="CheckItem7" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 211.0
+margin_right = 526.0
+margin_bottom = 235.0
+text = "TODO ITEM"
+
+[node name="CheckItem8" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 241.0
+margin_right = 526.0
+margin_bottom = 265.0
+text = "TODO ITEM"
+
+[node name="CheckItem9" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 271.0
+margin_right = 526.0
+margin_bottom = 295.0
+text = "TODO ITEM"
+
+[node name="CheckItem10" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 301.0
+margin_right = 526.0
+margin_bottom = 325.0
+text = "TODO ITEM"
+
+[node name="CheckItem11" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 331.0
+margin_right = 526.0
+margin_bottom = 355.0
+text = "TODO ITEM"
+
+[node name="CheckItem12" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 361.0
+margin_right = 526.0
+margin_bottom = 385.0
+text = "TODO ITEM"
+
+[node name="CheckItem13" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 391.0
+margin_right = 526.0
+margin_bottom = 415.0
+text = "TODO ITEM"
+
+[node name="CheckItem14" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 421.0
+margin_right = 526.0
+margin_bottom = 445.0
+text = "TODO ITEM"
+
+[node name="InputContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 451.0
+margin_right = 526.0
+margin_bottom = 503.0
 custom_constants/separation = 6
 
 [node name="CheckItemEdit" type="TextEdit" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
@@ -264,7 +340,7 @@ expand = true
 [node name="ActionsCol" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
 margin_left = 570.0
 margin_right = 668.0
-margin_bottom = 656.0
+margin_bottom = 686.0
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_right = 98.0
