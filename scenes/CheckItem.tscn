@@ -1,0 +1,12 @@
+[gd_scene format=2]
+
+[node name="CheckItem" type="CheckBox" groups=[
+"checklist",
+]]
+margin_top = 31.0
+margin_right = 526.0
+margin_bottom = 55.0
+text = "TODO ITEM"
+__meta__ = {
+"_edit_use_anchors_": false
+}

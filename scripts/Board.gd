@@ -8,11 +8,11 @@ onready var list_scene := preload("res://scenes/List.tscn")
 onready var list_container := $MarginContainer/ListContainerScroll/ListContainer
 onready var list_container_scroll := $MarginContainer/ListContainerScroll
 
-onready var open_card_container := $OpenCardContainer
+onready var card_details_container := $CardDetailsContainer
 
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
-	open_card_container.set_visible(false)
+	card_details_container.set_visible(false)
 	
 	for n in range(1, 3): # todo: iterate through existing lists
 		var list_element = list_scene.instance()
@@ -60,6 +60,6 @@ func drop_data(_pos, data):
 
 func _on_card_clicked(model):	
 	assert("load card details: " + model.title)
-	open_card_container.set_visible(true)
+	card_details_container.set_visible(true)
 	
 	

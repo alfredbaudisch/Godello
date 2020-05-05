@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=2]
@@ -6,8 +6,9 @@
 [ext_resource path="res://assets/icons/close.svg" type="Texture" id=4]
 [ext_resource path="res://assets/icons/description.svg" type="Texture" id=5]
 [ext_resource path="res://assets/icons/checklist.svg" type="Texture" id=6]
+[ext_resource path="res://scenes/CheckItem.tscn" type="PackedScene" id=7]
 
-[node name="Control" type="Control"]
+[node name="CardDetails" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -1.47212
@@ -18,45 +19,55 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -352.0
+margin_left = -300.0
 margin_top = 40.0
-margin_right = 352.0
-margin_bottom = 520.0
+margin_right = 300.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 600, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="ScrollContainer"]
+margin_right = 600.0
+margin_bottom = 439.0
 rect_min_size = Vector2( 600, 400 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-margin_right = 704.0
-margin_bottom = 807.0
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer"]
+margin_right = 600.0
+margin_bottom = 439.0
 custom_constants/margin_right = 18
 custom_constants/margin_top = 18
 custom_constants/margin_left = 18
-custom_constants/margin_bottom = 18
+custom_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer"]
 margin_left = 18.0
 margin_top = 18.0
-margin_right = 686.0
-margin_bottom = 789.0
+margin_right = 582.0
+margin_bottom = 399.0
 custom_constants/separation = 24
 
-[node name="TitleRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
-margin_right = 668.0
+[node name="TitleRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+margin_right = 564.0
 margin_bottom = 61.0
 rect_min_size = Vector2( 0, 60 )
 custom_constants/separation = 8
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
 margin_right = 16.0
 margin_bottom = 61.0
 custom_constants/margin_top = 6
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/TitleRow/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/MarginContainer"]
 modulate = Color( 0.439216, 0.509804, 0.627451, 1 )
 margin_top = 6.0
 margin_right = 16.0
@@ -68,22 +79,22 @@ texture = ExtResource( 3 )
 expand = true
 stretch_mode = 1
 
-[node name="TitleContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
+[node name="TitleContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
 margin_left = 24.0
-margin_right = 644.0
+margin_right = 540.0
 margin_bottom = 61.0
 size_flags_horizontal = 3
 
-[node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
-margin_right = 620.0
+[node name="Title" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
+margin_right = 516.0
 margin_bottom = 37.0
 custom_fonts/font = ExtResource( 2 )
 text = "Card Title, do this"
 autowrap = true
 
-[node name="Subtitle" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
+[node name="Subtitle" type="RichTextLabel" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
 margin_top = 41.0
-margin_right = 620.0
+margin_right = 516.0
 margin_bottom = 61.0
 rect_min_size = Vector2( 0, 20 )
 size_flags_horizontal = 3
@@ -92,10 +103,10 @@ bbcode_enabled = true
 bbcode_text = " in list [b][u]Foo[/u]	[/b]"
 text = " in list Foo	"
 
-[node name="CloseButton" type="TextureButton" parent="PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
+[node name="CloseButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
 modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
-margin_left = 652.0
-margin_right = 668.0
+margin_left = 548.0
+margin_right = 564.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 16, 22 )
 size_flags_horizontal = 0
@@ -103,26 +114,26 @@ size_flags_vertical = 0
 texture_normal = ExtResource( 4 )
 expand = true
 
-[node name="ContentRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ContentRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 85.0
-margin_right = 668.0
-margin_bottom = 771.0
+margin_right = 564.0
+margin_bottom = 381.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 20
 
-[node name="DetailsCol" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
-margin_right = 550.0
-margin_bottom = 686.0
+[node name="DetailsCol" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
+margin_right = 446.0
+margin_bottom = 296.0
 size_flags_horizontal = 3
 custom_constants/separation = 24
 
-[node name="DescriptionRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
-margin_right = 550.0
+[node name="DescriptionRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
+margin_right = 446.0
 margin_bottom = 159.0
 custom_constants/separation = 8
 
-[node name="TextureRect2" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
+[node name="TextureRect2" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
 modulate = Color( 0.439216, 0.509804, 0.627451, 1 )
 margin_right = 16.0
 margin_bottom = 22.0
@@ -133,42 +144,42 @@ texture = ExtResource( 5 )
 expand = true
 stretch_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
 margin_left = 24.0
-margin_right = 550.0
+margin_right = 446.0
 margin_bottom = 159.0
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
-margin_right = 526.0
+[node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
+margin_right = 422.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
 text = "Description"
 autowrap = true
 
-[node name="DescriptionEdit" type="TextEdit" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
+[node name="DescriptionEdit" type="TextEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
 margin_top = 31.0
-margin_right = 526.0
+margin_right = 422.0
 margin_bottom = 131.0
 rect_min_size = Vector2( 0, 100 )
 wrap_enabled = true
 caret_blink = true
 
-[node name="ButtonsContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
+[node name="ButtonsContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
 margin_top = 137.0
-margin_right = 526.0
+margin_right = 422.0
 margin_bottom = 159.0
 custom_constants/separation = 12
 
-[node name="SaveButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer"]
+[node name="SaveButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer"]
 margin_right = 41.0
 margin_bottom = 22.0
 size_flags_horizontal = 0
 text = "Save"
 
-[node name="CancelButton" type="TextureButton" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer"]
+[node name="CancelButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer"]
 modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
 margin_left = 53.0
 margin_right = 69.0
@@ -179,18 +190,18 @@ size_flags_vertical = 0
 texture_normal = ExtResource( 4 )
 expand = true
 
-[node name="ChecklistRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
+[node name="ChecklistRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
 margin_top = 183.0
-margin_right = 550.0
-margin_bottom = 686.0
+margin_right = 446.0
+margin_bottom = 296.0
 custom_constants/separation = 8
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
 margin_right = 16.0
-margin_bottom = 503.0
+margin_bottom = 113.0
 custom_constants/margin_top = 3
 
-[node name="TextureRect2" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/MarginContainer"]
+[node name="TextureRect2" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/MarginContainer"]
 modulate = Color( 0.439216, 0.509804, 0.627451, 1 )
 margin_top = 3.0
 margin_right = 16.0
@@ -202,131 +213,50 @@ texture = ExtResource( 6 )
 expand = true
 stretch_mode = 1
 
-[node name="ChecklistContent" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
+[node name="ChecklistContent" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
 margin_left = 24.0
-margin_right = 550.0
-margin_bottom = 503.0
+margin_right = 446.0
+margin_bottom = 113.0
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_right = 526.0
+[node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_right = 422.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
 text = "Checklist"
 autowrap = true
 
-[node name="CheckItem" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 31.0
-margin_right = 526.0
-margin_bottom = 55.0
-text = "TODO ITEM"
+[node name="CheckItem2" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent" instance=ExtResource( 7 )]
+margin_right = 422.0
 
-[node name="CheckItem2" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+[node name="InputContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
 margin_top = 61.0
-margin_right = 526.0
-margin_bottom = 85.0
-text = "TODO ITEM"
-
-[node name="CheckItem3" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 91.0
-margin_right = 526.0
-margin_bottom = 115.0
-text = "TODO ITEM"
-
-[node name="CheckItem4" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 121.0
-margin_right = 526.0
-margin_bottom = 145.0
-text = "TODO ITEM"
-
-[node name="CheckItem5" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 151.0
-margin_right = 526.0
-margin_bottom = 175.0
-text = "TODO ITEM"
-
-[node name="CheckItem6" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 181.0
-margin_right = 526.0
-margin_bottom = 205.0
-text = "TODO ITEM"
-
-[node name="CheckItem7" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 211.0
-margin_right = 526.0
-margin_bottom = 235.0
-text = "TODO ITEM"
-
-[node name="CheckItem8" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 241.0
-margin_right = 526.0
-margin_bottom = 265.0
-text = "TODO ITEM"
-
-[node name="CheckItem9" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 271.0
-margin_right = 526.0
-margin_bottom = 295.0
-text = "TODO ITEM"
-
-[node name="CheckItem10" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 301.0
-margin_right = 526.0
-margin_bottom = 325.0
-text = "TODO ITEM"
-
-[node name="CheckItem11" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 331.0
-margin_right = 526.0
-margin_bottom = 355.0
-text = "TODO ITEM"
-
-[node name="CheckItem12" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 361.0
-margin_right = 526.0
-margin_bottom = 385.0
-text = "TODO ITEM"
-
-[node name="CheckItem13" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 391.0
-margin_right = 526.0
-margin_bottom = 415.0
-text = "TODO ITEM"
-
-[node name="CheckItem14" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 421.0
-margin_right = 526.0
-margin_bottom = 445.0
-text = "TODO ITEM"
-
-[node name="InputContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 451.0
-margin_right = 526.0
-margin_bottom = 503.0
+margin_right = 422.0
+margin_bottom = 113.0
 custom_constants/separation = 6
 
-[node name="CheckItemEdit" type="TextEdit" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
-margin_right = 526.0
+[node name="CheckItemEdit" type="TextEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
+margin_right = 422.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 0, 24 )
 wrap_enabled = true
 caret_blink = true
 
-[node name="ButtonsContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
+[node name="ButtonsContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
 margin_top = 30.0
-margin_right = 526.0
+margin_right = 422.0
 margin_bottom = 52.0
 custom_constants/separation = 12
 
-[node name="SaveButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
+[node name="SaveButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
 margin_right = 37.0
 margin_bottom = 22.0
 size_flags_horizontal = 0
 text = "Add"
 
-[node name="CancelButton" type="TextureButton" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
+[node name="CancelButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
 modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
 margin_left = 49.0
 margin_right = 65.0
@@ -337,51 +267,51 @@ size_flags_vertical = 0
 texture_normal = ExtResource( 4 )
 expand = true
 
-[node name="ActionsCol" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
-margin_left = 570.0
-margin_right = 668.0
-margin_bottom = 686.0
+[node name="ActionsCol" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
+margin_left = 466.0
+margin_right = 564.0
+margin_bottom = 296.0
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_right = 98.0
 margin_bottom = 22.0
 text = "ADD TO CARD"
 
-[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="Button" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_top = 26.0
 margin_right = 98.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 0, 30 )
 text = "Labels"
 
-[node name="Button2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="Button2" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_top = 60.0
 margin_right = 98.0
 margin_bottom = 90.0
 rect_min_size = Vector2( 0, 30 )
 text = "Checklist"
 
-[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_top = 94.0
 margin_right = 98.0
 margin_bottom = 114.0
 rect_min_size = Vector2( 0, 20 )
 dragger_visibility = 1
 
-[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="Label2" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_top = 118.0
 margin_right = 98.0
 margin_bottom = 140.0
 text = "ACTIONS"
 
-[node name="Button4" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="Button4" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_top = 144.0
 margin_right = 98.0
 margin_bottom = 174.0
 rect_min_size = Vector2( 0, 30 )
 text = "Archive"
 
-[node name="Button3" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="Button3" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_top = 178.0
 margin_right = 98.0
 margin_bottom = 208.0
