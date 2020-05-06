@@ -19,7 +19,7 @@ func set_description(_description: String):
 	_notify_updated()
 
 func _notify_updated():
-	DataRepository.card_updated(self)
+	DataRepository.update_card(self)
 	
 func add_task(task):
 	tasks.push_back(task)

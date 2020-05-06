@@ -11,6 +11,8 @@ onready var list_container_scroll := $MarginContainer/ListContainerScroll
 onready var card_details_container := $CardDetailsContainer
 onready var card_details := $CardDetailsContainer/CardDetails
 
+var is_card_details_open = false
+
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
 	card_details_container.set_visible(false)
@@ -65,9 +67,11 @@ func drop_data(_pos, data):
 	if data.drag_data["model"].model_type == Model.ModelTypes.LIST:
 		Events.emit_signal("list_dropped", data.drag_data)
 
-func _on_card_clicked(model):	
-	card_details.set_card(model)
+func _on_card_clicked(model):
+	card_details.open(model)
 	card_details_container.set_visible(true)
+	is_card_details_open = true
 	
 func _on_CardDetails_close_requested():
 	card_details_container.set_visible(false)
+	is_card_details_open = false

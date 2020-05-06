@@ -7,6 +7,13 @@ var cards_by_id : Dictionary = {}
 var list_nodes : Dictionary = {}
 var card_nodes : Dictionary = {}
 
+signal list_created(list)
+signal list_updated(list)
+signal list_deleted(list)
+signal card_created(card)
+signal card_updated(card)
+signal card_deleted(card)
+
 func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
 
@@ -41,9 +48,8 @@ func _map_cards_by_id(cards : Array):
 	for card in cards:
 		cards_by_id[card.id] = card
 
-func card_updated(card):
-	print("CARD ", card.id, " UPDATED! ")
-	print(cards_by_id[card.id])
+func update_card(card):
+	emit_signal("card_updated", card)
 	
 func create_task(card, title, is_done := false) -> Dictionary:
 	var task = TaskModel.new(card.id + str(card.tasks.size()), card.id, title, is_done) # todo: task id

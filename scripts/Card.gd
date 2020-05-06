@@ -21,6 +21,7 @@ func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	Events.connect("list_dragged", self, "_on_list_dragged")
 	Events.connect("list_dropped", self, "_on_list_dropped")
+	DataRepository.connect("card_updated", self, "_on_card_updated")
 	
 	split.set_visible(true)
 	edit_icon.set_visible(false)
@@ -104,7 +105,10 @@ func _ignore_mouse():
 func _default_mouse():
 	set("mouse_filter", MOUSE_FILTER_STOP)
 
-
 func _on_Card_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_pressed():
 		Events.emit_signal("card_clicked", model)
+
+func _on_card_updated(_card):
+	if model and _card.id == model.id:
+		set_model(_card)

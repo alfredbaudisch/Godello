@@ -8,7 +8,9 @@ onready var subtitle_label := $ScrollContainer/PanelContainer/MarginContainer/VB
 
 onready var description_edit := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/DescriptionEdit
 
-onready var checkitem_scene := preload("res://scenes/CheckItem.tscn")
+const CHECKITEM_SCENE := preload("res://scenes/CheckItem.tscn")
+const POPUP_SCENE = preload("res://scenes/SingleButtonPopup.tscn")
+
 onready var checkitem_edit_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer
 onready var checkitem_edit := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/CheckItemEdit
 onready var checklist_row := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow
@@ -22,11 +24,17 @@ var list : ListModel setget set_list
 
 signal close_details_requested
 
+func _ready():
+	DataRepository.connect("card_updated", self, "_on_card_updated")
+
+func open(_model : CardModel):
+	set_card(_model)	
+	title_edit.set_visible(false)
+	title_label.set_visible(true)	
+
 func set_card(_model : CardModel):
 	card = _model
 	title_edit.set_text(card.title)
-	title_edit.set_visible(false)
-	title_label.set_visible(true)
 	title_label.set_text(card.title)
 	description_edit.set_text(card.description)
 	_sync_tasks()
@@ -41,6 +49,8 @@ func _on_CloseButton_pressed():
 	emit_signal("close_details_requested")
 
 func _sync_tasks():
+	_reset_checkitem_edit_container()
+	
 	for child in checklist_items_container.get_children():
 		checklist_items_container.remove_child(child)
 		child.queue_free()
@@ -49,7 +59,7 @@ func _sync_tasks():
 		checklist_row.set_visible(true)
 		
 		for task in card.tasks:
-			var checkitem = checkitem_scene.instance()
+			var checkitem = CHECKITEM_SCENE.instance()
 			checklist_items_container.add_child(checkitem)
 			checkitem.set_model(task)			
 			checkitem.connect("edit_check_item_requested", self, "_on_edit_check_item_requested")
@@ -77,12 +87,17 @@ func _on_TitleEdit_gui_input(event):
 		match event.get_scancode():
 			KEY_ENTER:
 				var title = title_edit.get_text().replace("\n", "")
-				card.set_title(title)
-				title_edit.set_text(title)
-				title_label.set_text(title)
-				title_edit.set_visible(false)
-				title_label.set_visible(true)
-				can_close = true
+				if title == "":
+					var popup = POPUP_SCENE.instance()
+					popup.get_node("Label").set_text("Title is required.")
+					add_child(popup)
+					popup.popup_centered()
+					
+				else:
+					card.set_title(title)
+					title_edit.set_visible(false)
+					title_label.set_visible(true)
+					can_close = true
 			
 			KEY_ESCAPE:
 				title_edit.set_visible(false)
@@ -102,3 +117,14 @@ func _on_edit_check_item_requested(_node):
 		checklist_content.remove_child(checkitem_edit_container)
 	
 	checklist_items_container.add_child_below_node(_node, checkitem_edit_container)
+	checklist_items_container.move_child(_node, checkitem_edit_container.get_index() - 1)
+	checkitem_edit.set_text(_node.model.title)
+
+func _on_card_updated(_card):
+	if card and _card.id == card.id:
+		set_card(_card)
+
+func _reset_checkitem_edit_container():
+	checkitem_edit.set_text("")
+	checkitem_edit_container.get_parent().remove_child(checkitem_edit_container)
+	checklist_content.add_child(checkitem_edit_container)
