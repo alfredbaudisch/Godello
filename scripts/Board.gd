@@ -9,10 +9,12 @@ onready var list_container := $MarginContainer/ListContainerScroll/ListContainer
 onready var list_container_scroll := $MarginContainer/ListContainerScroll
 
 onready var card_details_container := $CardDetailsContainer
+onready var card_details := $CardDetailsContainer/CardDetails
 
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
 	card_details_container.set_visible(false)
+	card_details.connect("close_details_requested", self, "_on_CardDetails_close_requested")
 	
 	for n in range(1, 3): # todo: iterate through existing lists
 		var list_element = list_scene.instance()
@@ -22,6 +24,11 @@ func _ready():
 		for c in range(1, 5):
 			var id = str(n) + " - " + str(c)# str(OS.get_ticks_usec())
 			var card = CardModel.new(id, list_id, ("Card Title " + id))
+			card.tasks = [
+				TaskModel.new(str(n * c), id, "TASK " + id),
+				TaskModel.new(str(n * c + 1), id, "TASK " + id, true),
+				TaskModel.new(str(n * c + 2), id, "TASK " + id),
+			]
 			cards.append(card)
 		
 		var list = ListModel.new(list_id, "TODO List " + list_id, cards)
@@ -59,7 +66,8 @@ func drop_data(_pos, data):
 		Events.emit_signal("list_dropped", data.drag_data)
 
 func _on_card_clicked(model):	
-	assert("load card details: " + model.title)
+	card_details.set_card(model)
 	card_details_container.set_visible(true)
 	
-	
+func _on_CardDetails_close_requested():
+	card_details_container.set_visible(false)

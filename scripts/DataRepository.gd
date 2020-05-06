@@ -12,6 +12,9 @@ func _ready():
 
 func get_lists():
 	return lists
+
+func get_list(id: String):
+	return lists_by_id[id]
 	
 func add_list(list : ListModel, node : Control):
 	lists.append(list)
@@ -37,3 +40,7 @@ func _on_card_dropped(drop_data, into_list):
 func _map_cards_by_id(cards : Array):
 	for card in cards:
 		cards_by_id[card.id] = card
+
+func card_updated(card):
+	print("CARD ", card.id, " UPDATED! ")
+	print(cards_by_id[card.id])

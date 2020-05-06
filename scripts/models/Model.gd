@@ -1,6 +1,6 @@
 class_name Model extends Object
 
-enum ModelTypes {BOARD, LIST, CARD}
+enum ModelTypes {BOARD, LIST, CARD, TASK}
 
 var model_type : int
 var id : String
