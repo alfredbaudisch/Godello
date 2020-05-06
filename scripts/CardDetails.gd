@@ -9,8 +9,11 @@ onready var subtitle_label := $ScrollContainer/PanelContainer/MarginContainer/VB
 onready var description_edit := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/DescriptionEdit
 
 onready var checkitem_scene := preload("res://scenes/CheckItem.tscn")
+onready var checkitem_edit_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer
+onready var checkitem_edit := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/CheckItemEdit
 onready var checklist_row := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow
-onready var checklist_content := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/Content
+onready var checklist_content := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent
+onready var checklist_items_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/Content
 
 onready var close_button := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/CloseButton
 
@@ -38,8 +41,8 @@ func _on_CloseButton_pressed():
 	emit_signal("close_details_requested")
 
 func _sync_tasks():
-	for child in checklist_content.get_children():
-		checklist_content.remove_child(child)
+	for child in checklist_items_container.get_children():
+		checklist_items_container.remove_child(child)
 		child.queue_free()
 		
 	if card.tasks.size() > 0:
@@ -47,8 +50,9 @@ func _sync_tasks():
 		
 		for task in card.tasks:
 			var checkitem = checkitem_scene.instance()
-			checklist_content.add_child(checkitem)
+			checklist_items_container.add_child(checkitem)
 			checkitem.set_model(task)			
+			checkitem.connect("edit_check_item_requested", self, "_on_edit_check_item_requested")
 			
 	else:
 		checklist_row.set_visible(false)
@@ -84,3 +88,17 @@ func _on_TitleEdit_gui_input(event):
 				title_edit.set_visible(false)
 				title_label.set_visible(true)
 				can_close = true
+
+func _on_SaveCheckItemButton_pressed():
+	assert(checkitem_edit.get_text() != "")
+	
+	var result = DataRepository.create_task(card, checkitem_edit.get_text())
+	checkitem_edit.set_text("")
+	card = result["card"]
+	_sync_tasks()
+
+func _on_edit_check_item_requested(_node):	
+	if checkitem_edit_container.get_parent() == checklist_content:
+		checklist_content.remove_child(checkitem_edit_container)
+	
+	checklist_items_container.add_child_below_node(_node, checkitem_edit_container)

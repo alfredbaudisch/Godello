@@ -3,11 +3,11 @@
 [ext_resource path="res://scripts/CheckItem.gd" type="Script" id=1]
 
 [node name="CheckItem" type="CheckBox"]
-margin_top = 31.0
 margin_right = 526.0
-margin_bottom = 55.0
+margin_bottom = 24.0
 text = "TODO ITEM"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="gui_input" from="." to="." method="_on_CheckItem_gui_input"]

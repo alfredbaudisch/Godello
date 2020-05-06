@@ -252,11 +252,10 @@ margin_right = 422.0
 margin_bottom = 89.0
 custom_constants/separation = 6
 
-[node name="CheckItemEdit" type="TextEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
+[node name="CheckItemEdit" type="LineEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
 margin_right = 422.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 0, 24 )
-wrap_enabled = true
 caret_blink = true
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
@@ -265,13 +264,13 @@ margin_right = 422.0
 margin_bottom = 52.0
 custom_constants/separation = 12
 
-[node name="SaveButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
+[node name="SaveCheckItemButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
 margin_right = 37.0
 margin_bottom = 22.0
 size_flags_horizontal = 0
 text = "Add"
 
-[node name="CancelButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
+[node name="CancelCheckItemButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
 modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
 margin_left = 49.0
 margin_right = 65.0
@@ -336,3 +335,4 @@ text = "Delete"
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/TitleEdit" to="." method="_on_TitleEdit_gui_input"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer/SaveDescriptionButton" to="." method="_on_SaveDescriptionButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer/SaveCheckItemButton" to="." method="_on_SaveCheckItemButton_pressed"]

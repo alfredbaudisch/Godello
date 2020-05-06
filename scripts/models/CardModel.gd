@@ -20,6 +20,9 @@ func set_description(_description: String):
 
 func _notify_updated():
 	DataRepository.card_updated(self)
+	
+func add_task(task):
+	tasks.push_back(task)
 
 func _to_string():
 	return to_json({

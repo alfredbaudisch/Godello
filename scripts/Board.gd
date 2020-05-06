@@ -25,9 +25,9 @@ func _ready():
 			var id = str(n) + " - " + str(c)# str(OS.get_ticks_usec())
 			var card = CardModel.new(id, list_id, ("Card Title " + id))
 			card.tasks = [
-				TaskModel.new(str(n * c), id, "TASK " + id),
-				TaskModel.new(str(n * c + 1), id, "TASK " + id, true),
-				TaskModel.new(str(n * c + 2), id, "TASK " + id),
+				TaskModel.new(str(n * c), id, "TASK " + id + ", 1"),
+				TaskModel.new(str(n * c + 1), id, "TASK " + id + ", 2", true),
+				TaskModel.new(str(n * c + 2), id, "TASK " + id + ", 3"),
 			]
 			cards.append(card)
 		

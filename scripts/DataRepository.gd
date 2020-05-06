@@ -44,3 +44,11 @@ func _map_cards_by_id(cards : Array):
 func card_updated(card):
 	print("CARD ", card.id, " UPDATED! ")
 	print(cards_by_id[card.id])
+	
+func create_task(card, title, is_done := false) -> Dictionary:
+	var task = TaskModel.new(card.id + str(card.tasks.size()), card.id, title, is_done) # todo: task id
+	card.add_task(task)
+	return {
+		"task": task,
+		"card": card
+	}
