@@ -66,6 +66,9 @@ func _sync_tasks():
 			
 	else:
 		checklist_row.set_visible(false)
+		
+func _on_TitleEdit_focus_exited():
+	_save_card_title()
 
 func _on_Title_gui_input(event):
 	if event is InputEventMouseButton and event.get_button_index() == BUTTON_LEFT and not event.is_pressed():
@@ -86,23 +89,33 @@ func _on_TitleEdit_gui_input(event):
 	if event is InputEventKey and not event.is_pressed():
 		match event.get_scancode():
 			KEY_ENTER:
-				var title = title_edit.get_text().replace("\n", "")
-				if title == "":
-					var popup = POPUP_SCENE.instance()
-					popup.get_node("Label").set_text("Title is required.")
-					add_child(popup)
-					popup.popup_centered()
-					
-				else:
-					card.set_title(title)
-					title_edit.set_visible(false)
-					title_label.set_visible(true)
-					can_close = true
+				_save_card_title()
 			
+			# Cancel changes
 			KEY_ESCAPE:
-				title_edit.set_visible(false)
-				title_label.set_visible(true)
-				can_close = true
+				title_edit.set_text(card.title)
+				_close_edit_card_title()
+
+func _close_edit_card_title():
+	title_edit.set_visible(false)
+	title_label.set_visible(true)
+	can_close = true
+	
+func _save_card_title():
+	if card.title == title_edit.get_text():
+		_close_edit_card_title()
+		return
+	
+	var title = title_edit.get_text().replace("\n", "")
+	if title == "":
+		var popup = POPUP_SCENE.instance()
+		popup.get_node("Label").set_text("Title is required.")
+		add_child(popup)
+		popup.popup_centered()
+		
+	else:
+		card.set_title(title)
+		_close_edit_card_title()
 
 func _on_SaveCheckItemButton_pressed():
 	assert(checkitem_edit.get_text() != "")

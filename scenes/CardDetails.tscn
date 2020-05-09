@@ -332,6 +332,7 @@ margin_bottom = 208.0
 rect_min_size = Vector2( 0, 30 )
 text = "Delete"
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/Title" to="." method="_on_Title_gui_input"]
+[connection signal="focus_exited" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/TitleEdit" to="." method="_on_TitleEdit_focus_exited"]
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/TitleEdit" to="." method="_on_TitleEdit_gui_input"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer/SaveDescriptionButton" to="." method="_on_SaveDescriptionButton_pressed"]
