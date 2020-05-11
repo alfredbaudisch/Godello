@@ -135,13 +135,13 @@ size_flags_vertical = 3
 custom_constants/separation = 20
 
 [node name="DetailsCol" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
-margin_right = 446.0
+margin_right = 479.0
 margin_bottom = 272.0
 size_flags_horizontal = 3
 custom_constants/separation = 24
 
 [node name="DescriptionRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
-margin_right = 446.0
+margin_right = 479.0
 margin_bottom = 159.0
 custom_constants/separation = 8
 
@@ -158,13 +158,13 @@ stretch_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
 margin_left = 24.0
-margin_right = 446.0
+margin_right = 479.0
 margin_bottom = 159.0
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
 [node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
-margin_right = 422.0
+margin_right = 455.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
@@ -173,7 +173,7 @@ autowrap = true
 
 [node name="DescriptionEdit" type="TextEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
 margin_top = 31.0
-margin_right = 422.0
+margin_right = 455.0
 margin_bottom = 131.0
 rect_min_size = Vector2( 0, 100 )
 wrap_enabled = true
@@ -181,7 +181,7 @@ caret_blink = true
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
 margin_top = 137.0
-margin_right = 422.0
+margin_right = 455.0
 margin_bottom = 159.0
 custom_constants/separation = 12
 
@@ -205,7 +205,7 @@ expand = true
 
 [node name="ChecklistRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
 margin_top = 183.0
-margin_right = 446.0
+margin_right = 479.0
 margin_bottom = 272.0
 custom_constants/separation = 8
 
@@ -228,13 +228,13 @@ stretch_mode = 1
 
 [node name="ChecklistContent" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
 margin_left = 24.0
-margin_right = 446.0
+margin_right = 479.0
 margin_bottom = 89.0
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
 [node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_right = 422.0
+margin_right = 455.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
@@ -243,26 +243,26 @@ autowrap = true
 
 [node name="Content" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
 margin_top = 31.0
-margin_right = 422.0
+margin_right = 455.0
 margin_bottom = 31.0
 
 [node name="InputContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
 margin_top = 37.0
-margin_right = 422.0
+margin_right = 455.0
 margin_bottom = 89.0
 custom_constants/separation = 6
 
 [node name="CheckItemEdit" type="LineEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
-margin_right = 422.0
+margin_right = 455.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 0, 24 )
 caret_blink = true
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer"]
 margin_top = 30.0
-margin_right = 422.0
+margin_right = 455.0
 margin_bottom = 52.0
-custom_constants/separation = 12
+custom_constants/separation = 6
 
 [node name="SaveCheckItemButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
 margin_right = 37.0
@@ -270,7 +270,16 @@ margin_bottom = 22.0
 size_flags_horizontal = 0
 text = "Add"
 
+[node name="DeleteCheckItemButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
+visible = false
+margin_left = 43.0
+margin_right = 97.0
+margin_bottom = 22.0
+size_flags_horizontal = 0
+text = "Cancel"
+
 [node name="CancelCheckItemButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer"]
+visible = false
 modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
 margin_left = 49.0
 margin_right = 65.0
@@ -282,16 +291,18 @@ texture_normal = ExtResource( 4 )
 expand = true
 
 [node name="ActionsCol" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
-margin_left = 466.0
+margin_left = 499.0
 margin_right = 564.0
 margin_bottom = 272.0
 
 [node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+visible = false
 margin_right = 98.0
 margin_bottom = 22.0
 text = "ADD TO CARD"
 
 [node name="Button" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+visible = false
 margin_top = 26.0
 margin_right = 98.0
 margin_bottom = 56.0
@@ -299,6 +310,7 @@ rect_min_size = Vector2( 0, 30 )
 text = "Labels"
 
 [node name="Button2" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+visible = false
 margin_top = 60.0
 margin_right = 98.0
 margin_bottom = 90.0
@@ -306,29 +318,28 @@ rect_min_size = Vector2( 0, 30 )
 text = "Checklist"
 
 [node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
-margin_top = 94.0
-margin_right = 98.0
-margin_bottom = 114.0
+visible = false
+margin_right = 65.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 dragger_visibility = 1
 
 [node name="Label2" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
-margin_top = 118.0
-margin_right = 98.0
-margin_bottom = 140.0
+margin_right = 65.0
+margin_bottom = 22.0
 text = "ACTIONS"
 
 [node name="Button4" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
-margin_top = 144.0
-margin_right = 98.0
-margin_bottom = 174.0
+margin_top = 26.0
+margin_right = 65.0
+margin_bottom = 56.0
 rect_min_size = Vector2( 0, 30 )
 text = "Archive"
 
 [node name="Button3" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
-margin_top = 178.0
-margin_right = 98.0
-margin_bottom = 208.0
+margin_top = 60.0
+margin_right = 65.0
+margin_bottom = 90.0
 rect_min_size = Vector2( 0, 30 )
 text = "Delete"
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/Title" to="." method="_on_Title_gui_input"]
@@ -336,4 +347,6 @@ text = "Delete"
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/TitleEdit" to="." method="_on_TitleEdit_gui_input"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer/SaveDescriptionButton" to="." method="_on_SaveDescriptionButton_pressed"]
+[connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_gui_input"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer/SaveCheckItemButton" to="." method="_on_SaveCheckItemButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/ButtonsContainer/DeleteCheckItemButton" to="." method="_on_DeleteCheckItemButton_pressed"]
