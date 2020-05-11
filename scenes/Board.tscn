@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scenes/CardDetails.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Board.gd" type="Script" id=3]
 
 [node name="Board" type="Control"]
@@ -56,5 +55,3 @@ color = Color( 0, 0, 0, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="CardDetails" parent="CardDetailsContainer" instance=ExtResource( 1 )]

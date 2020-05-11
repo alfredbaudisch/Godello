@@ -5,8 +5,8 @@ var is_dragged := false setget set_is_dragged
 var is_dragged_to_list setget set_dragged_to_list
 var is_any_data_dragged := false
 
-onready var style_default := preload("res://assets/style_panel_card.tres")
-onready var style_dragged := preload("res://assets/style_panel_card_dragged.tres")
+const STYLE_DEFAULT := preload("res://assets/style_panel_card.tres")
+const STYLE_DRAGGED := preload("res://assets/style_panel_card_dragged.tres")
 
 onready var content_container := $CardContent
 onready var content_padding_container := $CardContent/InnerPadding
@@ -14,7 +14,7 @@ onready var title_label := $CardContent/InnerPadding/HBoxContainer/Title
 onready var edit_icon := $CardContent/InnerPadding/HBoxContainer/EditIcon
 onready var split := $CardContent/InnerPadding/HBoxContainer/Split
 
-onready var card_drag_preview := preload("res://scenes/CardMousePreview.tscn")
+const CARD_DRAG_PREVIEW := preload("res://scenes/CardMousePreview.tscn")
 
 func _ready():
 	Events.connect("card_dragged", self, "_on_card_dragged")
@@ -42,10 +42,10 @@ func _unhandled_input(event):
 		
 func set_is_dragged(value := true):	
 	if value:
-		content_container.set("custom_styles/panel", style_dragged)
+		content_container.set("custom_styles/panel", STYLE_DRAGGED)
 		title_label.set_visible_characters(0)
 	else:
-		content_container.set("custom_styles/panel", style_default)
+		content_container.set("custom_styles/panel", STYLE_DEFAULT)
 		title_label.set_visible_characters(-1)		
 		is_dragged_to_list = null
 		
@@ -55,7 +55,7 @@ func set_dragged_to_list(list):
 	is_dragged_to_list = list
 
 func get_drag_data(_pos):	
-	var card = card_drag_preview.instance()
+	var card = CARD_DRAG_PREVIEW.instance()
 	get_parent().add_child(card)
 	card.set_data(self, get_model())
 	get_parent().remove_child(card)

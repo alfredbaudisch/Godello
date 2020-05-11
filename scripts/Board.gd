@@ -4,33 +4,33 @@ var is_receiving_drag_data = true
 
 var list_id_to_container : Dictionary = {}
 
-onready var list_scene := preload("res://scenes/List.tscn")
+const LIST_SCENE := preload("res://scenes/List.tscn")
+const CARD_DETAILS_SCENE := preload("res://scenes/CardDetails.tscn")
+
 onready var list_container := $MarginContainer/ListContainerScroll/ListContainer
 onready var list_container_scroll := $MarginContainer/ListContainerScroll
 
+var card_details
 onready var card_details_container := $CardDetailsContainer
-onready var card_details := $CardDetailsContainer/CardDetails
-
-var is_card_details_open = false
 
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
-	card_details_container.set_visible(false)
-	card_details.connect("close_details_requested", self, "_on_CardDetails_close_requested")
+	card_details_container.set_visible(false)	
 	
 	for n in range(1, 3): # todo: iterate through existing lists
-		var list_element = list_scene.instance()
+		var list_element = LIST_SCENE.instance()
 		var list_id = str(n)
 		
 		var cards := []		
 		for c in range(1, 5):
 			var id = str(n) + " - " + str(c)# str(OS.get_ticks_usec())
 			var card = CardModel.new(id, list_id, ("Card Title " + id))
-			card.tasks = [
-				TaskModel.new(str(n * c), id, "TASK " + id + ", 1"),
-				TaskModel.new(str(n * c + 1), id, "TASK " + id + ", 2", true),
-				TaskModel.new(str(n * c + 2), id, "TASK " + id + ", 3"),
-			]
+			if c != 1:
+				card.tasks = [
+					TaskModel.new(str(n * c), id, "TASK " + id + ", 1"),
+					TaskModel.new(str(n * c + 1), id, "TASK " + id + ", 2", true),
+					TaskModel.new(str(n * c + 2), id, "TASK " + id + ", 3"),
+				]
 			cards.append(card)
 		
 		var list = ListModel.new(list_id, "TODO List " + list_id, cards)
@@ -68,10 +68,11 @@ func drop_data(_pos, data):
 		Events.emit_signal("list_dropped", data.drag_data)
 
 func _on_card_clicked(model):
-	card_details.open(model)
+	card_details = CARD_DETAILS_SCENE.instance()
+	card_details_container.add_child(card_details)
+	card_details.set_card(model)
 	card_details_container.set_visible(true)
-	is_card_details_open = true
 	
-func _on_CardDetails_close_requested():
+	# Yield until the details modal is exited (when closed, it removes itself with queue_free).
+	yield(card_details, "tree_exited")	
 	card_details_container.set_visible(false)
-	is_card_details_open = false

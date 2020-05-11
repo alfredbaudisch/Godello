@@ -7,12 +7,12 @@ var is_any_data_dragged := false
 
 onready var list_content := $MarginContainer
 
-onready var card_scene := preload("res://scenes/Card.tscn")
+const CARD_SCENE := preload("res://scenes/Card.tscn")
 onready var card_container := $MarginContainer/VerticalContent/CardContainerScroll/CardContainer
 onready var card_container_scroll := $MarginContainer/VerticalContent/CardContainerScroll
 
-onready var style_dragged := preload("res://assets/style_panel_list_dragged.tres")
-onready var list_drag_preview := preload("res://scenes/ListMousePreview.tscn")
+const STYLE_DRAGGED := preload("res://assets/style_panel_list_dragged.tres")
+const LIST_DRAG_PREVIEW := preload("res://scenes/ListMousePreview.tscn")
 
 onready var title_label := $MarginContainer/VerticalContent/ListNameLabel
 onready var add_card_button := $MarginContainer/VerticalContent/AddCardButton
@@ -41,7 +41,7 @@ func _unhandled_input(event):
 	
 func set_is_dragged(value := true):	
 	if value:
-		set("custom_styles/panel", style_dragged)
+		set("custom_styles/panel", STYLE_DRAGGED)
 	else:
 		set("custom_styles/panel", null)	
 
@@ -49,12 +49,12 @@ func set_is_dragged(value := true):
 	is_dragged = value
 
 func add_card(card : CardModel):
-	var card_element = card_scene.instance()
+	var card_element = CARD_SCENE.instance()
 	card_container.add_child(card_element)
 	card_element.set_model(card)
 
 func get_drag_data(_pos):		
-	var list = list_drag_preview.instance()
+	var list = LIST_DRAG_PREVIEW.instance()
 	get_parent().add_child(list)
 	list.set_data(self, get_model())
 	get_parent().remove_child(list)
