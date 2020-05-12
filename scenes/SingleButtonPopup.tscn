@@ -17,6 +17,7 @@ margin_top = -40.0
 margin_right = 175.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 350, 80 )
+popup_exclusive = true
 window_title = "Error"
 script = ExtResource( 2 )
 __meta__ = {

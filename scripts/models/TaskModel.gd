@@ -8,3 +8,9 @@ func _init(_id : String, _card_id : String, _title : String, _is_done : bool = f
 	card_id = _card_id
 	title = _title
 	is_done = _is_done
+
+func set_title(_title : String):
+	title = _title
+	
+func set_is_done(_is_done : bool):
+	is_done = _is_done

@@ -12,8 +12,10 @@ onready var description_edit := $ScrollContainer/PanelContainer/MarginContainer/
 const CHECKITEM_SCENE := preload("res://scenes/CheckItem.tscn")
 const POPUP_SCENE = preload("res://scenes/SingleButtonPopup.tscn")
 
-onready var checkitem_edit_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer
-onready var checkitem_edit := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/InputContainer/CheckItemEdit
+onready var checkitem_edit_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer
+onready var checkitem_edit := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/CheckItemEdit
+onready var checkitem_create_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer
+onready var checkitem_create := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit
 onready var checklist_row := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow
 onready var checklist_content := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent
 onready var checklist_items_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/Content
@@ -22,6 +24,7 @@ onready var close_button := $ScrollContainer/PanelContainer/MarginContainer/VBox
 
 var card : CardModel setget set_card
 var list : ListModel setget set_list
+var task : TaskModel
 
 func _ready():
 	DataRepository.connect("card_updated", self, "_on_card_updated")
@@ -59,6 +62,7 @@ func _sync_tasks():
 			checklist_items_container.add_child(checkitem)
 			checkitem.set_model(task)			
 			checkitem.connect("edit_check_item_requested", self, "_on_edit_check_item_requested")
+			checkitem.connect("toggled", self, "_on_check_item_toggled", [task])
 		
 func _on_SaveDescriptionButton_pressed():
 	card.set_description(description_edit.get_text())
@@ -133,44 +137,59 @@ func _on_Title_gui_input(event):
 # Checkitem / Task
 #
 
-func _on_CheckItemEdit_gui_input(event):
+func _on_CheckItemEdit_gui_input(event, is_create):
 	if event is InputEventKey and not event.is_pressed():
 		match event.get_scancode():
 			KEY_ENTER:
-				_save_checkitem_task()
+				_save_checkitem_task(is_create)
 
 			KEY_ESCAPE:
 				_cancel_checkitem_task_edit()
 				
 func _reset_checkitem_edit_container():
-	checkitem_edit.set_text("")
-	checkitem_edit_container.get_parent().remove_child(checkitem_edit_container)
-	checklist_content.add_child(checkitem_edit_container)
+	checkitem_create_container.set_visible(true)
+	checkitem_edit_container.set_visible(false)
 	
-func _on_SaveCheckItemButton_pressed():	
-	_save_checkitem_task()
+	if checkitem_edit_container.get_parent() != checklist_content:
+		checkitem_edit_container.get_parent().remove_child(checkitem_edit_container)
+		checklist_content.add_child_below_node(checkitem_create_container, checkitem_edit_container)
+	
+func _on_SaveCheckItemButton_pressed(is_create):	
+	_save_checkitem_task(is_create)
 		
-func _save_checkitem_task():
-	var title = checkitem_edit.get_text().replace("\n", "").trim_suffix(" ").trim_prefix(" ")
+func _save_checkitem_task(is_create := true):
+	var input_field = checkitem_create if is_create else checkitem_edit
+	var title = input_field.get_text().replace("\n", "").trim_suffix(" ").trim_prefix(" ")
 	
 	if title == "":
-		_create_single_error_popup("Task description is required.", checkitem_edit)
+		_create_single_error_popup("Task description is required.", input_field)
+	elif is_create:
+		DataRepository.create_task(card, title)
+		input_field.set_text("")
 	else:
-		var result = DataRepository.create_task(card, title)
-		checkitem_edit.set_text("")
-		card = result["card"]
-		_sync_tasks()	
+		card.update_task(task, title, task.is_done)
 	
 func _on_DeleteCheckItemButton_pressed():
-	pass
+	card.delete_task(task)
+	_cancel_checkitem_task_edit()
 	
 func _cancel_checkitem_task_edit():
-	pass
+	checkitem_create_container.set_visible(true)
+	checkitem_edit_container.set_visible(false)
 
 func _on_edit_check_item_requested(_node):	
 	if checkitem_edit_container.get_parent() == checklist_content:
 		checklist_content.remove_child(checkitem_edit_container)
 	
-	checklist_items_container.add_child_below_node(_node, checkitem_edit_container)
-	checklist_items_container.move_child(_node, checkitem_edit_container.get_index() - 1)
+	task = _node.model
 	checkitem_edit.set_text(_node.model.title)
+	checkitem_edit_container.set_visible(true)
+	checkitem_create_container.set_visible(false)
+	checklist_items_container.add_child_below_node(_node, checkitem_edit_container)
+	checklist_items_container.move_child(_node, checkitem_edit_container.get_index() - 1)	
+
+func _on_CancelCheckItemButton_pressed():
+	_cancel_checkitem_task_edit()
+
+func _on_check_item_toggled(is_toggled, task):
+	card.update_task(task, task.title, not task.is_done)

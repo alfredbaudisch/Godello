@@ -18,11 +18,23 @@ func set_description(_description: String):
 	description = _description
 	_notify_updated()
 
-func _notify_updated():
-	DataRepository.update_card(self)
-	
 func add_task(task):
 	tasks.push_back(task)
+	_notify_updated()
+	
+func update_task(task, _title, _is_done):
+	task.set_title(_title)
+	task.set_is_done(_is_done)
+	_notify_updated()
+
+func delete_task(task):
+	var task_idx = tasks.find(task)	
+	if task_idx != -1:
+		tasks.remove(task_idx)
+		_notify_updated()	
+
+func _notify_updated():
+	DataRepository.update_card(self)
 
 func _to_string():
 	return to_json({
