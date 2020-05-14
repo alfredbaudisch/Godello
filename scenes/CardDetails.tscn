@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=2]
@@ -6,7 +6,12 @@
 [ext_resource path="res://assets/icons/close.svg" type="Texture" id=4]
 [ext_resource path="res://assets/icons/description.svg" type="Texture" id=5]
 [ext_resource path="res://assets/icons/checklist.svg" type="Texture" id=6]
+[ext_resource path="res://assets/fonts/Roboto-Regular.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://scripts/CardDetails.gd" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 10
+font_data = ExtResource( 7 )
 
 [node name="CardDetails" type="Control"]
 anchor_right = 1.0
@@ -111,6 +116,7 @@ margin_bottom = 105.0
 rect_min_size = Vector2( 0, 20 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_colors/default_color = Color( 0.368627, 0.423529, 0.517647, 1 )
 bbcode_enabled = true
 bbcode_text = " in list [b][u]Foo[/u]	[/b]"
 text = " in list Foo	"
@@ -233,13 +239,28 @@ margin_bottom = 147.0
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
-[node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
 margin_right = 455.0
 margin_bottom = 25.0
+
+[node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/HBoxContainer"]
+margin_right = 330.0
+margin_bottom = 25.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/font = ExtResource( 1 )
 text = "Checklist"
 autowrap = true
+
+[node name="Label2" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/HBoxContainer"]
+margin_left = 334.0
+margin_right = 455.0
+margin_bottom = 21.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.368627, 0.423529, 0.517647, 1 )
+text = "Right click a Task to edit it."
 
 [node name="Content" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
 margin_top = 31.0
@@ -364,9 +385,13 @@ text = "Delete"
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/TitleEdit" to="." method="_on_TitleEdit_gui_input"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer/SaveDescriptionButton" to="." method="_on_SaveDescriptionButton_pressed"]
+[connection signal="focus_entered" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_entered"]
+[connection signal="focus_exited" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_exited"]
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_gui_input" binds= [ false ]]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer/SaveCheckItemButton" to="." method="_on_SaveCheckItemButton_pressed" binds= [ false ]]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer/DeleteCheckItemButton" to="." method="_on_DeleteCheckItemButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer/CancelCheckItemButton" to="." method="_on_CancelCheckItemButton_pressed"]
+[connection signal="focus_entered" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_entered"]
+[connection signal="focus_exited" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_exited"]
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_gui_input" binds= [ true ]]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CreateCheckItemButton" to="." method="_on_SaveCheckItemButton_pressed" binds= [ true ]]

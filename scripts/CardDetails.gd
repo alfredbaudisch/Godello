@@ -176,6 +176,11 @@ func _on_DeleteCheckItemButton_pressed():
 func _cancel_checkitem_task_edit():
 	checkitem_create_container.set_visible(true)
 	checkitem_edit_container.set_visible(false)
+	checkitem_create.set_text("")
+	
+	# We need to lose the focus off of the container,
+	# since there is no direct method, set focus to anything else
+	close_button.grab_focus()
 
 func _on_edit_check_item_requested(_node):	
 	if checkitem_edit_container.get_parent() == checklist_content:
@@ -193,3 +198,9 @@ func _on_CancelCheckItemButton_pressed():
 
 func _on_check_item_toggled(is_toggled, task):
 	card.update_task(task, task.title, not task.is_done)
+
+func _on_CheckItemEdit_focus_entered():
+	can_close = false
+
+func _on_CheckItemEdit_focus_exited():
+	can_close = true
