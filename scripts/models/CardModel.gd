@@ -4,6 +4,7 @@ var title : String = ""
 var description : String = "" setget set_description
 var list_id : String = ""
 var tasks : Array = []
+var is_archived := false
 
 func _init(_id : String, _list_id : String, _title : String, _description : String = "").(ModelTypes.CARD, _id):
 	list_id = _list_id
@@ -31,7 +32,15 @@ func delete_task(task):
 	var task_idx = tasks.find(task)	
 	if task_idx != -1:
 		tasks.remove(task_idx)
-		_notify_updated()	
+		_notify_updated()
+
+func archive():
+	is_archived = true
+	_notify_updated()
+	
+func unarchive():
+	is_archived = false
+	_notify_updated()
 
 func _notify_updated():
 	DataRepository.update_card(self)

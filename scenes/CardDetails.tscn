@@ -367,14 +367,14 @@ margin_right = 65.0
 margin_bottom = 22.0
 text = "ACTIONS"
 
-[node name="Button4" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="ArchiveCardButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_top = 26.0
 margin_right = 65.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 0, 30 )
 text = "Archive"
 
-[node name="Button3" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+[node name="DeleteCardButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
 margin_top = 60.0
 margin_right = 65.0
 margin_bottom = 90.0
@@ -395,3 +395,4 @@ text = "Delete"
 [connection signal="focus_exited" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_exited"]
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_gui_input" binds= [ true ]]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CreateCheckItemButton" to="." method="_on_SaveCheckItemButton_pressed" binds= [ true ]]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol/ArchiveCardButton" to="." method="_on_ArchiveCardButton_pressed"]

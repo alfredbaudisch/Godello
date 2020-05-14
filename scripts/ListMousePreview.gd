@@ -14,7 +14,12 @@ func set_data(_node, _model : ListModel):
 	drag_data = DragUtils.get_drag_data(_node, _model)
 	set_title(_model.title)	
 	
-	if _model.cards.size() == 0:
+	# TODO: add utility functional methods to help in situations like this (map, filter, count, etc)
+	var size = 0
+	for card in _model.cards:
+		size += 1 if not card.is_archived else 0
+		
+	if size == 0:
 		card_template.set_visible(false)
 		
 func set_title(_title):

@@ -28,8 +28,11 @@ func _ready():
 
 func set_model(_model : CardModel):
 	model = _model
-	title_label.set_text(model.title)
-	DataRepository.set_card_node(model, self)
+	if model.is_archived:
+		queue_free()
+	else:
+		title_label.set_text(model.title)
+		DataRepository.set_card_node(model, self)
 
 func get_model():
 	return model

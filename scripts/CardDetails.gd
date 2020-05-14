@@ -204,3 +204,10 @@ func _on_CheckItemEdit_focus_entered():
 
 func _on_CheckItemEdit_focus_exited():
 	can_close = true
+
+#
+# Actions
+#
+
+func _on_ArchiveCardButton_pressed():
+	card.archive()

@@ -49,7 +49,14 @@ func _map_cards_by_id(cards : Array):
 		cards_by_id[card.id] = card
 
 func update_card(card):
+	if card.is_archived:
+		var list = get_list(card.list_id)
+		card_nodes.erase(card.id)
+		
 	emit_signal("card_updated", card)
+	
+func update_list(list):
+	emit_signal("list_updated", list)
 	
 func create_task(card, title, is_done := false) -> Dictionary:
 	var task = TaskModel.new(card.id + str(card.tasks.size()), card.id, title, is_done) # todo: task id

@@ -10,7 +10,7 @@ func _init(_id : String, _title : String, _cards : Array = []).(ModelTypes.LIST,
 	_map_cards_by_id()
 
 func add_card(card):
-	if not cards_by_id.get(card.id):						
+	if not cards_by_id.get(card.id):
 		card.list_id = id
 		cards.append(card)
 		cards_by_id[card.id] = card
