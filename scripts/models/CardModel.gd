@@ -5,15 +5,21 @@ var description : String = "" setget set_description
 var list_id : String = ""
 var tasks : Array = []
 var is_archived := false
+var is_draft := false setget set_draft
 
-func _init(_id : String, _list_id : String, _title : String, _description : String = "").(ModelTypes.CARD, _id):
+func _init(_id : String, _list_id : String, _title : String = "", _description : String = "").(ModelTypes.CARD, _id):
 	list_id = _list_id
 	title = _title
 	description = _description
 
 func set_title(_title: String):
+	var was_draft = is_draft
 	title = _title
-	_notify_updated()
+	
+	if is_draft and title != "":
+		set_draft(false)
+		
+	_notify_updated(was_draft)
 	
 func set_description(_description: String):
 	description = _description
@@ -42,13 +48,18 @@ func unarchive():
 	is_archived = false
 	_notify_updated()
 
-func _notify_updated():
-	DataRepository.update_card(self)
+func _notify_updated(was_draft := false):
+	DataRepository.update_card(self, was_draft)
+	
+func set_draft(value := true):
+	is_draft = value
 
 func _to_string():
+	# TODO: add tasks
 	return to_json({
 		"id": id,
 		"title": title,
 		"description": description,
-		"list_id": list_id
+		"list_id": list_id,
+		"is_archived": is_archived
 	})

@@ -22,6 +22,7 @@ func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	Events.connect("list_dragged", self, "_on_list_dragged")
 	Events.connect("list_dropped", self, "_on_list_dropped")
+	DataRepository.connect("card_created", self, "_on_card_created")
 
 func set_model(_model : ListModel):
 	model = _model
@@ -99,7 +100,11 @@ func can_drop_data(mouse_pos, data):
 func drop_data(_pos, data):
 	if data.drag_data["model"].model_type == Model.ModelTypes.CARD:
 		Events.emit_signal("card_dropped", data.drag_data, model)
-
+		
+func _on_card_created(_model):
+	if _model.list_id == model.id:
+		add_card(_model)
+	
 func _on_card_dragged(_node, _model):
 	is_any_data_dragged = true
 	
@@ -116,3 +121,6 @@ func _on_list_dropped(drop_data):
 	
 	if drop_data and drop_data["node"] == self:
 		set_is_dragged(false)
+
+func _on_AddCardButton_pressed():
+	Events.emit_signal("add_card_clicked", model)

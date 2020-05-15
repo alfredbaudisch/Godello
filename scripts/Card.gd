@@ -38,7 +38,7 @@ func get_model():
 	return model
 
 func _unhandled_input(event):
-	# Since Godot doesn't handle drops in failed places,
+	# Since Godot doesn't handle drops outside draggable boundaries,
 	# we have to handle this by ourselves
 	if event is InputEventMouseButton and is_dragged:		
 		Events.emit_signal("card_dropped", DragUtils.get_drag_data(self, model), is_dragged_to_list)

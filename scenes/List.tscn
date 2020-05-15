@@ -73,3 +73,4 @@ custom_colors/font_color = Color( 0.368627, 0.423529, 0.517647, 1 )
 custom_colors/font_color_hover = Color( 0.0901961, 0.168627, 0.301961, 1 )
 text = "+ Add a card"
 align = 0
+[connection signal="pressed" from="MarginContainer/VerticalContent/AddCardButton" to="." method="_on_AddCardButton_pressed"]

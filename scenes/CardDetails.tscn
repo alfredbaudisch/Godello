@@ -41,7 +41,7 @@ __meta__ = {
 
 [node name="PanelContainer" type="PanelContainer" parent="ScrollContainer"]
 margin_right = 600.0
-margin_bottom = 517.0
+margin_bottom = 476.0
 rect_min_size = Vector2( 600, 400 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -49,7 +49,7 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer"]
 margin_right = 600.0
-margin_bottom = 517.0
+margin_bottom = 476.0
 custom_constants/margin_right = 18
 custom_constants/margin_top = 18
 custom_constants/margin_left = 18
@@ -59,18 +59,18 @@ custom_constants/margin_bottom = 40
 margin_left = 18.0
 margin_top = 18.0
 margin_right = 582.0
-margin_bottom = 477.0
+margin_bottom = 436.0
 custom_constants/separation = 24
 
 [node name="TitleRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
 margin_right = 564.0
-margin_bottom = 105.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 0, 60 )
 custom_constants/separation = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
 margin_right = 16.0
-margin_bottom = 105.0
+margin_bottom = 64.0
 custom_constants/margin_top = 6
 
 [node name="TextureRect" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/MarginContainer"]
@@ -88,10 +88,11 @@ stretch_mode = 1
 [node name="TitleContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
 margin_left = 24.0
 margin_right = 540.0
-margin_bottom = 105.0
+margin_bottom = 64.0
 size_flags_horizontal = 3
 
 [node name="Title" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
+visible = false
 margin_right = 516.0
 margin_bottom = 37.0
 mouse_filter = 0
@@ -100,9 +101,8 @@ text = "Card Title, do this"
 autowrap = true
 
 [node name="TitleEdit" type="TextEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
-margin_top = 41.0
 margin_right = 516.0
-margin_bottom = 81.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
@@ -110,9 +110,9 @@ wrap_enabled = true
 caret_blink = true
 
 [node name="Subtitle" type="RichTextLabel" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
-margin_top = 85.0
+margin_top = 44.0
 margin_right = 516.0
-margin_bottom = 105.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 0, 20 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -133,9 +133,9 @@ texture_normal = ExtResource( 4 )
 expand = true
 
 [node name="ContentRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
-margin_top = 129.0
+margin_top = 88.0
 margin_right = 564.0
-margin_bottom = 459.0
+margin_bottom = 418.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 20

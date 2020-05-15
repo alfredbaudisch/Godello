@@ -2,6 +2,7 @@ extends Control
 
 var can_close := true
 var is_save_title_manually_requested := false
+var popup
 
 onready var title_label := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/Title
 onready var title_edit := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/TitleEdit
@@ -20,6 +21,8 @@ onready var checklist_row := $ScrollContainer/PanelContainer/MarginContainer/VBo
 onready var checklist_content := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent
 onready var checklist_items_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/Content
 
+onready var contents_row := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow
+onready var actions_col := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol
 onready var close_button := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/CloseButton
 
 var card : CardModel setget set_card
@@ -28,6 +31,7 @@ var task : TaskModel
 
 func _ready():
 	DataRepository.connect("card_updated", self, "_on_card_updated")
+	DataRepository.connect("card_created", self, "_on_card_updated")
 	title_edit.set_visible(false)
 	title_label.set_visible(true)	
 
@@ -40,9 +44,13 @@ func set_card(_model : CardModel):
 	
 	set_list(DataRepository.get_list(card.list_id))
 	
+	contents_row.set_visible(not card.is_draft)
+	title_edit.set_visible(card.is_draft)
+	title_label.set_visible(not card.is_draft)
+	
 func set_list(_model : ListModel):
 	list = _model
-	subtitle_label.set_bbcode("in list [u]" + list.title + "[/u]")
+	subtitle_label.set_bbcode("in list [u]" + list.title + "[/u]")		
 
 func _on_CloseButton_pressed():
 	queue_free()
@@ -55,7 +63,7 @@ func _sync_tasks():
 		child.queue_free()
 		
 	checklist_row.set_visible(true)
-		
+	
 	if card.tasks.size() > 0:
 		for task in card.tasks:
 			var checkitem = CHECKITEM_SCENE.instance()
@@ -68,21 +76,25 @@ func _on_SaveDescriptionButton_pressed():
 	card.set_description(description_edit.get_text())
 	
 func _input(event):
-	if Input.is_action_just_released("ui_cancel") and can_close:
-		queue_free()
-		_close_edit_card_title()
+	if Input.is_action_just_released("ui_cancel"):
+		if popup:
+			popup.queue_free()		
+		elif can_close:
+			queue_free()
+			_close_edit_card_title()
 
 func _on_card_updated(_card):
 	if card and _card.id == card.id:
 		set_card(_card)
 
 func _create_single_error_popup(message : String, focus_after_close : Control):
-	var popup = POPUP_SCENE.instance()
+	popup = POPUP_SCENE.instance()
 	popup.get_node("Label").set_text(message)
 	add_child(popup)
 	popup.popup_centered()
 	
 	yield(popup, "tree_exited")
+	popup = null
 	focus_after_close.grab_focus()
 	
 #
@@ -113,13 +125,14 @@ func _save_card_title():
 	if title != "" and card.title == title:
 		_close_edit_card_title()
 		return
-	
-	if title == "":
+		
+	if title == "" and (not card.is_draft or (card.is_draft and is_save_title_manually_requested)):
 		_create_single_error_popup("Title is required.", title_edit)
 		is_save_title_manually_requested = false
-	else:
-		card.set_title(title)
-		_close_edit_card_title()
+		return
+	
+	card.set_title(title)
+	_close_edit_card_title()
 
 func _on_TitleEdit_focus_exited():
 	if not is_save_title_manually_requested:

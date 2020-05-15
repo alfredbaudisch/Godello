@@ -3,6 +3,7 @@ extends Node
 var lists : Array = [] setget ,get_lists
 var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
+var list_draft_cards : Dictionary = {}
 
 var list_nodes : Dictionary = {}
 var card_nodes : Dictionary = {}
@@ -48,8 +49,15 @@ func _map_cards_by_id(cards : Array):
 	for card in cards:
 		cards_by_id[card.id] = card
 
-func update_card(card):
-	if card.is_archived:
+func update_card(card, was_draft := false):
+	if was_draft and not card.is_draft:
+		var list = get_list(card.list_id)
+		list.add_card(card)
+		_set_draft_card_for_list(list)
+		emit_signal("card_created", card)
+		return
+		
+	elif card.is_archived:
 		var list = get_list(card.list_id)
 		card_nodes.erase(card.id)
 		
@@ -65,3 +73,26 @@ func create_task(card, title, is_done := false) -> Dictionary:
 		"task": task,
 		"card": card
 	}
+
+func get_draft_card(list):
+	var draft_card = _find_draft_card_for_list(list)
+	
+	if not draft_card:	
+		draft_card = CardModel.new(UUID.v4(), list.id)
+		draft_card.set_draft()
+		
+	_set_draft_card_for_list(list, draft_card)
+	return draft_card
+
+# TODO: refactor to dict[list_id][draft_card_id] = foo
+func _find_draft_card_for_list(list):	
+	var draft_card = list_draft_cards.get(list.id)
+	if draft_card:
+		return draft_card
+	
+# TODO: refactor to dict[list_id][draft_card_id] = foo
+func _set_draft_card_for_list(list, draft_card = null):
+	if draft_card:
+		list_draft_cards[list.id] = draft_card
+	else:
+		list_draft_cards.erase(list.id)

@@ -15,6 +15,7 @@ onready var card_details_container := $CardDetailsContainer
 
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
+	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
 	card_details_container.set_visible(false)	
 	
 	for n in range(1, 3): # todo: iterate through existing lists
@@ -74,5 +75,16 @@ func _on_card_clicked(model):
 	card_details_container.set_visible(true)
 	
 	# Yield until the details modal is exited (when closed, it removes itself with queue_free).
+	yield(card_details, "tree_exited")	
+	card_details_container.set_visible(false)
+
+func _on_add_card_clicked(list):
+	card_details = CARD_DETAILS_SCENE.instance()
+	card_details_container.add_child(card_details)
+	
+	var draft_card = DataRepository.get_draft_card(list)
+	card_details.set_card(draft_card)
+	card_details_container.set_visible(true)
+	
 	yield(card_details, "tree_exited")	
 	card_details_container.set_visible(false)
