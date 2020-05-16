@@ -48,6 +48,14 @@ func _on_card_dropped(drop_data, into_list):
 func _map_cards_by_id(cards : Array):
 	for card in cards:
 		cards_by_id[card.id] = card
+		
+func delete_card(card):
+	var node = card_nodes[card.id]
+	node.queue_free()
+	card_nodes.erase(card.id)		
+	var list = get_list(card.list_id)
+	list.remove_card(card)
+	card.free()
 
 func update_card(card, was_draft := false):
 	if was_draft and not card.is_draft:

@@ -396,3 +396,4 @@ text = "Delete"
 [connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_gui_input" binds= [ true ]]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CreateCheckItemButton" to="." method="_on_SaveCheckItemButton_pressed" binds= [ true ]]
 [connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol/ArchiveCardButton" to="." method="_on_ArchiveCardButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol/DeleteCardButton" to="." method="_on_DeleteCardButton_pressed"]

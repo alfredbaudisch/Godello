@@ -1,5 +1,6 @@
 extends Control
 
+
 var can_close := true
 var is_save_title_manually_requested := false
 var popup
@@ -81,7 +82,6 @@ func _input(event):
 			popup.queue_free()		
 		elif can_close:
 			queue_free()
-			_close_edit_card_title()
 
 func _on_card_updated(_card):
 	if card and _card.id == card.id:
@@ -134,7 +134,7 @@ func _save_card_title():
 	card.set_title(title)
 	_close_edit_card_title()
 
-func _on_TitleEdit_focus_exited():
+func _on_TitleEdit_focus_exited():	
 	if not is_save_title_manually_requested:
 		_save_card_title()
 
@@ -224,3 +224,23 @@ func _on_CheckItemEdit_focus_exited():
 
 func _on_ArchiveCardButton_pressed():
 	card.archive()
+
+func _on_DeleteCardButton_pressed():
+	var dialog = ConfirmationDialog.new()
+	get_parent().add_child(dialog)
+	dialog.set_title("Are you sure?")
+	dialog.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	dialog.set_exclusive(true)		
+	dialog.get_cancel().connect("pressed", self, "_on_delete_cancelled")
+	dialog.connect("confirmed", self, "_on_delete_confirmed")	
+	dialog.popup()
+	
+	yield(dialog, "popup_hide")
+	dialog.queue_free()
+
+func _on_delete_cancelled():
+	pass # left here for learning purposes (how to connect cancel)
+	
+func _on_delete_confirmed():
+	DataRepository.delete_card(card)
+	queue_free()
