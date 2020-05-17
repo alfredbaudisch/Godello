@@ -63,11 +63,7 @@ func update_card(card, was_draft := false):
 		list.add_card(card)
 		_set_draft_card_for_list(list)
 		emit_signal("card_created", card)
-		return
-		
-	elif card.is_archived:
-		var list = get_list(card.list_id)
-		card_nodes.erase(card.id)
+		return		
 		
 	emit_signal("card_updated", card)
 	

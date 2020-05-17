@@ -50,10 +50,9 @@ func set_is_dragged(value := true):
 	is_dragged = value
 
 func add_card(card : CardModel):
-	if not card.is_archived:
-		var card_element = CARD_SCENE.instance()
-		card_container.add_child(card_element)
-		card_element.set_model(card)
+	var card_element = CARD_SCENE.instance()
+	card_container.add_child(card_element)
+	card_element.set_model(card)
 
 func get_drag_data(_pos):		
 	var list = LIST_DRAG_PREVIEW.instance()

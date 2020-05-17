@@ -22,6 +22,9 @@ onready var checklist_row := $ScrollContainer/PanelContainer/MarginContainer/VBo
 onready var checklist_content := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent
 onready var checklist_items_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/Content
 
+onready var archived_label := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ArchivedNoticeLabel
+onready var archive_button := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol/ArchiveCardButton
+
 onready var contents_row := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow
 onready var actions_col := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol
 onready var close_button := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/CloseButton
@@ -48,6 +51,12 @@ func set_card(_model : CardModel):
 	contents_row.set_visible(not card.is_draft)
 	title_edit.set_visible(card.is_draft)
 	title_label.set_visible(not card.is_draft)
+	
+	archived_label.set_visible(card.is_archived)
+	if card.is_archived:		
+		archive_button.set_text("Unarchive")
+	else:
+		archive_button.set_text("Archive")
 	
 func set_list(_model : ListModel):
 	list = _model
@@ -223,7 +232,7 @@ func _on_CheckItemEdit_focus_exited():
 #
 
 func _on_ArchiveCardButton_pressed():
-	card.archive()
+	card.archive() if not card.is_archived else card.unarchive()
 
 func _on_DeleteCardButton_pressed():
 	var dialog = ConfirmationDialog.new()
