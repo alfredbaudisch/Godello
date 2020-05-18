@@ -9,10 +9,10 @@
 [ext_resource path="res://assets/fonts/Roboto-Regular.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://scripts/CardDetails.gd" type="Script" id=8]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0.996078, 0.92549, 1 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 10
 font_data = ExtResource( 7 )
 
@@ -73,7 +73,7 @@ margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/normal = SubResource( 2 )
+custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "This card is Archived."
 align = 1
@@ -279,7 +279,7 @@ margin_right = 440.0
 margin_bottom = 21.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.368627, 0.423529, 0.517647, 1 )
 text = "Right click a Task to edit it."
 

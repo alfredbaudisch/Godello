@@ -1,24 +1,35 @@
 extends Control
 
+var model : BoardModel setget set_model
+
 var is_receiving_drag_data = true
 
 var list_id_to_container : Dictionary = {}
 
 const LIST_SCENE := preload("res://scenes/List.tscn")
+const MENU_SCENE := preload("res://scenes/Menu.tscn")
 const CARD_DETAILS_SCENE := preload("res://scenes/CardDetails.tscn")
 
-onready var list_container := $MarginContainer/ListContainerScroll/ListContainer
-onready var list_container_scroll := $MarginContainer/ListContainerScroll
+onready var list_container := $MarginContainer/VBoxContainer/ListContainerScroll/ListContainer
+onready var list_container_scroll := $MarginContainer/VBoxContainer/ListContainerScroll
 
 var card_details
 onready var card_details_container := $CardDetailsContainer
 
+onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/TitleLabel
+
+func set_model(_model):
+	model = _model
+	title_label.set_text(model.title)
+
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
 	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
-	card_details_container.set_visible(false)	
+	card_details_container.set_visible(false)
 	
-	for n in range(1, 3): # todo: iterate through existing lists
+	set_model(BoardModel.new("1", "A Trello Board"))
+	
+	for n in range(1, 30): # todo: iterate through existing lists
 		var list_element = LIST_SCENE.instance()
 		var list_id = str(n)
 		
@@ -88,3 +99,22 @@ func _on_add_card_clicked(list):
 	
 	yield(card_details, "tree_exited")	
 	card_details_container.set_visible(false)
+
+
+func _on_ShowMenuButton_pressed():
+	var menu = MENU_SCENE.instance()
+	add_child(menu)
+	move_child(menu, get_child_count() - 2)
+	
+	# If we tween the position, as soon as the viewport is resized, the menu
+	# will stay in place. By tweening the margin, the menu
+	# moves with the viewport resizing.
+	var tween = Tween.new()
+	add_child(tween)	
+	tween.interpolate_property(menu, 
+		"margin_left", 0, menu.rect_size.x * -1, 0.2,
+		Tween.TRANS_SINE, Tween.EASE_IN)
+	tween.start()
+	
+	yield(tween, "tween_completed")
+	tween.queue_free()	

@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Model",
+"class": "BoardModel",
+"language": "GDScript",
+"path": "res://scripts/models/BoardModel.gd"
+}, {
+"base": "Model",
 "class": "CardModel",
 "language": "GDScript",
 "path": "res://scripts/models/CardModel.gd"
@@ -50,6 +55,7 @@ _global_script_classes=[ {
 "path": "res://addons/uuid/uuid.gd"
 } ]
 _global_script_class_icons={
+"BoardModel": "",
 "CardModel": "",
 "CardPreview": "",
 "DragUtils": "",
