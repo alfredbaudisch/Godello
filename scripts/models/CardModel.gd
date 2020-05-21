@@ -42,14 +42,14 @@ func delete_task(task):
 
 func archive():
 	is_archived = true
-	_notify_updated()
+	_notify_updated(false, false)
 	
 func unarchive():
 	is_archived = false
-	_notify_updated()
+	_notify_updated(false, true)
 
-func _notify_updated(was_draft := false):
-	DataRepository.update_card(self, was_draft)
+func _notify_updated(was_draft := false, was_archived := false):
+	DataRepository.update_card(self, was_draft, was_archived)
 	
 func set_draft(value := true):
 	is_draft = value

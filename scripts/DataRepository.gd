@@ -1,10 +1,11 @@
 extends Node
 
-var lists : Array = [] setget ,get_lists
+var boards_by_id : Dictionary = {}
 var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
 var list_draft_cards : Dictionary = {}
 
+var board_nodes : Dictionary = {}
 var list_nodes : Dictionary = {}
 var card_nodes : Dictionary = {}
 
@@ -17,15 +18,18 @@ signal card_deleted(card)
 
 func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
+	
+func add_board(board : BoardModel, node : Control):
+	boards_by_id[board.id] = board
+	board_nodes[board.id] = board
 
-func get_lists():
-	return lists
+func get_board(id: String):
+	return boards_by_id[id]
 
 func get_list(id: String):
 	return lists_by_id[id]
 	
 func add_list(list : ListModel, node : Control):
-	lists.append(list)
 	lists_by_id[list.id] = list
 	list_nodes[list.id] = node
 	_map_cards_by_id(list.cards)
@@ -52,18 +56,28 @@ func _map_cards_by_id(cards : Array):
 func delete_card(card):
 	var node = card_nodes[card.id]
 	node.queue_free()
-	card_nodes.erase(card.id)		
+	card_nodes.erase(card.id)
+	
 	var list = get_list(card.list_id)
 	list.remove_card(card)
+		
+	get_board(list.board_id).remove_archived_card(card)
+	
 	card.free()
 
-func update_card(card, was_draft := false):
-	if was_draft and not card.is_draft:
-		var list = get_list(card.list_id)
+func update_card(card, was_draft := false, was_archived := false):
+	var list = get_list(card.list_id)
+	var board = get_board(list.board_id)
+	
+	if was_draft and not card.is_draft:		
 		list.add_card(card)
 		_set_draft_card_for_list(list)
 		emit_signal("card_created", card)
 		return		
+	elif was_archived and not card.is_archived:
+		board.remove_archived_card(card)
+	elif not was_archived and card.is_archived:
+		board.add_archived_card(card)
 		
 	emit_signal("card_updated", card)
 	

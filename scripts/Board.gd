@@ -21,6 +21,8 @@ onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/Tit
 func set_model(_model):
 	model = _model
 	title_label.set_text(model.title)
+	
+	DataRepository.add_board(model, self)
 
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
@@ -45,7 +47,7 @@ func _ready():
 				]
 			cards.append(card)
 		
-		var list = ListModel.new(list_id, "TODO List " + list_id, cards)
+		var list = ListModel.new(list_id, model.id, "TODO List " + list_id, cards)
 		list_container.add_child(list_element)
 		DataRepository.add_list(list, list_element)
 		
@@ -104,7 +106,9 @@ func _on_add_card_clicked(list):
 func _on_ShowMenuButton_pressed():
 	var menu = MENU_SCENE.instance()
 	add_child(menu)
-	move_child(menu, get_child_count() - 2)
+	move_child(menu, get_child_count() - 2)	
+	
+	var open_margin = menu.rect_size.x * -1
 	
 	# If we tween the position, as soon as the viewport is resized, the menu
 	# will stay in place. By tweening the margin, the menu
@@ -112,9 +116,22 @@ func _on_ShowMenuButton_pressed():
 	var tween = Tween.new()
 	add_child(tween)	
 	tween.interpolate_property(menu, 
-		"margin_left", 0, menu.rect_size.x * -1, 0.2,
+		"margin_left", 0, open_margin, 0.2,
 		Tween.TRANS_SINE, Tween.EASE_IN)
 	tween.start()
 	
 	yield(tween, "tween_completed")
 	tween.queue_free()	
+	
+	yield(menu, "menu_close_requested")
+	
+	tween = Tween.new()
+	add_child(tween)	
+	tween.interpolate_property(menu, 
+		"margin_left", open_margin, 0, 0.2,
+		Tween.TRANS_QUAD, Tween.EASE_OUT)
+	tween.start()
+	
+	yield(tween, "tween_completed")
+	tween.queue_free()	
+	menu.queue_free()
