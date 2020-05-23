@@ -182,6 +182,7 @@ size_flags_vertical = 0
 texture = ExtResource( 5 )
 expand = true
 stretch_mode = 1
+flip_v = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
 margin_left = 24.0

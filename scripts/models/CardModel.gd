@@ -31,8 +31,13 @@ func add_task(task):
 	
 func update_task(task, _title, _is_done):
 	task.set_title(_title)
-	task.set_is_done(_is_done)
+	task.set_is_done(_is_done)	
 	_notify_updated()
+
+func count_tasks_done():
+	var done = 0
+	for task in tasks: if task.is_done: done += 1	
+	return done
 
 func delete_task(task):
 	var task_idx = tasks.find(task)	

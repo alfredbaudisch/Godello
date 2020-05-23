@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/icons/toolPencil.png" type="Texture" id=1]
 [ext_resource path="res://assets/style_panel_card.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/icons/description.svg" type="Texture" id=3]
 [ext_resource path="res://scripts/Card.gd" type="Script" id=4]
+[ext_resource path="res://assets/icons/checklist.svg" type="Texture" id=5]
+[ext_resource path="res://assets/fonts/font_regular_detail.tres" type="DynamicFont" id=6]
 
 [node name="Card" type="MarginContainer"]
 rect_min_size = Vector2( 240, 40 )
@@ -21,7 +24,7 @@ __meta__ = {
 margin_left = 2.0
 margin_top = 5.0
 margin_right = 242.0
-margin_bottom = 45.0
+margin_bottom = 71.0
 rect_min_size = Vector2( 240, 40 )
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -33,23 +36,28 @@ __meta__ = {
 
 [node name="InnerPadding" type="MarginContainer" parent="CardContent"]
 margin_right = 240.0
-margin_bottom = 40.0
+margin_bottom = 66.0
 mouse_filter = 2
 custom_constants/margin_right = 8
 custom_constants/margin_top = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CardContent/InnerPadding"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CardContent/InnerPadding"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 232.0
-margin_bottom = 32.0
+margin_bottom = 58.0
+custom_constants/separation = 5
+
+[node name="TitleContainer" type="HBoxContainer" parent="CardContent/InnerPadding/VBoxContainer"]
+margin_right = 224.0
+margin_bottom = 22.0
 rect_pivot_offset = Vector2( -661, -267 )
 
-[node name="Title" type="Label" parent="CardContent/InnerPadding/HBoxContainer"]
+[node name="Title" type="Label" parent="CardContent/InnerPadding/VBoxContainer/TitleContainer"]
 margin_right = 202.0
-margin_bottom = 24.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Card Title"
@@ -58,7 +66,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Split" type="HSplitContainer" parent="CardContent/InnerPadding/HBoxContainer"]
+[node name="Split" type="HSplitContainer" parent="CardContent/InnerPadding/VBoxContainer/TitleContainer"]
 visible = false
 margin_left = 184.0
 margin_right = 202.0
@@ -66,14 +74,58 @@ margin_bottom = 24.0
 rect_min_size = Vector2( 18, 18 )
 dragger_visibility = 1
 
-[node name="EditIcon" type="TextureRect" parent="CardContent/InnerPadding/HBoxContainer"]
+[node name="EditIcon" type="TextureRect" parent="CardContent/InnerPadding/VBoxContainer/TitleContainer"]
 margin_left = 206.0
 margin_right = 224.0
-margin_bottom = 24.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 18, 18 )
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 5
+
+[node name="IndicatorsContainer" type="HBoxContainer" parent="CardContent/InnerPadding/VBoxContainer"]
+margin_top = 27.0
+margin_right = 224.0
+margin_bottom = 50.0
+
+[node name="DescriptionIcon" type="TextureRect" parent="CardContent/InnerPadding/VBoxContainer/IndicatorsContainer"]
+margin_right = 14.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 14, 14 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+flip_v = true
+
+[node name="DescriptionSep" type="HSeparator" parent="CardContent/InnerPadding/VBoxContainer/IndicatorsContainer"]
+margin_left = 18.0
+margin_right = 26.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="ChecklistIcon" type="TextureRect" parent="CardContent/InnerPadding/VBoxContainer/IndicatorsContainer"]
+margin_left = 30.0
+margin_right = 44.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 14, 14 )
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+
+[node name="ChecklistCountLabel" type="Label" parent="CardContent/InnerPadding/VBoxContainer/IndicatorsContainer"]
+margin_left = 48.0
+margin_right = 75.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 0, 14 )
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0.368627, 0.423529, 0.517647, 1 )
+text = "0/1"
+
+[node name="SizePlaceholder" type="HSeparator" parent="CardContent/InnerPadding/VBoxContainer/IndicatorsContainer"]
+margin_left = 79.0
+margin_right = 87.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 8, 23 )
 [connection signal="gui_input" from="." to="." method="_on_Card_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_Card_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Card_mouse_exited"]

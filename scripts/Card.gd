@@ -10,9 +10,16 @@ const STYLE_DRAGGED := preload("res://assets/style_panel_card_dragged.tres")
 
 onready var content_container := $CardContent
 onready var content_padding_container := $CardContent/InnerPadding
-onready var title_label := $CardContent/InnerPadding/HBoxContainer/Title
-onready var edit_icon := $CardContent/InnerPadding/HBoxContainer/EditIcon
-onready var split := $CardContent/InnerPadding/HBoxContainer/Split
+onready var title_label := $CardContent/InnerPadding/VBoxContainer/TitleContainer/Title
+onready var edit_icon := $CardContent/InnerPadding/VBoxContainer/TitleContainer/EditIcon
+onready var split := $CardContent/InnerPadding/VBoxContainer/TitleContainer/Split
+
+onready var indicators_container := $CardContent/InnerPadding/VBoxContainer/IndicatorsContainer
+onready var description_icon := $CardContent/InnerPadding/VBoxContainer/IndicatorsContainer/DescriptionIcon
+onready var description_sep := $CardContent/InnerPadding/VBoxContainer/IndicatorsContainer/DescriptionSep
+onready var checklist_icon := $CardContent/InnerPadding/VBoxContainer/IndicatorsContainer/ChecklistIcon
+onready var checklist_count_label := $CardContent/InnerPadding/VBoxContainer/IndicatorsContainer/ChecklistCountLabel
+onready var indicators_size_placeholder := $CardContent/InnerPadding/VBoxContainer/IndicatorsContainer/SizePlaceholder
 
 const CARD_DRAG_PREVIEW := preload("res://scenes/CardMousePreview.tscn")
 
@@ -32,10 +39,31 @@ func set_model(_model : CardModel):
 	set_visible(not model.is_archived)
 	title_label.set_text(model.title)
 	DataRepository.set_card_node(model, self)
+	
+	_set_indicators()
 
 func get_model():
 	return model
-
+	
+func _set_indicators(is_dragging := false):
+	var has_description = model.description != ""
+	var has_tasks = model.tasks.size() > 0
+	indicators_container.set_visible(has_description or has_tasks)	
+	
+	# When dragging, hide indicator icons,
+	# keeping the height with indicators_size_placeholder
+	if is_dragging:
+		for child in indicators_container.get_children():
+			child.set_visible(child == indicators_size_placeholder)		
+	else:
+		description_icon.set_visible(has_description)
+		description_sep.set_visible(has_description)
+		checklist_icon.set_visible(has_tasks)
+		checklist_count_label.set_visible(has_tasks)
+		
+		if has_tasks:
+			checklist_count_label.set_text(str(model.count_tasks_done()) + "/" + str(model.tasks.size()))
+		
 func _unhandled_input(event):
 	# Since Godot doesn't handle drops outside draggable boundaries,
 	# we have to handle this by ourselves
@@ -46,10 +74,12 @@ func set_is_dragged(value := true):
 	if value:
 		content_container.set("custom_styles/panel", STYLE_DRAGGED)
 		title_label.set_visible_characters(0)
+		_set_indicators(true)
 	else:
 		content_container.set("custom_styles/panel", STYLE_DEFAULT)
-		title_label.set_visible_characters(-1)		
+		title_label.set_visible_characters(-1)
 		is_dragged_to_list = null
+		_set_indicators()
 		
 	is_dragged = value
 	
