@@ -4,6 +4,7 @@ var model : CardModel setget set_model, get_model
 var is_dragged := false setget set_is_dragged
 var is_dragged_to_list setget set_dragged_to_list
 var is_any_data_dragged := false
+var in_archives := false setget set_is_in_archives # Listed in the Archived Cards?
 
 const STYLE_DEFAULT := preload("res://assets/style_panel_card.tres")
 const STYLE_DRAGGED := preload("res://assets/style_panel_card_dragged.tres")
@@ -32,15 +33,24 @@ func _ready():
 	
 	split.set_visible(true)
 	edit_icon.set_visible(false)
+	
+func set_is_in_archives(value : bool):
+	in_archives = value
 
 func set_model(_model : CardModel):
 	model = _model
 	
-	set_visible(not model.is_archived)
-	title_label.set_text(model.title)
-	DataRepository.set_card_node(model, self)
+	# Card is instantiated in the Archived Cards list but it's not archived anymore
+	if not model.is_archived and in_archives:
+		queue_free()
+	else:	
+		var is_visible = not model.is_archived or (model.is_archived and in_archives)
+		set_visible(is_visible)
 	
-	_set_indicators()
+		title_label.set_text(model.title)
+		DataRepository.set_card_node(model, self)
+		
+		_set_indicators()
 
 func get_model():
 	return model
@@ -86,7 +96,10 @@ func set_is_dragged(value := true):
 func set_dragged_to_list(list):
 	is_dragged_to_list = list
 
-func get_drag_data(_pos):	
+func get_drag_data(_pos):
+	if model.is_archived:
+		return
+		
 	var card = CARD_DRAG_PREVIEW.instance()
 	get_parent().add_child(card)
 	card.set_data(self, get_model())
@@ -105,6 +118,9 @@ func set_edit_icon_visibility(is_visible : bool):
 	split.set_visible(not is_visible)
 
 func _on_Card_mouse_entered():
+	if model.is_archived:
+		return
+		
 	if not is_dragged and not is_any_data_dragged:
 		set_edit_icon_visibility(true)
 

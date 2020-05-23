@@ -108,6 +108,8 @@ func _on_ShowMenuButton_pressed():
 	add_child(menu)
 	move_child(menu, get_child_count() - 2)	
 	
+	menu.set_board(model)
+	
 	var open_margin = menu.rect_size.x * -1
 	
 	# If we tween the position, as soon as the viewport is resized, the menu

@@ -75,7 +75,6 @@ text = "Menu"
 align = 1
 
 [node name="CloseButton" parent="MarginContainer/VerticalContent/HBoxContainer" instance=ExtResource( 5 )]
-modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
 margin_left = 248.0
 margin_right = 264.0
 

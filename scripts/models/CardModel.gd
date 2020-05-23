@@ -35,6 +35,7 @@ func update_task(task, _title, _is_done):
 	_notify_updated()
 
 func count_tasks_done():
+	# TODO: add functional programming (filter -> count)
 	var done = 0
 	for task in tasks: if task.is_done: done += 1	
 	return done
