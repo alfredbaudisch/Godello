@@ -21,6 +21,7 @@ onready var checkitem_create := $ScrollContainer/PanelContainer/MarginContainer/
 onready var checklist_row := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow
 onready var checklist_content := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent
 onready var checklist_items_container := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/Content
+onready var checklist_help_label := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/HBoxContainer/TaskTip
 
 onready var archived_label := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ArchivedNoticeLabel
 onready var archive_button := $ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol/ArchiveCardButton
@@ -74,7 +75,9 @@ func _sync_tasks():
 		
 	checklist_row.set_visible(true)
 	
-	if card.tasks.size() > 0:
+	var has_tasks = card.tasks.size() > 0
+	checklist_help_label.set_visible(has_tasks)	
+	if has_tasks:
 		for task in card.tasks:
 			var checkitem = CHECKITEM_SCENE.instance()
 			checklist_items_container.add_child(checkitem)

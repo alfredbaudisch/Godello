@@ -274,7 +274,7 @@ custom_fonts/font = ExtResource( 1 )
 text = "Checklist"
 autowrap = true
 
-[node name="Label2" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/HBoxContainer"]
+[node name="TaskTip" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/HBoxContainer"]
 margin_left = 319.0
 margin_right = 440.0
 margin_bottom = 21.0
