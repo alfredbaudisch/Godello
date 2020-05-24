@@ -99,9 +99,26 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ListContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ListContainerScroll"]
+margin_right = 280.0
 margin_bottom = 538.0
 size_flags_vertical = 3
 custom_constants/separation = 10
+
+[node name="AddListButton" type="Button" parent="MarginContainer/VBoxContainer/ListContainerScroll/ListContainer"]
+margin_right = 280.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 280, 40 )
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+text = "+ Add List"
+align = 0
 
 [node name="CardDetailsContainer" type="ColorRect" parent="."]
 visible = false
@@ -114,3 +131,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/ShowMenuButton" to="." method="_on_ShowMenuButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton" to="." method="_on_ShowMenuButton_pressed"]

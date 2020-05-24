@@ -6,7 +6,7 @@ static func get_drag_data(_node, _model) -> Dictionary:
     "model": _model
   }
 
-static func find_closest_horizontal_child(mouse_pos, compare_to, container, container_scroll) -> Array:
+static func find_closest_horizontal_child(mouse_pos, compare_to, container, container_scroll, ignore_child = null) -> Array:
   var closest_child
   var last_distance : float = -1
   var is_before := true
@@ -14,6 +14,9 @@ static func find_closest_horizontal_child(mouse_pos, compare_to, container, cont
   var scrolled_mouse_pos := Vector2(mouse_pos.x + container_scroll.get_h_scroll(), mouse_pos.y)
 
   for child in container.get_children():
+    if ignore_child and child.get_name() == ignore_child:
+      continue
+      
     var distance : float = child.get_position().distance_to(scrolled_mouse_pos)
     
     if last_distance == -1 or (distance < last_distance):

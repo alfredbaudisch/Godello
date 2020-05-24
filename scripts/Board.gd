@@ -12,6 +12,7 @@ const CARD_DETAILS_SCENE := preload("res://scenes/CardDetails.tscn")
 
 onready var list_container := $MarginContainer/VBoxContainer/ListContainerScroll/ListContainer
 onready var list_container_scroll := $MarginContainer/VBoxContainer/ListContainerScroll
+onready var add_list_button := $MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton
 
 var card_details
 onready var card_details_container := $CardDetailsContainer
@@ -33,7 +34,7 @@ func _ready():
   
   set_model(BoardModel.new("1", "A Trello Board"))
   
-  for n in range(1, 2): # todo: iterate through existing lists
+  for n in range(1, 10): # todo: iterate through existing lists
     var list_element = LIST_SCENE.instance()
     var list_id = str(n)
     
@@ -55,6 +56,13 @@ func _ready():
     
     list_element.set_model(list)
     
+  _make_button_last_item()
+    
+func _make_button_last_item():
+  var amount = list_container.get_child_count()  
+  if amount > 1:
+    list_container.move_child(add_list_button, amount - 1)
+    
 func can_drop_data(mouse_pos, data):
   if data.drag_data["model"].model_type == Model.ModelTypes.LIST:
     is_receiving_drag_data = true
@@ -63,17 +71,20 @@ func can_drop_data(mouse_pos, data):
 
     if list_node.get_parent() != list_container:
       list_node.get_parent().remove_child(list_node)
-      list_container.add_child(list_node)			
+      list_container.add_child(list_node)	     
       
-    if list_container.get_child_count() > 1:
-      var closest_list = DragUtils.find_closest_horizontal_child(mouse_pos, list_node, list_container, list_container_scroll)
+    if (list_container.get_child_count() - 1) > 1:
+      var closest_list = DragUtils.find_closest_horizontal_child(
+        mouse_pos, list_node, list_container, list_container_scroll, "AddListButton"
+      )
       
       if closest_list[0]:
         var curr_idx = list_node.get_index()		
-        var closest_idx = closest_list[0].get_index()					
+        var closest_idx = closest_list[0].get_index()
         var next_idx = max(0, closest_idx + (-1 if closest_list[1] else 0))
         list_container.move_child(list_node, next_idx)
-                
+        
+    _make_button_last_item()        
     return true	
     
   is_receiving_drag_data = false
