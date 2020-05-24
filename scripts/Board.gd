@@ -20,6 +20,8 @@ onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/Tit
 
 func set_model(_model):
 	model = _model
+	set_name("Board_" + model.id)
+	
 	title_label.set_text(model.title)
 	
 	DataRepository.add_board(model, self)
@@ -31,7 +33,7 @@ func _ready():
 	
 	set_model(BoardModel.new("1", "A Trello Board"))
 	
-	for n in range(1, 30): # todo: iterate through existing lists
+	for n in range(1, 2): # todo: iterate through existing lists
 		var list_element = LIST_SCENE.instance()
 		var list_id = str(n)
 		

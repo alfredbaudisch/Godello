@@ -54,8 +54,6 @@ func _map_cards_by_id(cards : Array):
 		cards_by_id[card.id] = card
 		
 func delete_card(card):
-	var node = card_nodes[card.id]
-	node.queue_free()
 	card_nodes.erase(card.id)
 	
 	var list = get_list(card.list_id)
@@ -63,7 +61,7 @@ func delete_card(card):
 		
 	get_board(list.board_id).remove_archived_card(card)
 	
-	card.free()
+	emit_signal("card_deleted", card)
 
 func update_card(card, was_draft := false, was_archived := false):
 	var list = get_list(card.list_id)

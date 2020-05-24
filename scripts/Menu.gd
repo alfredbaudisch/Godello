@@ -15,12 +15,23 @@ onready var card_container_scroll := $MarginContainer/VerticalContent/CardContai
 onready var card_container := $MarginContainer/VerticalContent/CardContainerScroll/CardContainer
 
 func _ready():
+	DataRepository.connect("card_updated", self, "_on_card_updated")
+	
 	_normalize_menu()
+	
+func _on_card_updated(_card):	
+	_sync_archived_cards()
 	
 func set_board(_board : BoardModel):
 	board = _board
 
 func _sync_archived_cards():
+	var amount_archived = board.archived_cards.size()
+	var amount_placed = card_container.get_child_count()
+	
+	if not (amount_archived > 0 or (amount_archived != amount_placed)):
+		return
+	
 	for child in card_container.get_children():
 		child.queue_free()
 	

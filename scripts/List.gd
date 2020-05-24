@@ -26,6 +26,8 @@ func _ready():
 
 func set_model(_model : ListModel):
 	model = _model
+	set_name("List_" + model.id)
+	
 	title_label.set_text(model.title)
 	
 	for card in model.cards:

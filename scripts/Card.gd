@@ -30,6 +30,7 @@ func _ready():
 	Events.connect("list_dragged", self, "_on_list_dragged")
 	Events.connect("list_dropped", self, "_on_list_dropped")
 	DataRepository.connect("card_updated", self, "_on_card_updated")
+	DataRepository.connect("card_deleted", self, "_on_card_deleted")
 	
 	split.set_visible(true)
 	edit_icon.set_visible(false)
@@ -39,6 +40,7 @@ func set_is_in_archives(value : bool):
 
 func set_model(_model : CardModel):
 	model = _model
+	set_name("Card_" + model.id + ("_archived" if in_archives else ""))
 	
 	# Card is instantiated in the Archived Cards list but it's not archived anymore
 	if not model.is_archived and in_archives:
@@ -48,7 +50,9 @@ func set_model(_model : CardModel):
 		set_visible(is_visible)
 	
 		title_label.set_text(model.title)
-		DataRepository.set_card_node(model, self)
+		
+		if not in_archives:
+			DataRepository.set_card_node(model, self)
 		
 		_set_indicators()
 
@@ -160,3 +164,7 @@ func _on_Card_gui_input(event):
 func _on_card_updated(_card):
 	if model and _card.id == model.id:
 		set_model(_card)
+
+func _on_card_deleted(_card):
+	if model and _card.id == model.id:
+		queue_free()
