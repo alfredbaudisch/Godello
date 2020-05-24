@@ -9,13 +9,14 @@ var list_id_to_container : Dictionary = {}
 const LIST_SCENE := preload("res://scenes/List.tscn")
 const MENU_SCENE := preload("res://scenes/Menu.tscn")
 const CARD_DETAILS_SCENE := preload("res://scenes/CardDetails.tscn")
+const EDIT_LIST_DIALOG := preload("res://scenes/EditListDialog.tscn")
 
 onready var list_container := $MarginContainer/VBoxContainer/ListContainerScroll/ListContainer
 onready var list_container_scroll := $MarginContainer/VBoxContainer/ListContainerScroll
 onready var add_list_button := $MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton
+onready var full_screen_overlay := $FullScreenOverlay
 
 var card_details
-onready var card_details_container := $CardDetailsContainer
 
 onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/TitleLabel
 
@@ -30,7 +31,7 @@ func set_model(_model):
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
 	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
-	card_details_container.set_visible(false)
+	full_screen_overlay.set_visible(false)
 	
 	set_model(BoardModel.new("1", "A Trello Board"))
 	
@@ -96,24 +97,24 @@ func drop_data(_pos, data):
 
 func _on_card_clicked(model):
 	card_details = CARD_DETAILS_SCENE.instance()
-	card_details_container.add_child(card_details)
+	full_screen_overlay.add_child(card_details)
 	card_details.set_card(model)
-	card_details_container.set_visible(true)
+	full_screen_overlay.set_visible(true)
 	
 	# Yield until the details modal is exited (when closed, it removes itself with queue_free).
 	yield(card_details, "tree_exited")	
-	card_details_container.set_visible(false)
+	full_screen_overlay.set_visible(false)
 
 func _on_add_card_clicked(list):
 	card_details = CARD_DETAILS_SCENE.instance()
-	card_details_container.add_child(card_details)
+	full_screen_overlay.add_child(card_details)
 	
 	var draft_card = DataRepository.get_draft_card(list)
 	card_details.set_card(draft_card)
-	card_details_container.set_visible(true)
+	full_screen_overlay.set_visible(true)
 	
 	yield(card_details, "tree_exited")	
-	card_details_container.set_visible(false)
+	full_screen_overlay.set_visible(false)
 
 # Instantiate and animate the opening of the Main Menu.
 # 
@@ -152,3 +153,15 @@ func _on_ShowMenuButton_pressed():
 	yield(tween, "tween_completed")
 	tween.queue_free()	
 	menu.queue_free()
+
+
+func _on_AddListButton_pressed():
+	full_screen_overlay.set_visible(true)
+	
+	var dialog = EDIT_LIST_DIALOG.instance()
+	full_screen_overlay.add_child(dialog)
+	dialog.popup()
+	
+	yield(dialog, "popup_hide")
+	dialog.queue_free()
+	full_screen_overlay.set_visible(false)

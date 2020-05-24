@@ -78,6 +78,7 @@ config/icon="res://icon.png"
 
 Events="*res://scripts/Events.gd"
 DataRepository="*res://scripts/DataRepository.gd"
+SceneUtils="*res://scripts/SceneUtils.gd"
 
 [editor_plugins]
 

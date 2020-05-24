@@ -98,16 +98,6 @@ func _input(event):
 func _on_card_updated(_card):
 	if card and _card.id == card.id:
 		set_card(_card)
-
-func _create_single_error_popup(message : String, focus_after_close : Control):
-	popup = POPUP_SCENE.instance()
-	popup.get_node("Label").set_text(message)
-	add_child(popup)
-	popup.popup_centered()
-	
-	yield(popup, "tree_exited")
-	popup = null
-	focus_after_close.grab_focus()
 	
 #
 # Title
@@ -139,7 +129,7 @@ func _save_card_title():
 		return
 		
 	if title == "" and (not card.is_draft or (card.is_draft and is_save_title_manually_requested)):
-		_create_single_error_popup("Title is required.", title_edit)
+		SceneUtils.create_single_error_popup("Title is required.", title_edit, self)
 		is_save_title_manually_requested = false
 		return
 	
@@ -187,7 +177,7 @@ func _save_checkitem_task(is_create := true):
 	var title = input_field.get_text().replace("\n", "").trim_suffix(" ").trim_prefix(" ")
 	
 	if title == "":
-		_create_single_error_popup("Task description is required.", input_field)
+		SceneUtils.create_single_error_popup("Task description is required.", input_field, self)
 	elif is_create:
 		DataRepository.create_task(card, title)
 		input_field.set_text("")

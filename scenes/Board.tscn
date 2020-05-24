@@ -120,7 +120,7 @@ custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 text = "+ Add List"
 align = 0
 
-[node name="CardDetailsContainer" type="ColorRect" parent="."]
+[node name="FullScreenOverlay" type="ColorRect" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -131,4 +131,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/ShowMenuButton" to="." method="_on_ShowMenuButton_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton" to="." method="_on_ShowMenuButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton" to="." method="_on_AddListButton_pressed"]
