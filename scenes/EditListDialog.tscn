@@ -43,5 +43,6 @@ margin_bottom = 26.0
 size_flags_horizontal = 3
 placeholder_text = "List Name"
 caret_blink = true
+[connection signal="about_to_show" from="." to="." method="_on_EditListDialog_about_to_show"]
 [connection signal="confirmed" from="." to="." method="_on_EditListDialog_confirmed"]
 [connection signal="gui_input" from="MarginContainer/TextEdit" to="." method="_on_TextEdit_gui_input"]

@@ -7,7 +7,7 @@ onready var input_field := $MarginContainer/TextEdit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_hide_on_ok(false)
+	set_hide_on_ok(false)	
 
 func _input(event):
 	if event is InputEventKey and not event.is_pressed():
@@ -45,3 +45,7 @@ func set_list(_model):
 
 func _on_EditListDialog_confirmed():
 	save()
+
+func _on_EditListDialog_about_to_show():
+	yield(get_tree().create_timer(0.05), "timeout")
+	input_field.grab_focus()
