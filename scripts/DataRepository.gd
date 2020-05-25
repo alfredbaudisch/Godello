@@ -5,10 +5,6 @@ var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
 var list_draft_cards : Dictionary = {}
 
-var board_nodes : Dictionary = {}
-var list_nodes : Dictionary = {}
-var card_nodes : Dictionary = {}
-
 signal list_created(list)
 signal list_updated(list)
 signal list_deleted(list)
@@ -19,9 +15,8 @@ signal card_deleted(card)
 func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	
-func add_board(board : BoardModel, node : Control):
+func add_board(board : BoardModel):
 	boards_by_id[board.id] = board
-	board_nodes[board.id] = board
 
 func get_board(id: String):
 	return boards_by_id[id]
@@ -29,14 +24,10 @@ func get_board(id: String):
 func get_list(id: String):
 	return lists_by_id[id]
 	
-func add_list(list : ListModel, node : Control):
-	lists_by_id[list.id] = list
-	list_nodes[list.id] = node
+func add_list(list : ListModel):
+	lists_by_id[list.id] = list	
 	_map_cards_by_id(list.cards)
-	
-func set_card_node(card : CardModel, node : Control):
-	card_nodes[card.id] = node
-	
+
 func move_card_to_list(card : CardModel, list : ListModel):
 	var from_list = lists_by_id[card.list_id]
 	var to_list = lists_by_id[list.id]
@@ -53,13 +44,12 @@ func _map_cards_by_id(cards : Array):
 	for card in cards:
 		cards_by_id[card.id] = card
 		
-func delete_card(card):
-	card_nodes.erase(card.id)
-	
+func delete_card(card):	
 	var list = get_list(card.list_id)
 	list.remove_card(card)
 		
 	get_board(list.board_id).remove_archived_card(card)
+	cards_by_id.erase(card.id)
 	
 	emit_signal("card_deleted", card)
 
@@ -70,6 +60,7 @@ func update_card(card, was_draft := false, was_archived := false):
 	if was_draft and not card.is_draft:		
 		list.add_card(card)
 		_set_draft_card_for_list(list)
+		cards_by_id[card.id] = card
 		emit_signal("card_created", card)
 		return		
 	elif was_archived and not card.is_archived:
@@ -98,6 +89,7 @@ func get_draft_card(list):
 		draft_card.set_draft()
 		
 	_set_draft_card_for_list(list, draft_card)
+	cards_by_id[draft_card.id] = draft_card
 	return draft_card
 
 # TODO: refactor to dict[list_id][draft_card_id] = foo

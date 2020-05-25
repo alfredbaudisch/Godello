@@ -51,9 +51,6 @@ func set_model(_model : CardModel):
 	
 		title_label.set_text(model.title)
 		
-		if not in_archives:
-			DataRepository.set_card_node(model, self)
-		
 		_set_indicators()
 
 func get_model():

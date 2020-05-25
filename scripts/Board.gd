@@ -26,11 +26,13 @@ func set_model(_model):
 	
 	title_label.set_text(model.title)
 	
-	DataRepository.add_board(model, self)
+	DataRepository.add_board(model)
 
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
 	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
+	DataRepository.connect("list_created", self, "_on_list_created")
+	
 	full_screen_overlay.set_visible(false)
 	
 	set_model(BoardModel.new("1", "A Trello Board"))
@@ -53,7 +55,7 @@ func _ready():
 		
 		var list = ListModel.new(list_id, model.id, "TODO List " + list_id, cards)
 		list_container.add_child(list_element)
-		DataRepository.add_list(list, list_element)
+		DataRepository.add_list(list)
 		
 		list_element.set_model(list)
 		
@@ -116,6 +118,15 @@ func _on_add_card_clicked(list):
 	yield(card_details, "tree_exited")	
 	full_screen_overlay.set_visible(false)
 
+func _add_list(list : ListModel):
+	var list_element = LIST_SCENE.instance()	
+	list_container.add_child(list_element)	
+	list_element.set_model(list)
+	
+func _on_list_created(list : ListModel):
+	if list and list.board_id == model.id:
+		pass
+
 # Instantiate and animate the opening of the Main Menu.
 # 
 # The idea of this method is to illustrate how to do everything dynamically.
@@ -153,7 +164,6 @@ func _on_ShowMenuButton_pressed():
 	yield(tween, "tween_completed")
 	tween.queue_free()	
 	menu.queue_free()
-
 
 func _on_AddListButton_pressed():
 	full_screen_overlay.set_visible(true)
