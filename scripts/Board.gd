@@ -87,7 +87,7 @@ func can_drop_data(mouse_pos, data):
 				var next_idx = max(0, closest_idx + (-1 if closest_list[1] else 0))
 				list_container.move_child(list_node, next_idx)
 				
-		_make_button_last_item()        
+		_make_button_last_item()
 		return true	
 		
 	is_receiving_drag_data = false
@@ -122,10 +122,11 @@ func _add_list(list : ListModel):
 	var list_element = LIST_SCENE.instance()	
 	list_container.add_child(list_element)	
 	list_element.set_model(list)
+	_make_button_last_item()
 	
 func _on_list_created(list : ListModel):
 	if list and list.board_id == model.id:
-		pass
+		_add_list(list)
 
 # Instantiate and animate the opening of the Main Menu.
 # 
@@ -170,6 +171,7 @@ func _on_AddListButton_pressed():
 	
 	var dialog = EDIT_LIST_DIALOG.instance()
 	full_screen_overlay.add_child(dialog)
+	dialog.set_board(model)
 	dialog.popup()
 	
 	yield(dialog, "popup_hide")

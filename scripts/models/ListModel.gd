@@ -10,7 +10,11 @@ func _init(_id : String, _board_id : String, _title : String, _cards : Array = [
 	board_id = _board_id
 	cards = _cards
 	_map_cards_by_id()
-
+	
+func set_title(_title : String):
+	title = _title
+	_notify_updated()
+	
 func add_card(card):
 	if not cards_by_id.get(card.id):
 		card.list_id = id
@@ -27,3 +31,6 @@ func remove_card(card):
 func _map_cards_by_id():
 	for card in cards:
 		cards_by_id[card.id] = card
+
+func _notify_updated():
+	DataRepository.update_list(self)

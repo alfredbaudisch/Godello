@@ -81,6 +81,11 @@ func create_task(card, title, is_done := false) -> Dictionary:
 		"card": card
 	}
 
+func create_list(board, title):
+	var list = ListModel.new(UUID.v4(), board.id, title)
+	add_list(list)
+	emit_signal("list_created", list)
+
 func get_draft_card(list):
 	var draft_card = _find_draft_card_for_list(list)
 	

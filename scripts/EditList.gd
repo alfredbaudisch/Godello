@@ -1,6 +1,7 @@
 extends ConfirmationDialog
 
-var model : ListModel setget set_model
+var board : BoardModel setget set_board
+var list : ListModel setget set_list
 
 onready var input_field := $MarginContainer/TextEdit
 
@@ -27,15 +28,19 @@ func save():
 		SceneUtils.create_single_error_popup("List Name is required.", input_field, self)
 		return
 		
-	if model:
+	if list:
 		# todo: update list
 		pass
 	else:
-		# todo: create list
-		pass
+		DataRepository.create_list(board, title)
+	
+	hide()
 
-func set_model(_model):
-	model = _model
+func set_board(_model):
+	board = _model
+
+func set_list(_model):
+	list = _model
 	set_title("Edit List")
 
 func _on_EditListDialog_confirmed():

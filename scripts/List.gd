@@ -23,6 +23,7 @@ func _ready():
 	Events.connect("list_dragged", self, "_on_list_dragged")
 	Events.connect("list_dropped", self, "_on_list_dropped")
 	DataRepository.connect("card_created", self, "_on_card_created")
+	DataRepository.connect("list_updated", self, "_on_list_updated")
 
 func set_model(_model : ListModel):
 	model = _model
@@ -105,6 +106,10 @@ func drop_data(_pos, data):
 func _on_card_created(_model):
 	if _model.list_id == model.id:
 		add_card(_model)
+		
+func _on_list_updated(_model):
+	if _model.id == model.id:
+		set_model(_model)
 	
 func _on_card_dragged(_node, _model):
 	is_any_data_dragged = true
