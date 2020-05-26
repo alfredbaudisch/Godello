@@ -228,17 +228,7 @@ func _on_ArchiveCardButton_pressed():
 	card.archive() if not card.is_archived else card.unarchive()
 
 func _on_DeleteCardButton_pressed():
-	var dialog = ConfirmationDialog.new()
-	get_parent().add_child(dialog)
-	dialog.set_title("Are you sure?")
-	dialog.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
-	dialog.set_exclusive(true)		
-	dialog.get_cancel().connect("pressed", self, "_on_delete_cancelled")
-	dialog.connect("confirmed", self, "_on_delete_confirmed")	
-	dialog.popup()
-	
-	yield(dialog, "popup_hide")
-	dialog.queue_free()
+	SceneUtils.create_delete_confirm_popup(get_parent(), self)
 
 func _on_delete_cancelled():
 	pass # left here for learning purposes (how to connect cancel)

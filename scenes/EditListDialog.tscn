@@ -3,6 +3,7 @@
 [ext_resource path="res://scripts/EditList.gd" type="Script" id=1]
 
 [node name="EditListDialog" type="ConfirmationDialog"]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -45,4 +46,5 @@ placeholder_text = "List Name"
 caret_blink = true
 [connection signal="about_to_show" from="." to="." method="_on_EditListDialog_about_to_show"]
 [connection signal="confirmed" from="." to="." method="_on_EditListDialog_confirmed"]
+[connection signal="custom_action" from="." to="." method="_on_EditListDialog_custom_action"]
 [connection signal="gui_input" from="MarginContainer/TextEdit" to="." method="_on_TextEdit_gui_input"]

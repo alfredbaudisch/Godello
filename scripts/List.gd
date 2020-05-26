@@ -14,7 +14,7 @@ onready var card_container_scroll := $MarginContainer/VerticalContent/CardContai
 const STYLE_DRAGGED := preload("res://assets/style_panel_list_dragged.tres")
 const LIST_DRAG_PREVIEW := preload("res://scenes/ListMousePreview.tscn")
 
-onready var title_label := $MarginContainer/VerticalContent/ListNameLabel
+onready var title_label := $MarginContainer/VerticalContent/TitleContainer/Title
 onready var add_card_button := $MarginContainer/VerticalContent/AddCardButton
 
 func _ready():
@@ -130,3 +130,6 @@ func _on_list_dropped(drop_data):
 
 func _on_AddCardButton_pressed():
 	Events.emit_signal("add_card_clicked", model)
+
+func _on_ListActionsButton_pressed():
+	Events.emit_signal("list_clicked", model)

@@ -31,13 +31,14 @@ func set_model(_model):
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
 	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
+	Events.connect("list_clicked", self, "_on_list_clicked")
 	DataRepository.connect("list_created", self, "_on_list_created")
 	
 	full_screen_overlay.set_visible(false)
 	
 	set_model(BoardModel.new("1", "A Trello Board"))
 	
-	for n in range(1, 10): # todo: iterate through existing lists
+	for n in range(1, 3): # todo: iterate through existing lists
 		var list_element = LIST_SCENE.instance()
 		var list_id = str(n)
 		
@@ -127,6 +128,9 @@ func _add_list(list : ListModel):
 func _on_list_created(list : ListModel):
 	if list and list.board_id == model.id:
 		_add_list(list)
+	
+func _on_list_clicked(list : ListModel):
+	_create_edit_list_dialog(SceneUtils.DialogMode.EDIT_LIST, list)
 
 # Instantiate and animate the opening of the Main Menu.
 # 
@@ -167,11 +171,17 @@ func _on_ShowMenuButton_pressed():
 	menu.queue_free()
 
 func _on_AddListButton_pressed():
+	_create_edit_list_dialog(SceneUtils.DialogMode.CREATE_LIST)
+
+func _create_edit_list_dialog(mode, list = null):
 	full_screen_overlay.set_visible(true)
 	
 	var dialog = EDIT_LIST_DIALOG.instance()
-	full_screen_overlay.add_child(dialog)
+	full_screen_overlay.add_child(dialog)	
 	dialog.set_board(model)
+	dialog.set_mode(mode)
+	
+	if list: dialog.set_list(list)
 	dialog.popup()
 	
 	yield(dialog, "popup_hide")
