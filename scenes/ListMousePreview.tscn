@@ -56,6 +56,8 @@ margin_bottom = 25.0
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "List Name"
+autowrap = true
+max_lines_visible = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VerticalContent"]
 margin_top = 29.0

@@ -47,6 +47,7 @@ margin_bottom = 25.0
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "List Name"
+autowrap = true
 
 [node name="CardContainerScroll" type="ScrollContainer" parent="MarginContainer/VerticalContent"]
 margin_top = 29.0
