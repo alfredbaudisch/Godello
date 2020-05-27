@@ -70,6 +70,11 @@ func update_card(card, was_draft := false, was_archived := false):
 		
 	emit_signal("card_updated", card)
 	
+func delete_list(list):
+	lists_by_id.erase(list.id)
+	list.remove_cards()
+	emit_signal("list_deleted", list)
+	
 func update_list(list):
 	emit_signal("list_updated", list)
 	

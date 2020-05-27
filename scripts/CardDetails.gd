@@ -37,7 +37,9 @@ var task : TaskModel
 func _ready():
 	DataRepository.connect("card_updated", self, "_on_card_updated")
 	DataRepository.connect("card_created", self, "_on_card_updated")
+	DataRepository.connect("card_deleted", self, "_on_card_deleted")
 	DataRepository.connect("list_updated", self, "_on_list_updated")
+	DataRepository.connect("list_deleted", self, "_on_list_deleted")
 	
 	title_edit.set_visible(false)
 	title_label.set_visible(true)	
@@ -101,9 +103,17 @@ func _on_card_updated(_card):
 	if card and _card.id == card.id:
 		set_card(_card)
 		
+func _on_card_deleted(_card):
+	if card and _card.id == card.id:
+		queue_free()
+		
 func _on_list_updated(_list):
 	if list and _list.id == list.id:
 		set_list(list)
+		
+func _on_list_deleted(_list):
+	if list and _list.id == list.id:
+		queue_free()
 #
 # Title
 #
@@ -234,9 +244,6 @@ func _on_ArchiveCardButton_pressed():
 
 func _on_DeleteCardButton_pressed():
 	SceneUtils.create_delete_confirm_popup(get_parent(), self)
-
-func _on_delete_cancelled():
-	pass # left here for learning purposes (how to connect cancel)
 	
 func _on_delete_confirmed():
 	DataRepository.delete_card(card)

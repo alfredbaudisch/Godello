@@ -20,6 +20,10 @@ func add_card(card):
 		card.list_id = id
 		cards.append(card)
 		cards_by_id[card.id] = card
+
+func remove_cards():
+	cards_by_id.clear()		
+	cards.clear()
 	
 func remove_card(card):	
 	var card_idx = cards.find(card)	

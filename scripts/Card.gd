@@ -31,6 +31,7 @@ func _ready():
 	Events.connect("list_dropped", self, "_on_list_dropped")
 	DataRepository.connect("card_updated", self, "_on_card_updated")
 	DataRepository.connect("card_deleted", self, "_on_card_deleted")
+	DataRepository.connect("list_deleted", self, "_on_list_deleted")
 	
 	split.set_visible(true)
 	edit_icon.set_visible(false)
@@ -164,4 +165,10 @@ func _on_card_updated(_card):
 
 func _on_card_deleted(_card):
 	if model and _card.id == model.id:
+		queue_free()
+
+func _on_list_deleted(_list):
+	# We need to delete the card if it's in the Archived Cards menu,
+	# otherwise it will just get deleted with the list anyway.
+	if in_archives and model and _list.id == model.list_id:
 		queue_free()

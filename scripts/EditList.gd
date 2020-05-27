@@ -82,8 +82,8 @@ func _on_EditListDialog_custom_action(action):
 func _on_delete_confirmed(action):
 	match mode:
 		SceneUtils.DialogMode.EDIT_LIST:	
-			# todo: delete list
-			pass
+			DataRepository.delete_list(list)
+			hide()
 			
 		SceneUtils.DialogMode.EDIT_BOARD:
 			# todo: delete board

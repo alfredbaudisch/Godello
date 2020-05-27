@@ -22,8 +22,10 @@ func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	Events.connect("list_dragged", self, "_on_list_dragged")
 	Events.connect("list_dropped", self, "_on_list_dropped")
+	
 	DataRepository.connect("card_created", self, "_on_card_created")
 	DataRepository.connect("list_updated", self, "_on_list_updated")
+	DataRepository.connect("list_deleted", self, "_on_list_deleted")
 
 func set_model(_model : ListModel, shallow_update := false):
 	model = _model
@@ -111,6 +113,10 @@ func _on_card_created(_model):
 func _on_list_updated(_model):
 	if _model.id == model.id:
 		set_model(_model, true)
+		
+func _on_list_deleted(_model):
+	if _model.id == model.id:
+		queue_free()
 	
 func _on_card_dragged(_node, _model):
 	is_any_data_dragged = true
