@@ -25,14 +25,15 @@ func _ready():
 	DataRepository.connect("card_created", self, "_on_card_created")
 	DataRepository.connect("list_updated", self, "_on_list_updated")
 
-func set_model(_model : ListModel):
+func set_model(_model : ListModel, shallow_update := false):
 	model = _model
 	set_name("List_" + model.id)
 	
 	title_label.set_text(model.title)
 	
-	for card in model.cards:
-		add_card(card)
+	if not shallow_update:
+		for card in model.cards:
+			add_card(card)
 
 func get_model():
 	return model
@@ -109,7 +110,7 @@ func _on_card_created(_model):
 		
 func _on_list_updated(_model):
 	if _model.id == model.id:
-		set_model(_model)
+		set_model(_model, true)
 	
 func _on_card_dragged(_node, _model):
 	is_any_data_dragged = true

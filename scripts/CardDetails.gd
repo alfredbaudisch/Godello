@@ -37,6 +37,8 @@ var task : TaskModel
 func _ready():
 	DataRepository.connect("card_updated", self, "_on_card_updated")
 	DataRepository.connect("card_created", self, "_on_card_updated")
+	DataRepository.connect("list_updated", self, "_on_list_updated")
+	
 	title_edit.set_visible(false)
 	title_label.set_visible(true)	
 
@@ -98,7 +100,10 @@ func _input(event):
 func _on_card_updated(_card):
 	if card and _card.id == card.id:
 		set_card(_card)
-	
+		
+func _on_list_updated(_list):
+	if list and _list.id == list.id:
+		set_list(list)
 #
 # Title
 #

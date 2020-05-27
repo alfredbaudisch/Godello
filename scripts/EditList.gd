@@ -51,8 +51,7 @@ func save():
 		
 	match mode:
 		SceneUtils.DialogMode.EDIT_LIST:	
-			# todo: update list
-			pass
+			list.set_title(title)			
 			
 		SceneUtils.DialogMode.EDIT_BOARD:
 			# todo: update board
