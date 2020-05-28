@@ -64,16 +64,24 @@ func save():
 
 func set_board(_model):
 	board = _model
-	input_field.set_text(board.title)
 
 func set_list(_model):
 	list = _model
-	input_field.set_text(list.title)
 
 func _on_EditListDialog_confirmed():
 	save()
 
 func _on_EditListDialog_about_to_show():
+	match mode:
+		SceneUtils.DialogMode.EDIT_LIST:	
+			input_field.set_text(list.title)
+			
+		SceneUtils.DialogMode.EDIT_BOARD:
+			input_field.set_text(board.title)
+			
+		SceneUtils.DialogMode.CREATE_LIST:
+			input_field.set_text("")
+			
 	yield(get_tree().create_timer(0.05), "timeout")
 	input_field.grab_focus()
 
