@@ -21,20 +21,20 @@ onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/Tit
 
 func set_model(_model):
 	model = _model
-	set_name("Board_" + model.id)
-	
-	title_label.set_text(model.title)
-	
-	DataRepository.add_board(model)
+	set_name("Board_" + model.id)	
+	title_label.set_text(model.title)	
 
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
 	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
 	DataRepository.connect("list_created", self, "_on_list_created")
+	DataRepository.connect("board_updated", self, "_on_board_updated")
 	
 	full_screen_overlay.set_visible(false)
 	
-	set_model(BoardModel.new("1", "A Trello Board"))
+	var board = BoardModel.new("1", "A Trello Board")
+	DataRepository.add_board(board)
+	set_model(board)
 	
 	for n in range(1, 3): # todo: iterate through existing lists
 		var list_element = LIST_SCENE.instance()
@@ -126,6 +126,10 @@ func _add_list(list : ListModel):
 func _on_list_created(list : ListModel):
 	if list and list.board_id == model.id:
 		_add_list(list)
+		
+func _on_board_updated(board):
+	if model and board.id == model.id:
+		set_model(board)
 
 # Instantiate and animate the opening of the Main Menu.
 # 

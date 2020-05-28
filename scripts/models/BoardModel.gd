@@ -7,6 +7,10 @@ var archived_cards : Dictionary = {} setget ,get_archived_cards
 func _init(_id : String, _title : String = "").(ModelTypes.BOARD, _id):
 	title = _title
 	
+func set_title(_title : String):
+	title = _title
+	_notify_updated()
+	
 func add_archived_card(card):
 	archived_cards[card.id] = card
 	
@@ -21,3 +25,6 @@ func _to_string():
 		"id": id,
 		"title": title
 	})
+
+func _notify_updated():
+	DataRepository.update_board(self)

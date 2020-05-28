@@ -69,12 +69,19 @@ rect_min_size = Vector2( 0, 32 )
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
 margin_top = 1.0
-margin_right = 891.0
+margin_right = 687.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Board Name"
+clip_text = true
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
+margin_left = 691.0
+margin_right = 891.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 200, 0 )
 
 [node name="ShowMenuButton" type="Button" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
 margin_left = 895.0

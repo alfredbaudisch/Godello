@@ -5,6 +5,7 @@ var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
 var list_draft_cards : Dictionary = {}
 
+signal board_updated(board)
 signal list_created(list)
 signal list_updated(list)
 signal list_deleted(list)
@@ -77,6 +78,9 @@ func delete_list(list):
 	
 func update_list(list):
 	emit_signal("list_updated", list)
+	
+func update_board(board):
+	emit_signal("board_updated", board)
 	
 func create_task(card, title, is_done := false) -> Dictionary:
 	var task = TaskModel.new(card.id + str(card.tasks.size()), card.id, title, is_done) # todo: task id

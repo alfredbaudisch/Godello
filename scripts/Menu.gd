@@ -64,3 +64,6 @@ func _on_ArchivedCardsButton_pressed():
 	menu_actions.set_visible(false)
 	card_container_scroll.set_visible(true)
 	_sync_archived_cards()	
+
+func _on_EditBoardButton_pressed():
+	SceneUtils.create_edit_title_dialog(SceneUtils.DialogMode.EDIT_BOARD, board)

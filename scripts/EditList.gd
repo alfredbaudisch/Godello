@@ -26,6 +26,7 @@ func set_mode(value):
 		SceneUtils.DialogMode.EDIT_BOARD:
 			add_button("Delete Board", true, ACTION_DELETE_BOARD)
 			set_title("Edit Board")
+			input_field.set_placeholder("Board Name")
 
 func _input(event):
 	if event is InputEventKey and not event.is_pressed():
@@ -51,11 +52,10 @@ func save():
 		
 	match mode:
 		SceneUtils.DialogMode.EDIT_LIST:	
-			list.set_title(title)			
+			list.set_title(title)
 			
 		SceneUtils.DialogMode.EDIT_BOARD:
-			# todo: update board
-			pass
+			board.set_title(title)
 			
 		SceneUtils.DialogMode.CREATE_LIST:
 			DataRepository.create_list(board, title)
@@ -64,6 +64,7 @@ func save():
 
 func set_board(_model):
 	board = _model
+	input_field.set_text(board.title)
 
 func set_list(_model):
 	list = _model
