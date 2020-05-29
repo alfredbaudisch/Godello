@@ -34,29 +34,29 @@ scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 1012.0
-margin_bottom = 1574.0
+margin_bottom = 956.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/margin_right = 150
+custom_constants/margin_right = 96
 custom_constants/margin_top = 0
-custom_constants/margin_left = 150
+custom_constants/margin_left = 96
 custom_constants/margin_bottom = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer"]
-margin_left = 150.0
-margin_right = 862.0
-margin_bottom = 1574.0
+margin_left = 96.0
+margin_right = 916.0
+margin_bottom = 956.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VSplitContainer3" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_right = 712.0
+margin_right = 820.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 36.0
-margin_right = 712.0
+margin_right = 820.0
 margin_bottom = 73.0
 custom_constants/separation = 10
 
@@ -78,13 +78,13 @@ text = "Personal Boards"
 
 [node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 77.0
-margin_right = 712.0
+margin_right = 820.0
 margin_bottom = 109.0
 rect_min_size = Vector2( 0, 32 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 113.0
-margin_right = 712.0
+margin_right = 820.0
 margin_bottom = 150.0
 custom_constants/separation = 10
 
@@ -106,103 +106,194 @@ text = "Public Boards"
 
 [node name="VSplitContainer2" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 154.0
-margin_right = 712.0
+margin_right = 820.0
 margin_bottom = 186.0
 rect_min_size = Vector2( 0, 32 )
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 190.0
-margin_right = 712.0
+margin_right = 820.0
 margin_bottom = 290.0
 rect_min_size = Vector2( 0, 100 )
 color = Color( 0.74902, 0.227451, 0.227451, 1 )
 
-[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 294.0
-margin_right = 712.0
-margin_bottom = 394.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect3" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 398.0
-margin_right = 712.0
-margin_bottom = 498.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect4" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 502.0
-margin_right = 712.0
-margin_bottom = 602.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect5" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 606.0
-margin_right = 712.0
-margin_bottom = 706.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect6" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 710.0
-margin_right = 712.0
-margin_bottom = 810.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect7" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 814.0
-margin_right = 712.0
-margin_bottom = 914.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect8" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 918.0
-margin_right = 712.0
-margin_bottom = 1018.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect9" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 1022.0
-margin_right = 712.0
-margin_bottom = 1122.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect10" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 1126.0
-margin_right = 712.0
-margin_bottom = 1226.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect11" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 1230.0
-margin_right = 712.0
-margin_bottom = 1330.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect12" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 1334.0
-margin_right = 712.0
-margin_bottom = 1434.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
-[node name="ColorRect13" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 1438.0
-margin_right = 712.0
-margin_bottom = 1538.0
-rect_min_size = Vector2( 0, 100 )
-color = Color( 0.74902, 0.227451, 0.227451, 1 )
-
 [node name="VSplitContainer4" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-margin_top = 1542.0
-margin_right = 712.0
-margin_bottom = 1574.0
+margin_top = 294.0
+margin_right = 820.0
+margin_bottom = 326.0
 rect_min_size = Vector2( 0, 32 )
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+margin_top = 330.0
+margin_right = 820.0
+margin_bottom = 956.0
+size_flags_vertical = 3
+custom_constants/vseparation = 10
+custom_constants/hseparation = 10
+columns = 4
+
+[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_right = 194.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect3" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 204.0
+margin_right = 398.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect4" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 408.0
+margin_right = 602.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect5" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 612.0
+margin_right = 806.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect6" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 106.0
+margin_right = 194.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect7" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 204.0
+margin_top = 106.0
+margin_right = 398.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect8" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 408.0
+margin_top = 106.0
+margin_right = 602.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect9" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 612.0
+margin_top = 106.0
+margin_right = 806.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect10" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 212.0
+margin_right = 194.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect11" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 204.0
+margin_top = 212.0
+margin_right = 398.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect12" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 408.0
+margin_top = 212.0
+margin_right = 602.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect13" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 612.0
+margin_top = 212.0
+margin_right = 806.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect14" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 318.0
+margin_right = 194.0
+margin_bottom = 414.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect15" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 204.0
+margin_top = 318.0
+margin_right = 398.0
+margin_bottom = 414.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect16" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 408.0
+margin_top = 318.0
+margin_right = 602.0
+margin_bottom = 414.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect17" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 612.0
+margin_top = 318.0
+margin_right = 806.0
+margin_bottom = 414.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect18" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 424.0
+margin_right = 194.0
+margin_bottom = 520.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect19" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 204.0
+margin_top = 424.0
+margin_right = 398.0
+margin_bottom = 520.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect20" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 408.0
+margin_top = 424.0
+margin_right = 602.0
+margin_bottom = 520.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect21" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 612.0
+margin_top = 424.0
+margin_right = 806.0
+margin_bottom = 520.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect22" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 530.0
+margin_right = 194.0
+margin_bottom = 626.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )
+
+[node name="ColorRect23" type="ColorRect" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 204.0
+margin_top = 530.0
+margin_right = 398.0
+margin_bottom = 626.0
+rect_min_size = Vector2( 194, 96 )
+color = Color( 0.74902, 0.227451, 0.227451, 1 )

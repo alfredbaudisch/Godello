@@ -1,0 +1,238 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/icons/user.svg" type="Texture" id=2]
+[ext_resource path="res://assets/icons/users.svg" type="Texture" id=3]
+[ext_resource path="res://scenes/BoardCard.tscn" type="PackedScene" id=4]
+
+[node name="Home" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+color = Color( 0.00784314, 0.415686, 0.654902, 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 44.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 1012.0
+margin_bottom = 834.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 94
+custom_constants/margin_top = 0
+custom_constants/margin_left = 94
+custom_constants/margin_bottom = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/ScrollContainer/MarginContainer"]
+margin_left = 94.0
+margin_right = 918.0
+margin_bottom = 834.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer"]
+margin_left = 6.0
+margin_right = 816.0
+margin_bottom = 834.0
+rect_min_size = Vector2( 810, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="VSplitContainer3" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_right = 810.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 0, 28 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 38.0
+margin_right = 810.0
+margin_bottom = 75.0
+custom_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+modulate = Color( 0.34902, 0.686275, 0.882353, 1 )
+margin_right = 32.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 32, 14 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 42.0
+margin_right = 228.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 1 )
+text = "Personal Boards"
+
+[node name="PersonalBoardsContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 85.0
+margin_right = 810.0
+margin_bottom = 605.0
+size_flags_vertical = 3
+custom_constants/vseparation = 10
+custom_constants/hseparation = 10
+columns = 4
+
+[node name="BoardCard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+
+[node name="BoardCard2" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 204.0
+margin_right = 398.0
+
+[node name="BoardCard3" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 408.0
+margin_right = 602.0
+
+[node name="BoardCard4" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 612.0
+margin_right = 806.0
+
+[node name="BoardCard5" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_top = 106.0
+margin_bottom = 202.0
+
+[node name="BoardCard6" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 204.0
+margin_top = 106.0
+margin_right = 398.0
+margin_bottom = 202.0
+
+[node name="BoardCard7" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 408.0
+margin_top = 106.0
+margin_right = 602.0
+margin_bottom = 202.0
+
+[node name="BoardCard8" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 612.0
+margin_top = 106.0
+margin_right = 806.0
+margin_bottom = 202.0
+
+[node name="BoardCard9" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_top = 212.0
+margin_bottom = 308.0
+
+[node name="BoardCard10" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 204.0
+margin_top = 212.0
+margin_right = 398.0
+margin_bottom = 308.0
+
+[node name="BoardCard11" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 408.0
+margin_top = 212.0
+margin_right = 602.0
+margin_bottom = 308.0
+
+[node name="BoardCard12" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 612.0
+margin_top = 212.0
+margin_right = 806.0
+margin_bottom = 308.0
+
+[node name="BoardCard13" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_top = 318.0
+margin_bottom = 414.0
+
+[node name="BoardCard14" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 204.0
+margin_top = 318.0
+margin_right = 398.0
+margin_bottom = 414.0
+
+[node name="BoardCard15" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 408.0
+margin_top = 318.0
+margin_right = 602.0
+margin_bottom = 414.0
+
+[node name="BoardCard16" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 612.0
+margin_top = 318.0
+margin_right = 806.0
+margin_bottom = 414.0
+
+[node name="BoardCard17" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_top = 424.0
+margin_bottom = 520.0
+
+[node name="BoardCard18" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 204.0
+margin_top = 424.0
+margin_right = 398.0
+margin_bottom = 520.0
+
+[node name="BoardCard19" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 4 )]
+margin_left = 408.0
+margin_top = 424.0
+margin_right = 602.0
+margin_bottom = 520.0
+
+[node name="VSplitContainer4" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 615.0
+margin_right = 810.0
+margin_bottom = 643.0
+rect_min_size = Vector2( 0, 28 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 653.0
+margin_right = 810.0
+margin_bottom = 690.0
+custom_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color( 0.34902, 0.686275, 0.882353, 1 )
+margin_right = 32.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 32, 14 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 42.0
+margin_right = 200.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 1 )
+text = "Public Boards"
+
+[node name="PublicBoardsContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 700.0
+margin_right = 810.0
+margin_bottom = 796.0
+size_flags_vertical = 3
+custom_constants/vseparation = 10
+custom_constants/hseparation = 10
+columns = 4
+
+[node name="BoardCard7" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer" instance=ExtResource( 4 )]
+
+[node name="VSplitContainer5" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 806.0
+margin_right = 810.0
+margin_bottom = 834.0
+rect_min_size = Vector2( 0, 28 )
