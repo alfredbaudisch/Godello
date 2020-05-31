@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/Boards.gd" type="Script" id=2]
 [ext_resource path="res://assets/icons/user.svg" type="Texture" id=3]
 [ext_resource path="res://assets/icons/users.svg" type="Texture" id=4]
 [ext_resource path="res://scenes/BoardCard.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/CreateBoardButton.tscn" type="PackedScene" id=6]
 
 [node name="Boards" type="ColorRect"]
 anchor_right = 1.0
@@ -36,8 +37,8 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer"]
-margin_right = 1012.0
-margin_bottom = 834.0
+margin_right = 1024.0
+margin_bottom = 556.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 94
@@ -47,16 +48,16 @@ custom_constants/margin_bottom = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/ScrollContainer/MarginContainer"]
 margin_left = 94.0
-margin_right = 918.0
-margin_bottom = 834.0
+margin_right = 930.0
+margin_bottom = 410.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer"]
-margin_left = 7.0
-margin_right = 817.0
-margin_bottom = 834.0
+margin_left = 13.0
+margin_right = 823.0
+margin_bottom = 410.0
 rect_min_size = Vector2( 810, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -92,7 +93,7 @@ text = "Personal Boards"
 [node name="PersonalBoardsContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 85.0
 margin_right = 810.0
-margin_bottom = 605.0
+margin_bottom = 181.0
 size_flags_vertical = 3
 custom_constants/vseparation = 10
 custom_constants/hseparation = 10
@@ -103,110 +104,18 @@ columns = 4
 [node name="Title" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard" index="0"]
 text = "A Trello Board"
 
-[node name="BoardCard2" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 204.0
-margin_right = 398.0
-
-[node name="BoardCard3" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 408.0
-margin_right = 602.0
-
-[node name="BoardCard4" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 612.0
-margin_right = 806.0
-
-[node name="BoardCard5" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_top = 106.0
-margin_bottom = 202.0
-
-[node name="BoardCard6" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 204.0
-margin_top = 106.0
-margin_right = 398.0
-margin_bottom = 202.0
-
-[node name="BoardCard7" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 408.0
-margin_top = 106.0
-margin_right = 602.0
-margin_bottom = 202.0
-
-[node name="BoardCard8" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 612.0
-margin_top = 106.0
-margin_right = 806.0
-margin_bottom = 202.0
-
-[node name="BoardCard9" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_top = 212.0
-margin_bottom = 308.0
-
-[node name="BoardCard10" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 204.0
-margin_top = 212.0
-margin_right = 398.0
-margin_bottom = 308.0
-
-[node name="BoardCard11" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 408.0
-margin_top = 212.0
-margin_right = 602.0
-margin_bottom = 308.0
-
-[node name="BoardCard12" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 612.0
-margin_top = 212.0
-margin_right = 806.0
-margin_bottom = 308.0
-
-[node name="BoardCard13" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_top = 318.0
-margin_bottom = 414.0
-
-[node name="BoardCard14" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 204.0
-margin_top = 318.0
-margin_right = 398.0
-margin_bottom = 414.0
-
-[node name="BoardCard15" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 408.0
-margin_top = 318.0
-margin_right = 602.0
-margin_bottom = 414.0
-
-[node name="BoardCard16" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 612.0
-margin_top = 318.0
-margin_right = 806.0
-margin_bottom = 414.0
-
-[node name="BoardCard17" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_top = 424.0
-margin_bottom = 520.0
-
-[node name="BoardCard18" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 204.0
-margin_top = 424.0
-margin_right = 398.0
-margin_bottom = 520.0
-
-[node name="BoardCard19" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-margin_left = 408.0
-margin_top = 424.0
-margin_right = 602.0
-margin_bottom = 520.0
+[node name="CreateBoard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 6 )]
 
 [node name="VSplitContainer4" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 615.0
+margin_top = 191.0
 margin_right = 810.0
-margin_bottom = 643.0
+margin_bottom = 219.0
 rect_min_size = Vector2( 0, 28 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 653.0
+margin_top = 229.0
 margin_right = 810.0
-margin_bottom = 690.0
+margin_bottom = 266.0
 custom_constants/separation = 10
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
@@ -226,9 +135,9 @@ custom_fonts/font = ExtResource( 1 )
 text = "Public Boards"
 
 [node name="PublicBoardsContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 700.0
+margin_top = 276.0
 margin_right = 810.0
-margin_bottom = 796.0
+margin_bottom = 372.0
 size_flags_vertical = 3
 custom_constants/vseparation = 10
 custom_constants/hseparation = 10
@@ -236,10 +145,12 @@ columns = 4
 
 [node name="BoardCard7" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer" instance=ExtResource( 5 )]
 
+[node name="CreateBoard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer" instance=ExtResource( 6 )]
+
 [node name="VSplitContainer5" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 806.0
+margin_top = 382.0
 margin_right = 810.0
-margin_bottom = 834.0
+margin_bottom = 410.0
 rect_min_size = Vector2( 0, 28 )
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard" to="." method="_on_BoardCard_pressed"]
 
