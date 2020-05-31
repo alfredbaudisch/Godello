@@ -5,6 +5,7 @@
 [node name="CheckItem" type="CheckBox"]
 margin_right = 526.0
 margin_bottom = 24.0
+mouse_default_cursor_shape = 2
 text = "TODO ITEM"
 script = ExtResource( 1 )
 __meta__ = {

@@ -25,13 +25,15 @@ onready var indicators_size_placeholder := $CardContent/InnerPadding/VBoxContain
 const CARD_DRAG_PREVIEW := preload("res://scenes/CardMousePreview.tscn")
 
 func _ready():
+	set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+	
 	Events.connect("card_dragged", self, "_on_card_dragged")
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	Events.connect("list_dragged", self, "_on_list_dragged")
 	Events.connect("list_dropped", self, "_on_list_dropped")
 	DataRepository.connect("card_updated", self, "_on_card_updated")
 	DataRepository.connect("card_deleted", self, "_on_card_deleted")
-	DataRepository.connect("list_deleted", self, "_on_list_deleted")
+	DataRepository.connect("list_deleted", self, "_on_list_deleted")	
 	
 	split.set_visible(true)
 	edit_icon.set_visible(false)

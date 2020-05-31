@@ -5,11 +5,11 @@
 [ext_resource path="res://scripts/List.gd" type="Script" id=4]
 [ext_resource path="res://assets/icons/dots.svg" type="Texture" id=5]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.721569, 0.72549, 0.756863, 1 )
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 6.0
 bg_color = Color( 0.0352941, 0.117647, 0.258824, 1 )
 
@@ -62,7 +62,8 @@ margin_left = 232.0
 margin_right = 264.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 32, 18 )
-custom_styles/hover = SubResource( 2 )
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 1 )
 icon = ExtResource( 5 )
 expand_icon = true
 
@@ -86,7 +87,8 @@ size_flags_horizontal = 3
 margin_top = 562.0
 margin_right = 264.0
 margin_bottom = 584.0
-custom_styles/hover = SubResource( 1 )
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 2 )
 text = "+ Add a card"
 align = 0
 [connection signal="pressed" from="MarginContainer/VerticalContent/TitleContainer/ListActionsButton" to="." method="_on_ListActionsButton_pressed"]

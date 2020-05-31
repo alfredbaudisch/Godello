@@ -18,6 +18,8 @@ onready var title_label := $MarginContainer/VerticalContent/TitleContainer/Title
 onready var add_card_button := $MarginContainer/VerticalContent/AddCardButton
 
 func _ready():
+	set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+	
 	Events.connect("card_dragged", self, "_on_card_dragged")
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	Events.connect("list_dragged", self, "_on_list_dragged")

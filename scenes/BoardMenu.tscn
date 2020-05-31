@@ -64,6 +64,7 @@ margin_left = 20.0
 margin_right = 36.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 16, 24 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 6 )
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VerticalContent/HBoxContainer"]
@@ -79,6 +80,7 @@ align = 1
 [node name="CloseButton" parent="MarginContainer/VerticalContent/HBoxContainer" instance=ExtResource( 5 )]
 margin_left = 248.0
 margin_right = 264.0
+mouse_default_cursor_shape = 2
 
 [node name="VSplitContainer2" type="VSplitContainer" parent="MarginContainer/VerticalContent"]
 margin_top = 29.0
@@ -120,6 +122,7 @@ custom_constants/separation = 10
 [node name="ArchivedCardsButton" type="ToolButton" parent="MarginContainer/VerticalContent/MenuActionsContainer"]
 margin_right = 264.0
 margin_bottom = 22.0
+mouse_default_cursor_shape = 2
 text = "Archived Cards"
 icon = ExtResource( 8 )
 align = 0
@@ -129,6 +132,7 @@ expand_icon = true
 margin_top = 32.0
 margin_right = 264.0
 margin_bottom = 54.0
+mouse_default_cursor_shape = 2
 text = "Edit Board"
 icon = ExtResource( 7 )
 align = 0
@@ -138,6 +142,7 @@ expand_icon = true
 margin_top = 64.0
 margin_right = 264.0
 margin_bottom = 86.0
+mouse_default_cursor_shape = 2
 text = "Boards"
 icon = ExtResource( 10 )
 align = 0

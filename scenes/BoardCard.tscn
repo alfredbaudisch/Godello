@@ -8,6 +8,7 @@
 margin_right = 194.0
 margin_bottom = 96.0
 rect_min_size = Vector2( 194, 96 )
+mouse_default_cursor_shape = 2
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 2 )
 custom_styles/focus = ExtResource( 1 )
