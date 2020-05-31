@@ -95,5 +95,5 @@ func _on_delete_confirmed(action):
 			hide()
 			
 		SceneUtils.DialogMode.EDIT_BOARD:
-			# todo: delete board
-			pass
+			DataRepository.delete_board(board)
+			queue_free()

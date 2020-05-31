@@ -100,6 +100,9 @@ columns = 4
 
 [node name="BoardCard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
 
+[node name="Title" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard" index="0"]
+text = "A Trello Board"
+
 [node name="BoardCard2" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
 margin_left = 204.0
 margin_right = 398.0
@@ -239,3 +242,5 @@ margin_right = 810.0
 margin_bottom = 834.0
 rect_min_size = Vector2( 0, 28 )
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard" to="." method="_on_BoardCard_pressed"]
+
+[editable path="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard"]

@@ -7,7 +7,7 @@ var is_receiving_drag_data = true
 var list_id_to_container : Dictionary = {}
 
 const LIST_SCENE := preload("res://scenes/List.tscn")
-const MENU_SCENE := preload("res://scenes/Menu.tscn")
+const MENU_SCENE := preload("res://scenes/BoardMenu.tscn")
 const CARD_DETAILS_SCENE := preload("res://scenes/CardDetails.tscn")
 
 onready var list_container := $MarginContainer/VBoxContainer/ListContainerScroll/ListContainer
@@ -29,6 +29,7 @@ func _ready():
 	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
 	DataRepository.connect("list_created", self, "_on_list_created")
 	DataRepository.connect("board_updated", self, "_on_board_updated")
+	DataRepository.connect("board_deleted", self, "_on_board_deleted")
 	
 	full_screen_overlay.set_visible(false)
 	
@@ -130,6 +131,10 @@ func _on_list_created(list : ListModel):
 func _on_board_updated(board):
 	if model and board.id == model.id:
 		set_model(board)
+		
+func _on_board_deleted(board):
+	if model and board.id == model.id:		
+		SceneUtils.go_to_boards()		
 
 # Instantiate and animate the opening of the Main Menu.
 # 

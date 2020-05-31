@@ -5,6 +5,9 @@ enum DialogMode { CREATE_LIST, EDIT_LIST, EDIT_BOARD }
 
 var popup
 
+func go_to_boards():
+	get_tree().change_scene("res://scenes/Boards.tscn")
+
 func create_single_error_popup(message : String, focus_after_close : Control, parent : Node):
 	if popup: popup.queue_free()
 	
