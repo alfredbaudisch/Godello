@@ -1,7 +1,7 @@
 extends Node
 
 const EDIT_LIST_DIALOG := preload("res://scenes/EditListDialog.tscn")
-enum DialogMode { CREATE_LIST, EDIT_LIST, EDIT_BOARD }
+enum DialogMode { CREATE_LIST, EDIT_LIST, CREATE_BOARD, EDIT_BOARD }
 
 var popup
 

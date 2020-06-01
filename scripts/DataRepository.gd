@@ -5,6 +5,7 @@ var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
 var list_draft_cards : Dictionary = {}
 
+signal board_created(board)
 signal board_updated(board)
 signal board_deleted(board)
 signal list_created(list)
@@ -99,6 +100,13 @@ func create_list(board, title):
 	var list = ListModel.new(UUID.v4(), board.id, title)
 	add_list(list)
 	emit_signal("list_created", list)
+	
+func create_board(board):
+	add_board(board)
+	emit_signal("board_created", board)
+	
+func get_draft_board(is_public : bool) -> BoardModel:
+	return BoardModel.new(UUID.v4(), is_public)
 
 func get_draft_card(list):
 	var draft_card = _find_draft_card_for_list(list)

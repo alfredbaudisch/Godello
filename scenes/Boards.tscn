@@ -153,5 +153,7 @@ margin_right = 810.0
 margin_bottom = 410.0
 rect_min_size = Vector2( 0, 28 )
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard" to="." method="_on_BoardCard_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ false ]]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ true ]]
 
 [editable path="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard"]

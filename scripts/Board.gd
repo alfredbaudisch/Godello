@@ -33,7 +33,7 @@ func _ready():
 	
 	full_screen_overlay.set_visible(false)
 	
-	var board = BoardModel.new("1", "A Trello Board")
+	var board = BoardModel.new("1", false, "A Trello Board")
 	DataRepository.add_board(board)
 	set_model(board)
 	

@@ -23,9 +23,14 @@ func set_mode(value):
 		SceneUtils.DialogMode.EDIT_LIST:	
 			add_button("Delete List", true, ACTION_DELETE_LIST)
 			set_title("Edit List")
+			
 		SceneUtils.DialogMode.EDIT_BOARD:
 			add_button("Delete Board", true, ACTION_DELETE_BOARD)
 			set_title("Edit Board")
+			input_field.set_placeholder("Board Name")
+			
+		SceneUtils.DialogMode.CREATE_BOARD:
+			set_title("Create Board")
 			input_field.set_placeholder("Board Name")
 
 func _input(event):
@@ -45,7 +50,7 @@ func save():
 	
 	if title == "":
 		SceneUtils.create_single_error_popup(
-			EMPTY_BOARD_ERROR if mode == SceneUtils.DialogMode.EDIT_BOARD else EMPTY_LIST_ERROR,
+			EMPTY_BOARD_ERROR if _is_board_mode() else EMPTY_LIST_ERROR,
 			input_field, self
 		)
 		return
@@ -59,6 +64,10 @@ func save():
 			
 		SceneUtils.DialogMode.CREATE_LIST:
 			DataRepository.create_list(board, title)
+			
+		SceneUtils.DialogMode.CREATE_BOARD:
+			board.set_title(title)
+			DataRepository.create_board(board)
 	
 	hide()
 
@@ -67,6 +76,9 @@ func set_board(_model):
 
 func set_list(_model):
 	list = _model
+
+func _is_board_mode():
+	return mode in [SceneUtils.DialogMode.CREATE_BOARD, SceneUtils.DialogMode.EDIT_BOARD]
 
 func _on_EditListDialog_confirmed():
 	save()
@@ -79,7 +91,7 @@ func _on_EditListDialog_about_to_show():
 		SceneUtils.DialogMode.EDIT_BOARD:
 			input_field.set_text(board.title)
 			
-		SceneUtils.DialogMode.CREATE_LIST:
+		_:
 			input_field.set_text("")
 			
 	yield(get_tree().create_timer(0.05), "timeout")
