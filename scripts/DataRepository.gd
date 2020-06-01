@@ -38,6 +38,9 @@ func add_list(list : ListModel):
 	lists_by_id[list.id] = list	
 	_map_cards_by_id(list.cards)
 
+	var board = boards_by_id[list.board_id]
+	board.add_list(list)
+
 func move_card_to_list(card : CardModel, list : ListModel):
 	var from_list = lists_by_id[card.list_id]
 	var to_list = lists_by_id[list.id]
@@ -83,6 +86,10 @@ func update_card(card, was_draft := false, was_archived := false):
 func delete_list(list):
 	lists_by_id.erase(list.id)
 	list.remove_cards()
+
+	var board = boards_by_id[list.board_id]
+	board.remove_list(list)
+
 	emit_signal("list_deleted", list)
 	
 func update_list(list):

@@ -19,10 +19,17 @@ var card_details
 
 onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/TitleLabel
 
-func set_model(_model):
+func set_model(_model : BoardModel):
 	model = _model
-	set_name("Board_" + model.id)	
-	title_label.set_text(model.title)	
+	set_name("Board_" + model.id)
+	title_label.set_text(model.title)
+	
+	for list in model.lists: # todo: iterate through existing lists
+		var list_element = LIST_SCENE.instance()
+		list_container.add_child(list_element)
+		list_element.set_model(list)
+		
+	_make_button_last_item()
 
 func _ready():	
 	Events.connect("card_clicked", self, "_on_card_clicked")
