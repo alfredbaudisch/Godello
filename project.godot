@@ -53,6 +53,11 @@ _global_script_classes=[ {
 "class": "UUID",
 "language": "GDScript",
 "path": "res://addons/uuid/uuid.gd"
+}, {
+"base": "Object",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://scripts/Utils.gd"
 } ]
 _global_script_class_icons={
 "BoardModel": "",
@@ -63,7 +68,8 @@ _global_script_class_icons={
 "ListPreview": "",
 "Model": "",
 "TaskModel": "",
-"UUID": ""
+"UUID": "",
+"Utils": ""
 }
 
 [application]

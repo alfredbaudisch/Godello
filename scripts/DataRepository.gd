@@ -1,5 +1,6 @@
 extends Node
 
+var active_board : BoardModel setget set_active_board,get_active_board
 var boards_by_id : Dictionary = {}
 var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
@@ -17,6 +18,12 @@ signal card_deleted(card)
 
 func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
+	
+func set_active_board(value : BoardModel):
+	active_board = value
+
+func get_active_board() -> BoardModel:
+	return active_board
 	
 func add_board(board : BoardModel):
 	boards_by_id[board.id] = board

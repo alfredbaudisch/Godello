@@ -33,33 +33,9 @@ func _ready():
 	
 	full_screen_overlay.set_visible(false)
 	
-	var board = BoardModel.new("1", false, "A Trello Board")
-	DataRepository.add_board(board)
+	var board = DataRepository.get_active_board()
+	assert(board)
 	set_model(board)
-	
-	for n in range(1, 3): # todo: iterate through existing lists
-		var list_element = LIST_SCENE.instance()
-		var list_id = str(n)
-		
-		var cards := []		
-		for c in range(1, 5):
-			var id = str(n) + " - " + str(c)# str(OS.get_ticks_usec())
-			var card = CardModel.new(id, list_id, ("Card Title " + id))
-			if c != 1:
-				card.tasks = [
-					TaskModel.new(str(n * c), id, "TASK " + id + ", 1"),
-					TaskModel.new(str(n * c + 1), id, "TASK " + id + ", 2", true),
-					TaskModel.new(str(n * c + 2), id, "TASK " + id + ", 3"),
-				]
-			cards.append(card)
-		
-		var list = ListModel.new(list_id, model.id, "TODO List " + list_id, cards)
-		list_container.add_child(list_element)
-		DataRepository.add_list(list)
-		
-		list_element.set_model(list)
-		
-	_make_button_last_item()
 		
 func _make_button_last_item():
 	var amount = list_container.get_child_count()  

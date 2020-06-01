@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/style_board_card.tres" type="StyleBox" id=1]
 [ext_resource path="res://assets/style_board_card_hover.tres" type="StyleBox" id=2]
 [ext_resource path="res://assets/fonts/font_board_card.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scripts/BoardCard.gd" type="Script" id=4]
 
 [node name="BoardCard" type="Button"]
 margin_right = 194.0
@@ -20,6 +21,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 clip_text = true
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

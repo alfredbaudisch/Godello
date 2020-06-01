@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/Boards.gd" type="Script" id=2]
 [ext_resource path="res://assets/icons/user.svg" type="Texture" id=3]
 [ext_resource path="res://assets/icons/users.svg" type="Texture" id=4]
-[ext_resource path="res://scenes/BoardCard.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/CreateBoardButton.tscn" type="PackedScene" id=6]
 
 [node name="Boards" type="ColorRect"]
@@ -99,12 +98,9 @@ custom_constants/vseparation = 10
 custom_constants/hseparation = 10
 columns = 4
 
-[node name="BoardCard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 5 )]
-
-[node name="Title" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard" index="0"]
-text = "A Trello Board"
-
 [node name="CreateBoard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 6 )]
+margin_left = 0.0
+margin_right = 194.0
 
 [node name="VSplitContainer4" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 191.0
@@ -143,17 +139,14 @@ custom_constants/vseparation = 10
 custom_constants/hseparation = 10
 columns = 4
 
-[node name="BoardCard7" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer" instance=ExtResource( 5 )]
-
 [node name="CreateBoard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer" instance=ExtResource( 6 )]
+margin_left = 0.0
+margin_right = 194.0
 
 [node name="VSplitContainer5" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 382.0
 margin_right = 810.0
 margin_bottom = 410.0
 rect_min_size = Vector2( 0, 28 )
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard" to="." method="_on_BoardCard_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ false ]]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ true ]]
-
-[editable path="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/BoardCard"]
