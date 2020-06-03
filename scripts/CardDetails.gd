@@ -137,11 +137,12 @@ func _close_edit_card_title():
 	is_save_title_manually_requested = false
 	
 func _save_card_title():
-	var title = title_edit.get_text().replace("\n", "").replace("\t", "").trim_suffix(" ").trim_prefix(" ")
+	var title = Utils.clean_input_text(title_edit.get_text())
 	
 	if title != "" and card.title == title:
 		_close_edit_card_title()
 		return
+		
 		
 	if title == "" and (not card.is_draft or (card.is_draft and is_save_title_manually_requested)):
 		SceneUtils.create_single_error_popup("Title is required.", title_edit, self)
@@ -189,15 +190,14 @@ func _on_SaveCheckItemButton_pressed(is_create):
 		
 func _save_checkitem_task(is_create := true):
 	var input_field = checkitem_create if is_create else checkitem_edit
-	var title = input_field.get_text().replace("\n", "").trim_suffix(" ").trim_prefix(" ")
+	var title = Utils.clean_input_text(input_field.get_text())	
 	
-	if title == "":
-		SceneUtils.create_single_error_popup("Task description is required.", input_field, self)
-	elif is_create:
-		DataRepository.create_task(card, title)
-		input_field.set_text("")
-	else:
-		card.update_task(task, title, task.is_done)
+	if Utils.validate_not_empty_text(title, "Task description", input_field, self):
+		if is_create:
+			DataRepository.create_task(card, title)
+			input_field.set_text("")
+		else:
+			card.update_task(task, title, task.is_done)
 	
 func _on_DeleteCheckItemButton_pressed():
 	card.delete_task(task)

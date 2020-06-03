@@ -5,8 +5,8 @@ var list : ListModel setget set_list
 
 var mode = SceneUtils.DialogMode.CREATE_LIST setget set_mode
 
-const EMPTY_LIST_ERROR = "List Name is required."
-const EMPTY_BOARD_ERROR = "Board Name is required."
+const EMPTY_LIST_ERROR = "List Name"
+const EMPTY_BOARD_ERROR = "Board Name"
 
 const ACTION_DELETE_LIST = "delete_list"
 const ACTION_DELETE_BOARD = "delete_board"
@@ -46,30 +46,27 @@ func _on_TextEdit_gui_input(event):
 				save()
 				
 func save():
-	var title = input_field.get_text().replace("\n", "").trim_suffix(" ").trim_prefix(" ")
+	var title = Utils.clean_input_text(input_field.get_text())
 	
-	if title == "":
-		SceneUtils.create_single_error_popup(
-			EMPTY_BOARD_ERROR if _is_board_mode() else EMPTY_LIST_ERROR,
-			input_field, self
-		)
-		return
+	if Utils.validate_not_empty_text(
+		title, EMPTY_BOARD_ERROR if _is_board_mode() else EMPTY_LIST_ERROR,
+		input_field, self
+	):		
+		match mode:
+			SceneUtils.DialogMode.EDIT_LIST:	
+				list.set_title(title)
+				
+			SceneUtils.DialogMode.EDIT_BOARD:
+				board.set_title(title)
+				
+			SceneUtils.DialogMode.CREATE_LIST:
+				DataRepository.create_list(board, title)
+				
+			SceneUtils.DialogMode.CREATE_BOARD:
+				board.set_title(title)
+				DataRepository.create_board(board)
 		
-	match mode:
-		SceneUtils.DialogMode.EDIT_LIST:	
-			list.set_title(title)
-			
-		SceneUtils.DialogMode.EDIT_BOARD:
-			board.set_title(title)
-			
-		SceneUtils.DialogMode.CREATE_LIST:
-			DataRepository.create_list(board, title)
-			
-		SceneUtils.DialogMode.CREATE_BOARD:
-			board.set_title(title)
-			DataRepository.create_board(board)
-	
-	hide()
+		hide()
 
 func set_board(_model):
 	board = _model
