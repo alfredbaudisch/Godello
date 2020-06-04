@@ -10,6 +10,19 @@ static func validate_not_empty_text(text : String, field_name : String, input_fi
 	
 	return true	
 
+# Basic email validation (x@x.x)
+static func validate_email(email : String) -> bool:
+	var regex = RegEx.new()
+	regex.compile("([\\w-]+@([\\w-]+\\.)+[\\w-]+)")					
+	return regex.search(email) != null
+	
+static func validate_email_field(input_field : Control, parent : Node) -> bool:
+	if not validate_email(input_field.get_text()):
+		SceneUtils.create_single_error_popup("Email is not valid.", input_field, parent)
+		return false
+	
+	return true
+
 static func clear_children(node : Node, ignore := []) -> void:
 	# O(n^1) but there won't be that many items anyway
 	for child in node.get_children():

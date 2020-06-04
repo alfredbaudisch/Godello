@@ -9,8 +9,6 @@
 [node name="LoginRegister" type="ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -4.0
-margin_right = -4.0
 color = Color( 0.054902, 0.462745, 0.752941, 1 )
 script = ExtResource( 5 )
 __meta__ = {
