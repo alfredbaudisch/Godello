@@ -29,7 +29,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Form" type="VBoxContainer" parent="Center"]
+[node name="SignUpForm" type="VBoxContainer" parent="Center"]
+visible = false
 margin_left = 5.0
 margin_top = 16.0
 margin_right = 355.0
@@ -38,26 +39,26 @@ rect_min_size = Vector2( 350, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="FullName" parent="Center/Form" instance=ExtResource( 1 )]
+[node name="FullName" parent="Center/SignUpForm" instance=ExtResource( 1 )]
 margin_top = 0.0
 margin_bottom = 58.0
 placeholder_text = "Full name"
 
-[node name="Email" parent="Center/Form" instance=ExtResource( 1 )]
+[node name="Email" parent="Center/SignUpForm" instance=ExtResource( 1 )]
 margin_top = 62.0
 margin_bottom = 120.0
 placeholder_text = "Email"
 
-[node name="Password" parent="Center/Form" instance=ExtResource( 1 )]
+[node name="Password" parent="Center/SignUpForm" instance=ExtResource( 1 )]
 margin_top = 124.0
 margin_bottom = 182.0
 secret = true
 placeholder_text = "Password"
 
-[node name="ConfirmPassword" parent="Center/Form" instance=ExtResource( 1 )]
+[node name="ConfirmPassword" parent="Center/SignUpForm" instance=ExtResource( 1 )]
 secret = true
 
-[node name="SignUpButton" type="Button" parent="Center/Form"]
+[node name="SignUpButton" type="Button" parent="Center/SignUpForm"]
 margin_top = 248.0
 margin_right = 350.0
 margin_bottom = 306.0
@@ -77,7 +78,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SignInButton" type="ToolButton" parent="Center/Form"]
+[node name="GoToSignInButton" type="ToolButton" parent="Center/SignUpForm"]
 margin_top = 310.0
 margin_right = 350.0
 margin_bottom = 368.0
@@ -86,5 +87,59 @@ mouse_default_cursor_shape = 2
 custom_colors/font_color = Color( 0.784314, 0.788235, 0.803922, 1 )
 custom_colors/font_color_hover = Color( 0.921569, 0.92549, 0.941176, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0.92549, 0.941176, 1 )
+text = "Already have an account? Sign in!"
+
+[node name="SignInForm" type="VBoxContainer" parent="Center"]
+margin_left = 5.0
+margin_top = 78.0
+margin_right = 355.0
+margin_bottom = 322.0
+rect_min_size = Vector2( 350, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SignInEmail" parent="Center/SignInForm" instance=ExtResource( 1 )]
+margin_top = 0.0
+margin_bottom = 58.0
+placeholder_text = "Email"
+
+[node name="SignInPassword" parent="Center/SignInForm" instance=ExtResource( 1 )]
+margin_top = 62.0
+margin_bottom = 120.0
+secret = true
+placeholder_text = "Password"
+
+[node name="SignInButton" type="Button" parent="Center/SignInForm"]
+margin_top = 124.0
+margin_right = 350.0
+margin_bottom = 182.0
+rect_min_size = Vector2( 0, 58 )
+mouse_default_cursor_shape = 2
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/focus = ExtResource( 4 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 text = "Sign in"
-[connection signal="pressed" from="Center/Form/SignUpButton" to="." method="_on_SignUpButton_pressed"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GoToSignUpButton" type="ToolButton" parent="Center/SignInForm"]
+margin_top = 186.0
+margin_right = 350.0
+margin_bottom = 244.0
+rect_min_size = Vector2( 0, 58 )
+mouse_default_cursor_shape = 2
+custom_colors/font_color = Color( 0.784314, 0.788235, 0.803922, 1 )
+custom_colors/font_color_hover = Color( 0.921569, 0.92549, 0.941176, 1 )
+custom_colors/font_color_pressed = Color( 0.921569, 0.92549, 0.941176, 1 )
+text = "Don't have an account? Create one!"
+[connection signal="pressed" from="Center/SignUpForm/SignUpButton" to="." method="_on_SignUpButton_pressed"]
+[connection signal="pressed" from="Center/SignUpForm/GoToSignInButton" to="." method="_on_GoToSignInButton_pressed"]
+[connection signal="pressed" from="Center/SignInForm/SignInButton" to="." method="_on_SignInButton_pressed"]
+[connection signal="pressed" from="Center/SignInForm/GoToSignUpButton" to="." method="_on_GoToSignUpButton_pressed"]
