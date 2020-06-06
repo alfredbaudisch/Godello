@@ -1,5 +1,6 @@
 extends Node
 
+var active_user : UserModel setget set_active_user
 var active_board : BoardModel setget set_active_board,get_active_board
 var boards_by_id : Dictionary = {}
 var lists_by_id : Dictionary = {}
@@ -18,6 +19,9 @@ signal card_deleted(card)
 
 func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
+	
+func set_active_user(value : UserModel):
+	active_user = value
 	
 func set_active_board(value : BoardModel):
 	active_board = value
