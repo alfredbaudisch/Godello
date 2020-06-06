@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/uuid/uuid.gd"
 }, {
+"base": "Model",
+"class": "UserModel",
+"language": "GDScript",
+"path": "res://scripts/models/UserModel.gd"
+}, {
 "base": "Object",
 "class": "Utils",
 "language": "GDScript",
@@ -69,6 +74,7 @@ _global_script_class_icons={
 "Model": "",
 "TaskModel": "",
 "UUID": "",
+"UserModel": "",
 "Utils": ""
 }
 

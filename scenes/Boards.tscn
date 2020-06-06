@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/Boards.gd" type="Script" id=2]
 [ext_resource path="res://assets/icons/user.svg" type="Texture" id=3]
 [ext_resource path="res://assets/icons/users.svg" type="Texture" id=4]
+[ext_resource path="res://assets/icons/home-white.png" type="Texture" id=5]
 [ext_resource path="res://scenes/CreateBoardButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=7]
+[ext_resource path="res://assets/style_topbar_button_hover.tres" type="StyleBox" id=8]
+[ext_resource path="res://assets/style_topbar_button_normal.tres" type="StyleBox" id=9]
+[ext_resource path="res://assets/style_topbar_button_pressed.tres" type="StyleBox" id=10]
+[ext_resource path="res://assets/icons/sign-out-white.png" type="Texture" id=11]
 
 [node name="Boards" type="ColorRect"]
 anchor_right = 1.0
@@ -26,6 +32,60 @@ margin_right = 1024.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 color = Color( 0.00784314, 0.415686, 0.654902, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HomeButton" type="Button" parent="VBoxContainer/ColorRect/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 100, 0 )
+mouse_default_cursor_shape = 2
+custom_styles/hover = ExtResource( 8 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 10 )
+custom_styles/normal = ExtResource( 9 )
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+text = "Boards"
+icon = ExtResource( 5 )
+expand_icon = true
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/ColorRect/HBoxContainer"]
+margin_left = 104.0
+margin_right = 912.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="SignOutButton" type="Button" parent="VBoxContainer/ColorRect/HBoxContainer"]
+margin_left = 916.0
+margin_right = 1016.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 100, 0 )
+mouse_default_cursor_shape = 2
+custom_styles/hover = ExtResource( 8 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 10 )
+custom_styles/normal = ExtResource( 9 )
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+text = "Log Out"
+icon = ExtResource( 11 )
+expand_icon = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 44.0
