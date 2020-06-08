@@ -1,103 +1,34 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/Boards.gd" type="Script" id=2]
 [ext_resource path="res://assets/icons/user.svg" type="Texture" id=3]
 [ext_resource path="res://assets/icons/users.svg" type="Texture" id=4]
-[ext_resource path="res://assets/icons/home-white.png" type="Texture" id=5]
 [ext_resource path="res://scenes/CreateBoardButton.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=7]
-[ext_resource path="res://assets/style_topbar_button_hover.tres" type="StyleBox" id=8]
-[ext_resource path="res://assets/style_topbar_button_normal.tres" type="StyleBox" id=9]
-[ext_resource path="res://assets/style_topbar_button_pressed.tres" type="StyleBox" id=10]
-[ext_resource path="res://assets/icons/sign-out-white.png" type="Texture" id=11]
 
 [node name="Boards" type="ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 0, 40 )
-color = Color( 0.00784314, 0.415686, 0.654902, 1 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ColorRect"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HomeButton" type="Button" parent="VBoxContainer/ColorRect/HBoxContainer"]
-margin_right = 100.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 100, 0 )
-mouse_default_cursor_shape = 2
-custom_styles/hover = ExtResource( 8 )
-custom_styles/pressed = ExtResource( 10 )
-custom_styles/focus = ExtResource( 10 )
-custom_styles/normal = ExtResource( 9 )
-custom_fonts/font = ExtResource( 7 )
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
-text = "Boards"
-icon = ExtResource( 5 )
-expand_icon = true
-
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/ColorRect/HBoxContainer"]
-margin_left = 104.0
-margin_right = 912.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-
-[node name="SignOutButton" type="Button" parent="VBoxContainer/ColorRect/HBoxContainer"]
-margin_left = 916.0
-margin_right = 1016.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 100, 0 )
-mouse_default_cursor_shape = 2
-custom_styles/hover = ExtResource( 8 )
-custom_styles/pressed = ExtResource( 10 )
-custom_styles/focus = ExtResource( 10 )
-custom_styles/normal = ExtResource( 9 )
-custom_fonts/font = ExtResource( 7 )
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
-text = "Log Out"
-icon = ExtResource( 11 )
-expand_icon = true
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 44.0
-margin_right = 1024.0
-margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
 margin_right = 1024.0
-margin_bottom = 556.0
+margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 94
@@ -105,7 +36,7 @@ custom_constants/margin_top = 0
 custom_constants/margin_left = 94
 custom_constants/margin_bottom = 0
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/ScrollContainer/MarginContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="ScrollContainer/MarginContainer"]
 margin_left = 94.0
 margin_right = 930.0
 margin_bottom = 410.0
@@ -113,7 +44,7 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/CenterContainer"]
 margin_left = 13.0
 margin_right = 823.0
 margin_bottom = 410.0
@@ -122,18 +53,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
 
-[node name="VSplitContainer3" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+[node name="VSplitContainer3" type="VSplitContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_right = 810.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 0, 28 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 38.0
 margin_right = 810.0
 margin_bottom = 75.0
 custom_constants/separation = 10
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
 modulate = Color( 0.34902, 0.686275, 0.882353, 1 )
 margin_right = 32.0
 margin_bottom = 37.0
@@ -142,14 +73,14 @@ texture = ExtResource( 3 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
 margin_left = 42.0
 margin_right = 228.0
 margin_bottom = 37.0
 custom_fonts/font = ExtResource( 1 )
 text = "Personal Boards"
 
-[node name="PersonalBoardsContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+[node name="PersonalBoardsContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 85.0
 margin_right = 810.0
 margin_bottom = 181.0
@@ -158,23 +89,23 @@ custom_constants/vseparation = 10
 custom_constants/hseparation = 10
 columns = 4
 
-[node name="CreateBoard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 6 )]
+[node name="CreateBoard" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 6 )]
 margin_left = 0.0
 margin_right = 194.0
 
-[node name="VSplitContainer4" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+[node name="VSplitContainer4" type="VSplitContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 191.0
 margin_right = 810.0
 margin_bottom = 219.0
 rect_min_size = Vector2( 0, 28 )
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 229.0
 margin_right = 810.0
 margin_bottom = 266.0
 custom_constants/separation = 10
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
 modulate = Color( 0.34902, 0.686275, 0.882353, 1 )
 margin_right = 32.0
 margin_bottom = 37.0
@@ -183,14 +114,14 @@ texture = ExtResource( 4 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 42.0
 margin_right = 200.0
 margin_bottom = 37.0
 custom_fonts/font = ExtResource( 1 )
 text = "Public Boards"
 
-[node name="PublicBoardsContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+[node name="PublicBoardsContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 276.0
 margin_right = 810.0
 margin_bottom = 372.0
@@ -199,14 +130,14 @@ custom_constants/vseparation = 10
 custom_constants/hseparation = 10
 columns = 4
 
-[node name="CreateBoard" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer" instance=ExtResource( 6 )]
+[node name="CreateBoard" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer" instance=ExtResource( 6 )]
 margin_left = 0.0
 margin_right = 194.0
 
-[node name="VSplitContainer5" type="VSplitContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+[node name="VSplitContainer5" type="VSplitContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 382.0
 margin_right = 810.0
 margin_bottom = 410.0
 rect_min_size = Vector2( 0, 28 )
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ false ]]
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ true ]]
+[connection signal="pressed" from="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ false ]]
+[connection signal="pressed" from="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ true ]]
