@@ -24,6 +24,11 @@ func set_model(_model : BoardModel):
 	set_name("Board_" + model.id)
 	title_label.set_text(model.title)
 	
+	# In a high performance/production scenario, we wouldn't always clear the
+	# children and recreate them. Instead, we change just what changed.
+	# But for the sake of this project, this is enough.
+	Utils.clear_children(list_container)
+	
 	for list in model.lists: # todo: iterate through existing lists
 		var list_element = LIST_SCENE.instance()
 		list_container.add_child(list_element)
