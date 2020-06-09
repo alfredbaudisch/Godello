@@ -14,6 +14,9 @@ func go_to_main_route():
 	
 func request_route_change(route : int):
 	emit_signal("change_route_requested", route)
+
+func go_to_login():
+	get_tree().change_scene("res://scenes/LoginRegister.tscn")
 	
 func go_to_boards():
 	emit_signal("change_route_requested", Routes.BOARDS)

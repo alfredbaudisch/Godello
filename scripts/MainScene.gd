@@ -10,8 +10,10 @@ var route : int
 var route_scene : Node
 
 func _ready():
+	Events.connect("user_logged_out", self, "_on_user_logged_out")
+	
 	SceneUtils.connect("change_route_requested", self, "_on_change_scene_requested")
-	_go_ro_route(SceneUtils.Routes.BOARDS)
+	SceneUtils.go_to_boards()
 
 func _on_change_scene_requested(next_route : int):
 	_go_ro_route(next_route)
@@ -31,4 +33,12 @@ func _get_scene_for_route(next_route : int) -> PackedScene:
 					
 		_:
 			return BOARDS_SCENE
+
+func _on_HomeButton_pressed():
+	SceneUtils.go_to_boards()
+
+func _on_user_logged_out():
+	SceneUtils.go_to_login()
 	
+func _on_LogOutButton_pressed():
+	Events.emit_signal("user_logged_out")

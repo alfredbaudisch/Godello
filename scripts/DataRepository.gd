@@ -19,7 +19,15 @@ signal card_deleted(card)
 
 func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
+	Events.connect("user_logged_in", self, "_on_user_logged_in")
+	Events.connect("user_logged_out", self, "_on_user_logged_out")
+
+func _on_user_logged_in(user : UserModel):
+	set_active_user(user)
 	
+func _on_user_logged_out():
+	set_active_user(null)
+
 func set_active_user(value : UserModel):
 	active_user = value
 	
