@@ -1,12 +1,28 @@
 extends Node
 
+enum Routes { LOGIN, SIGNUP, BOARDS, BOARD }
+
 const EDIT_LIST_DIALOG := preload("res://scenes/EditListDialog.tscn")
 enum DialogMode { CREATE_LIST, EDIT_LIST, CREATE_BOARD, EDIT_BOARD }
 
 var popup
 
+signal change_route_requested(next_route)
+
+func go_to_main_route():
+	get_tree().change_scene("res://scenes/MainScene.tscn")
+	
+func request_route_change(route : int):
+	emit_signal("change_route_requested", route)
+
+func go_to_login():
+	get_tree().change_scene("res://scenes/LoginRegister.tscn")
+	
 func go_to_boards():
-	get_tree().change_scene("res://scenes/Boards.tscn")
+	emit_signal("change_route_requested", Routes.BOARDS)
+	
+func go_to_board():
+	emit_signal("change_route_requested", Routes.BOARD)
 
 func create_single_error_popup(message : String, focus_after_close : Control, parent : Node):
 	if popup: popup.queue_free()

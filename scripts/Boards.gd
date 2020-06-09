@@ -1,12 +1,11 @@
 extends ColorRect
 
-onready var personal_boards_container := $VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer
-onready var public_boards_container := $VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer
+onready var personal_boards_container := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer
+onready var public_boards_container := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer
 
-onready var create_personal_board_button := $VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard
-onready var create_public_board_button := $VBoxContainer/ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer/CreateBoard
+onready var create_personal_board_button := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard
+onready var create_public_board_button := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer/CreateBoard
 
-const BOARD_SCENE := preload("res://scenes/Board.tscn")
 const BOARD_CARD := preload("res://scenes/BoardCard.tscn")
 
 func _ready():
@@ -33,7 +32,7 @@ func _refresh_boards():
 
 func _go_to_board(board):
 	DataRepository.set_active_board(board)
-	get_tree().change_scene("res://scenes/Board.tscn")
+	SceneUtils.request_route_change(SceneUtils.Routes.BOARD)
 
 func _on_board_card_pressed(board : BoardModel):
 	_go_to_board(board)
