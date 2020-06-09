@@ -27,7 +27,7 @@ func set_model(_model : BoardModel):
 	# In a high performance/production scenario, we wouldn't always clear the
 	# children and recreate them. Instead, we change just what changed.
 	# But for the sake of this project, this is enough.
-	Utils.clear_children(list_container)
+	Utils.clear_children(list_container, [add_list_button])
 	
 	for list in model.lists: # todo: iterate through existing lists
 		var list_element = LIST_SCENE.instance()
