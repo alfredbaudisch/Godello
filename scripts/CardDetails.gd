@@ -42,7 +42,10 @@ func _ready():
 	DataRepository.connect("list_deleted", self, "_on_list_deleted")
 	
 	title_edit.set_visible(false)
-	title_label.set_visible(true)	
+	title_label.set_visible(true)
+	
+	yield(get_tree().create_timer(0.005), "timeout")
+	title_edit.grab_focus()
 
 func set_card(_model : CardModel):
 	card = _model
