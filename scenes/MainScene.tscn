@@ -19,6 +19,7 @@ __meta__ = {
 [node name="ContentContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -64,7 +65,7 @@ margin_right = 912.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
 
-[node name="SignOutButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
+[node name="LogOutButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
 margin_left = 916.0
 margin_right = 1016.0
 margin_bottom = 32.0
@@ -82,3 +83,5 @@ custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 text = "Log Out"
 icon = ExtResource( 4 )
 expand_icon = true
+[connection signal="pressed" from="ContentContainer/TopBar/HBoxContainer/HomeButton" to="." method="_on_HomeButton_pressed"]
+[connection signal="pressed" from="ContentContainer/TopBar/HBoxContainer/LogOutButton" to="." method="_on_LogOutButton_pressed"]
