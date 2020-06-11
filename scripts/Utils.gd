@@ -28,3 +28,6 @@ static func clear_children(node : Node, ignore := []) -> void:
 	for child in node.get_children():
 		if not child in ignore:
 			child.queue_free()
+
+static func is_mouse_inside_control(node : Control) -> bool:
+	return Rect2(node.get_global_position(), node.get_size()).has_point(node.get_global_mouse_position())

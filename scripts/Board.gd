@@ -15,6 +15,9 @@ onready var list_container_scroll := $MarginContainer/VBoxContainer/ListContaine
 onready var add_list_button := $MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton
 onready var full_screen_overlay := $FullScreenOverlay
 
+onready var board_members_container := $MarginContainer/VBoxContainer/BoardInfoContainer/BoardMembers
+onready var board_owner_button := $MarginContainer/VBoxContainer/BoardInfoContainer/BoardOwnerButton
+
 var card_details
 
 onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/TitleLabel

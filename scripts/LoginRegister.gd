@@ -9,7 +9,8 @@ var is_sign_in := true
 onready var sign_up_form := $"/root/LoginRegister".find_node("SignUpForm")
 onready var sign_in_form := $"/root/LoginRegister".find_node("SignInForm")
 
-onready var full_name_input := $"/root/LoginRegister".find_node("FullName")
+onready var first_name_input := $"/root/LoginRegister".find_node("FirstName")
+onready var last_name_input := $"/root/LoginRegister".find_node("LastName")
 onready var email_input := $"/root/LoginRegister".find_node("Email")
 onready var password_input := $"/root/LoginRegister".find_node("Password")
 onready var confirm_password_input := $"/root/LoginRegister".find_node("ConfirmPassword")
@@ -67,14 +68,16 @@ func _sign_in():
 		print("SIGN IN!")
 	
 func _sign_up():
-	var full_name = Utils.clean_input_text(full_name_input.get_text())
+	var first_name = Utils.clean_input_text(first_name_input.get_text())
+	var last_name = Utils.clean_input_text(last_name_input.get_text())
 	var email = Utils.clean_input_text(email_input.get_text())
 	var password = password_input.get_text()
 	var confirm_password = confirm_password_input.get_text()
 	
 	# Basic validation
 	if (
-		Utils.validate_not_empty_text(full_name, full_name_input.get_placeholder(), full_name_input, self)
+		Utils.validate_not_empty_text(first_name, first_name_input.get_placeholder(), first_name_input, self)
+		and Utils.validate_not_empty_text(last_name, last_name_input.get_placeholder(), last_name_input, self)
 		and Utils.validate_not_empty_text(email, email_input.get_placeholder(), email_input, self)
 		and Utils.validate_email_field(email_input, self)
 		and Utils.validate_not_empty_text(password, password_input.get_placeholder(), password_input, self)

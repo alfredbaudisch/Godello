@@ -21,6 +21,8 @@ func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
 	Events.connect("user_logged_in", self, "_on_user_logged_in")
 	Events.connect("user_logged_out", self, "_on_user_logged_out")
+	
+	set_active_user(UserModel.new("1", "Alfred", "R Baudisch", "alfred@alfred"))
 
 func _on_user_logged_in(user : UserModel):
 	set_active_user(user)

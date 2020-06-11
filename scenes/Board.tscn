@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/fonts/Roboto-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/icons/plus-white.png" type="Texture" id=2]
 [ext_resource path="res://scripts/Board.gd" type="Script" id=3]
+[ext_resource path="res://scenes/ButtonExpandOnHover.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/style_board_member_button.tres" type="StyleBox" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 18
@@ -71,7 +74,7 @@ rect_min_size = Vector2( 0, 32 )
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
 margin_top = 1.0
-margin_right = 687.0
+margin_right = 603.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
@@ -80,10 +83,36 @@ text = "Board Name"
 clip_text = true
 
 [node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
-margin_left = 691.0
-margin_right = 891.0
+margin_left = 607.0
+margin_right = 807.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 200, 0 )
+
+[node name="BoardMembers" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
+margin_left = 811.0
+margin_right = 811.0
+margin_bottom = 32.0
+
+[node name="BoardOwnerButton" parent="MarginContainer/VBoxContainer/BoardInfoContainer" instance=ExtResource( 4 )]
+expand_to = "Alfred"
+
+[node name="AddBoardMemberButton2" type="Button" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
+margin_left = 855.0
+margin_right = 891.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 36, 0 )
+hint_tooltip = "Add Board Member"
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/normal = ExtResource( 5 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+icon = ExtResource( 2 )
+expand_icon = true
 
 [node name="ShowMenuButton" type="Button" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
 margin_left = 895.0
@@ -141,5 +170,6 @@ color = Color( 0, 0, 0, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/AddBoardMemberButton2" to="." method="_on_ShowMenuButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/ShowMenuButton" to="." method="_on_ShowMenuButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton" to="." method="_on_AddListButton_pressed"]

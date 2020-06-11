@@ -30,38 +30,42 @@ __meta__ = {
 }
 
 [node name="SignUpForm" type="VBoxContainer" parent="Center"]
-visible = false
 margin_left = 5.0
-margin_top = 16.0
 margin_right = 355.0
-margin_bottom = 384.0
+margin_bottom = 430.0
 rect_min_size = Vector2( 350, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="FullName" parent="Center/SignUpForm" instance=ExtResource( 1 )]
+[node name="FirstName" parent="Center/SignUpForm" instance=ExtResource( 1 )]
 margin_top = 0.0
 margin_bottom = 58.0
-placeholder_text = "Full name"
+placeholder_text = "First Name"
 
-[node name="Email" parent="Center/SignUpForm" instance=ExtResource( 1 )]
+[node name="LastName" parent="Center/SignUpForm" instance=ExtResource( 1 )]
 margin_top = 62.0
 margin_bottom = 120.0
+placeholder_text = "Last Name"
+
+[node name="Email" parent="Center/SignUpForm" instance=ExtResource( 1 )]
+margin_top = 124.0
+margin_bottom = 182.0
 placeholder_text = "Email"
 
 [node name="Password" parent="Center/SignUpForm" instance=ExtResource( 1 )]
-margin_top = 124.0
-margin_bottom = 182.0
 secret = true
 placeholder_text = "Password"
 
 [node name="ConfirmPassword" parent="Center/SignUpForm" instance=ExtResource( 1 )]
+margin_top = 248.0
+margin_bottom = 306.0
 secret = true
+placeholder_text = "Confirm Password"
 
 [node name="SignUpButton" type="Button" parent="Center/SignUpForm"]
-margin_top = 248.0
+margin_top = 310.0
 margin_right = 350.0
-margin_bottom = 306.0
+margin_bottom = 368.0
 rect_min_size = Vector2( 0, 58 )
 mouse_default_cursor_shape = 2
 custom_styles/hover = ExtResource( 2 )
@@ -79,9 +83,9 @@ __meta__ = {
 }
 
 [node name="GoToSignInButton" type="ToolButton" parent="Center/SignUpForm"]
-margin_top = 310.0
+margin_top = 372.0
 margin_right = 350.0
-margin_bottom = 368.0
+margin_bottom = 430.0
 rect_min_size = Vector2( 0, 58 )
 mouse_default_cursor_shape = 2
 custom_colors/font_color = Color( 0.784314, 0.788235, 0.803922, 1 )
@@ -90,10 +94,11 @@ custom_colors/font_color_pressed = Color( 0.921569, 0.92549, 0.941176, 1 )
 text = "Already have an account? Sign in!"
 
 [node name="SignInForm" type="VBoxContainer" parent="Center"]
+visible = false
 margin_left = 5.0
-margin_top = 78.0
+margin_top = 93.0
 margin_right = 355.0
-margin_bottom = 322.0
+margin_bottom = 337.0
 rect_min_size = Vector2( 350, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3

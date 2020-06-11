@@ -61,9 +61,27 @@ expand_icon = true
 
 [node name="HSplitContainer" type="HSplitContainer" parent="ContentContainer/TopBar/HBoxContainer"]
 margin_left = 104.0
-margin_right = 912.0
+margin_right = 857.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
+
+[node name="UserButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
+margin_left = 861.0
+margin_right = 912.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 0 )
+mouse_default_cursor_shape = 2
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/focus = ExtResource( 5 )
+custom_styles/normal = ExtResource( 7 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+text = "Alfred"
+expand_icon = true
 
 [node name="LogOutButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
 margin_left = 916.0
