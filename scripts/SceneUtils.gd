@@ -2,8 +2,10 @@ extends Node
 
 enum Routes { LOGIN, SIGNUP, BOARDS, BOARD }
 
-const EDIT_LIST_DIALOG := preload("res://scenes/EditListDialog.tscn")
-enum DialogMode { CREATE_LIST, EDIT_LIST, CREATE_BOARD, EDIT_BOARD }
+const INPUT_FIELD_DIALOG := preload("res://scenes/InputFieldDialog.tscn")
+enum InputFieldDialogMode { 
+	CREATE_LIST, EDIT_LIST, CREATE_BOARD, EDIT_BOARD, ADD_BOARD_MEMBER
+}
 
 var popup
 
@@ -51,13 +53,13 @@ func create_delete_confirm_popup(parent : Node, confirm_target : Object, binds :
 	yield(dialog, "popup_hide")
 	dialog.queue_free()
 
-func create_edit_title_dialog(mode, board, list = null):
+func create_input_field_dialog(mode, board, list = null):
 	var overlay = ColorRect.new()
 	overlay.color = Color(0, 0, 0, 0.5)
 	overlay.set_anchors_and_margins_preset(Control.PRESET_WIDE, Control.PRESET_MODE_KEEP_SIZE)
 	get_parent().add_child(overlay)
 	
-	var dialog = EDIT_LIST_DIALOG.instance()
+	var dialog = INPUT_FIELD_DIALOG.instance()
 	overlay.add_child(dialog)	
 	dialog.set_board(board)
 	dialog.set_mode(mode)

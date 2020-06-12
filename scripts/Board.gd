@@ -166,4 +166,8 @@ func _on_ShowMenuButton_pressed():
 	menu.queue_free()
 
 func _on_AddListButton_pressed():
-	SceneUtils.create_edit_title_dialog(SceneUtils.DialogMode.CREATE_LIST, model)
+	SceneUtils.create_input_field_dialog(SceneUtils.InputFieldDialogMode.CREATE_LIST, model)
+
+
+func _on_AddBoardMemberButton_pressed():
+	SceneUtils.create_input_field_dialog(SceneUtils.InputFieldDialogMode.ADD_BOARD_MEMBER, model)

@@ -38,7 +38,7 @@ func _on_board_card_pressed(board : BoardModel):
 	_go_to_board(board)
 
 func _on_CreateBoard_pressed(is_public : bool):
-	SceneUtils.create_edit_title_dialog(SceneUtils.DialogMode.CREATE_BOARD, DataRepository.get_draft_board(is_public))
+	SceneUtils.create_input_field_dialog(SceneUtils.InputFieldDialogMode.CREATE_BOARD, DataRepository.get_draft_board(is_public))
 
 func _on_board_created(board : BoardModel):
 	_refresh_boards()

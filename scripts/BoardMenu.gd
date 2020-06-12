@@ -66,7 +66,7 @@ func _on_ArchivedCardsButton_pressed():
 	_sync_archived_cards()	
 
 func _on_EditBoardButton_pressed():
-	SceneUtils.create_edit_title_dialog(SceneUtils.DialogMode.EDIT_BOARD, board)
+	SceneUtils.create_input_field_dialog(SceneUtils.InputFieldDialogMode.EDIT_BOARD, board)
 
 func _on_HomeButton_pressed():
 	SceneUtils.go_to_boards()

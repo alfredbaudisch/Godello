@@ -96,7 +96,7 @@ margin_bottom = 32.0
 [node name="BoardOwnerButton" parent="MarginContainer/VBoxContainer/BoardInfoContainer" instance=ExtResource( 4 )]
 expand_to = "Alfred"
 
-[node name="AddBoardMemberButton2" type="Button" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
+[node name="AddBoardMemberButton" type="Button" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
 margin_left = 855.0
 margin_right = 891.0
 margin_bottom = 32.0
@@ -170,6 +170,6 @@ color = Color( 0, 0, 0, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/AddBoardMemberButton2" to="." method="_on_ShowMenuButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/AddBoardMemberButton" to="." method="_on_AddBoardMemberButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/ShowMenuButton" to="." method="_on_ShowMenuButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton" to="." method="_on_AddListButton_pressed"]

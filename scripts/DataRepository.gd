@@ -33,6 +33,9 @@ func _on_user_logged_out():
 func set_active_user(value : UserModel):
 	active_user = value
 	
+func add_board_member(email : String, board : BoardModel):
+	pass
+	
 func set_active_board(value : BoardModel):
 	active_board = value
 
@@ -146,6 +149,7 @@ func get_draft_card(list):
 	_set_draft_card_for_list(list, draft_card)
 	cards_by_id[draft_card.id] = draft_card
 	return draft_card
+	
 
 # TODO: refactor to dict[list_id][draft_card_id] = foo
 func _find_draft_card_for_list(list):	

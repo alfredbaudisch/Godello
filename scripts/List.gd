@@ -141,7 +141,7 @@ func _on_AddCardButton_pressed():
 	Events.emit_signal("add_card_clicked", model)
 
 func _on_ListActionsButton_pressed():
-	SceneUtils.create_edit_title_dialog(
-		SceneUtils.DialogMode.EDIT_LIST, 
+	SceneUtils.create_input_field_dialog(
+		SceneUtils.InputFieldDialogMode.EDIT_LIST, 
 		DataRepository.get_board(model.board_id), model
 	)
