@@ -5,6 +5,7 @@ const BOARD_SCENE := preload("res://scenes/Board.tscn")
 
 onready var content_container := $ContentContainer
 onready var top_bar := $ContentContainer/TopBar
+onready var user_button := $ContentContainer/TopBar/HBoxContainer/UserButton
 
 var route : int
 var route_scene : Node
@@ -14,6 +15,8 @@ func _ready():
 	
 	SceneUtils.connect("change_route_requested", self, "_on_change_scene_requested")
 	SceneUtils.go_to_boards()
+	
+	user_button.set_text(DataRepository.active_user.get_full_name())
 
 func _on_change_scene_requested(next_route : int):
 	_go_ro_route(next_route)

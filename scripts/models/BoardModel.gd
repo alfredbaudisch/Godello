@@ -1,14 +1,18 @@
 class_name BoardModel extends Model
 
 var title : String = ""
-var is_public := false setget set_public
 var archived_cards : Dictionary = {} setget ,get_archived_cards
+var is_public : bool = false
+
+var user_owner : UserModel
+var members : Array = []
 
 var lists : Array = []
 var lists_by_id : Dictionary = {}
 
-func _init(_id : String, _is_public : bool = false, _title : String = "", _lists : Array = []).(ModelTypes.BOARD, _id):
+func _init(_id : String, _owner : UserModel, _is_public := false, _title := "", _lists := []).(ModelTypes.BOARD, _id):
 	title = _title
+	user_owner = _owner
 	is_public = _is_public
 	lists = _lists
 	_map_lists_by_id()
@@ -25,9 +29,6 @@ func remove_archived_card(card):
 	
 func get_archived_cards() -> Dictionary:
 	return archived_cards
-	
-func set_public(value : bool):
-	is_public = value
 
 func add_list(list):
 	if not lists_by_id.get(list.id):
@@ -45,7 +46,12 @@ func remove_list(list):
 		lists.remove(list_idx)		
 	
 	lists_by_id.erase(list.id)
-
+	
+func add_member(user : UserModel):
+	if members.find(user) == -1:
+		members.append(user)	
+		_notify_updated()
+		
 func _map_lists_by_id():
 	for list in lists:
 		lists_by_id[list.id] = list
@@ -53,8 +59,7 @@ func _map_lists_by_id():
 func _to_string():
 	return to_json({
 		"id": id,
-		"title": title,
-		"is_public": is_public
+		"title": title
 	})
 
 func _notify_updated():

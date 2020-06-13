@@ -34,7 +34,9 @@ func set_active_user(value : UserModel):
 	active_user = value
 	
 func add_board_member(email : String, board : BoardModel):
-	pass
+	# TODO: check if member exists
+	var user_found = UserModel.new(UUID.v4(), "Member", "Name", email)
+	board.add_member(user_found)
 	
 func set_active_board(value : BoardModel):
 	active_board = value
@@ -137,7 +139,7 @@ func create_board(board):
 	emit_signal("board_created", board)
 	
 func get_draft_board(is_public : bool) -> BoardModel:
-	return BoardModel.new(UUID.v4(), is_public)
+	return BoardModel.new(UUID.v4(), active_user, is_public)
 
 func get_draft_card(list):
 	var draft_card = _find_draft_card_for_list(list)

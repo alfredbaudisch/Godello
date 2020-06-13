@@ -9,6 +9,7 @@ var list_id_to_container : Dictionary = {}
 const LIST_SCENE := preload("res://scenes/List.tscn")
 const MENU_SCENE := preload("res://scenes/BoardMenu.tscn")
 const CARD_DETAILS_SCENE := preload("res://scenes/CardDetails.tscn")
+const MEMBER_BUTTON_SCENE := preload("res://scenes/ButtonExpandOnHover.tscn")
 
 onready var list_container := $MarginContainer/VBoxContainer/ListContainerScroll/ListContainer
 onready var list_container_scroll := $MarginContainer/VBoxContainer/ListContainerScroll
@@ -27,12 +28,20 @@ func set_model(_model : BoardModel):
 	set_name("Board_" + model.id)
 	title_label.set_text(model.title)
 	
+	board_owner_button.set_texts(Utils.get_first_character(model.user_owner.first_name), model.user_owner.first_name, model.user_owner.get_full_name())
+	
+	Utils.clear_children(board_members_container)	
+	for member in model.members:
+		var button = MEMBER_BUTTON_SCENE.instance()
+		board_members_container.add_child(button)
+		button.set_texts(Utils.get_first_character(member.first_name), member.first_name, member.get_full_name())
+	
 	# In a high performance/production scenario, we wouldn't always clear the
 	# children and recreate them. Instead, we change just what changed.
 	# But for the sake of this project, this is enough.
 	Utils.clear_children(list_container, [add_list_button])
 	
-	for list in model.lists: # todo: iterate through existing lists
+	for list in model.lists:
 		var list_element = LIST_SCENE.instance()
 		list_container.add_child(list_element)
 		list_element.set_model(list)
