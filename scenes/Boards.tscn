@@ -39,7 +39,7 @@ custom_constants/margin_bottom = 0
 [node name="CenterContainer" type="CenterContainer" parent="ScrollContainer/MarginContainer"]
 margin_left = 94.0
 margin_right = 930.0
-margin_bottom = 410.0
+margin_bottom = 314.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 0
@@ -47,7 +47,7 @@ size_flags_vertical = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/CenterContainer"]
 margin_left = 13.0
 margin_right = 823.0
-margin_bottom = 410.0
+margin_bottom = 314.0
 rect_min_size = Vector2( 810, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -116,28 +116,23 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 42.0
-margin_right = 200.0
+margin_right = 210.0
 margin_bottom = 37.0
 custom_fonts/font = ExtResource( 1 )
-text = "Public Boards"
+text = "Shared Boards"
 
 [node name="PublicBoardsContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
 margin_top = 276.0
 margin_right = 810.0
-margin_bottom = 372.0
+margin_bottom = 276.0
 size_flags_vertical = 3
 custom_constants/vseparation = 10
 custom_constants/hseparation = 10
 columns = 4
 
-[node name="CreateBoard" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer" instance=ExtResource( 6 )]
-margin_left = 0.0
-margin_right = 194.0
-
 [node name="VSplitContainer5" type="VSplitContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 382.0
+margin_top = 286.0
 margin_right = 810.0
-margin_bottom = 410.0
+margin_bottom = 314.0
 rect_min_size = Vector2( 0, 28 )
 [connection signal="pressed" from="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ false ]]
-[connection signal="pressed" from="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ true ]]
