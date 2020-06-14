@@ -52,6 +52,10 @@ func add_member(user : UserModel):
 		members.append(user)	
 		_notify_updated()
 		
+func remove_member(user : UserModel):
+	members.erase(user)
+	_notify_updated()
+		
 func _map_lists_by_id():
 	for list in lists:
 		lists_by_id[list.id] = list

@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/fonts/Roboto-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/icons/plus-white.png" type="Texture" id=2]
 [ext_resource path="res://scripts/Board.gd" type="Script" id=3]
-[ext_resource path="res://scenes/ButtonExpandOnHover.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/BoardMemberButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/style_board_member_button.tres" type="StyleBox" id=5]
 
 [sub_resource type="DynamicFont" id=1]
@@ -94,7 +94,6 @@ margin_right = 811.0
 margin_bottom = 32.0
 
 [node name="BoardOwnerButton" parent="MarginContainer/VBoxContainer/BoardInfoContainer" instance=ExtResource( 4 )]
-expand_to = "Alfred"
 
 [node name="AddBoardMemberButton" type="Button" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
 margin_left = 855.0

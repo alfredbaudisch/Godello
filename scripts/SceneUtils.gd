@@ -41,10 +41,10 @@ func create_single_error_popup(message : String, focus_after_close : Control, pa
 	popup = null
 	focus_after_close.grab_focus()
 
-func create_delete_confirm_popup(parent : Node, confirm_target : Object, binds := []):
+func create_delete_confirm_popup(parent : Node, confirm_target : Object, binds := [], title := "Are you sure?"):
 	var dialog = ConfirmationDialog.new()
 	parent.add_child(dialog)
-	dialog.set_title("Are you sure?")
+	dialog.set_title(title)
 	dialog.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
 	dialog.set_exclusive(true)
 	dialog.connect("confirmed", confirm_target, "_on_delete_confirmed", binds)	
