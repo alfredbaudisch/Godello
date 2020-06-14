@@ -65,7 +65,8 @@ func _sign_in():
 		and Utils.validate_email_field(login_email_input, self)
 		and Utils.validate_not_empty_text(password, login_password_input.get_placeholder(), login_password_input, self)
 	):
-		print("SIGN IN!")
+		print("TODO: SIGN IN!")
+		SceneUtils.go_to_main_route()
 	
 func _sign_up():
 	var first_name = Utils.clean_input_text(first_name_input.get_text())
@@ -91,4 +92,7 @@ func _sign_up():
 		
 		# All good, sign up
 		else:
-			print("SIGN UP!")
+			print("TODO: SIGN UP!")
+			var user = UserModel.new(UUID.v4(), first_name, last_name, email)			
+			DataRepository.set_active_user(user)
+			SceneUtils.go_to_main_route()
