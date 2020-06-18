@@ -3,8 +3,13 @@ defmodule GodelloWeb.ErrorHelpers do
   Conveniences for translating and building error messages.
   """
 
-  def translate_error(msg) when is_atom(msg), do: translate_error(msg |> to_string())
-  def translate_error(msg) when is_binary(msg), do: translate_error({msg, %{}})
+  def translate_error(msg) when is_atom(msg) do
+    translate_error(msg |> to_string())
+  end
+
+  def translate_error(msg) when is_binary(msg) do
+    translate_error({msg, %{}})
+  end
 
   @doc """
   Translates an error message using gettext.

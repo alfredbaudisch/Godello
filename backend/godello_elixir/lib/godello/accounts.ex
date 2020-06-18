@@ -36,6 +36,7 @@ defmodule Godello.Accounts do
     })
   end
 
-  def verify_token(token, salt \\ @salt),
-    do: Phoenix.Token.verify(@context, salt, token, max_age: @max_age)
+  def verify_token(token, salt \\ @salt) do
+    Phoenix.Token.verify(@context, salt, token, max_age: @max_age)
+  end
 end
