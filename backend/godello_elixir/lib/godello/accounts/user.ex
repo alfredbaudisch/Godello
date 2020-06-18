@@ -2,7 +2,7 @@ defmodule Godello.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @email_regex ~r/^([\\w-]+@([\\w-]+\\.)+[\\w-]+)/
+  @email_regex ~r/[\w-]+@([\w-]+\.)+[\w-]+/
 
   schema "users" do
     field :email, :string
@@ -25,7 +25,10 @@ defmodule Godello.Accounts.User do
     |> unique_constraint(:email)
   end
 
-  defp put_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset), do:
-    change(changeset, Pbkdf2.add_hash(password))
+  defp put_password_hash(
+         %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset
+       ),
+       do: change(changeset, Pbkdf2.add_hash(password))
+
   defp put_password_hash(changeset), do: changeset
 end
