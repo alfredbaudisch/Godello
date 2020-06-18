@@ -27,6 +27,29 @@ defmodule GodelloWeb.UserControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
+  describe "crud" do
+    test "signup", %{conn: conn} do
+      conn = post(conn, Routes.user_path(conn, :create), @create_attrs)
+      %{"user" => user, "token" => token} = json_response(conn, 201)
+      assert is_nil(user["password_hash"])
+      assert is_nil(user["password"])
+      assert user["email"] == @create_attrs.email
+      refute is_nil(token)
+      assert Accounts.verify_token(token) == {:ok, %{user_id: user["id"]}}
+    end
+
+    test "signup invalid", %{conn: conn} do
+      conn = post(conn, Routes.user_path(conn, :create), @create_attrs |> Map.put("email", "foo"))
+      assert json_response(conn, 422)["errors"]["details"]["email"] == ["has invalid format"]
+    end
+
+    test "signup with duplicated email", %{conn: conn} do
+      _user = fixture(:user)
+      conn = post(conn, Routes.user_path(conn, :create), @create_attrs)
+      assert json_response(conn, 422)["errors"]["details"]["email"] == ["has already been taken"]
+    end
+  end
+
   describe "authentication" do
     setup [:create_user]
 
@@ -41,6 +64,7 @@ defmodule GodelloWeb.UserControllerTest do
       assert is_nil(user["password_hash"])
       assert user["email"] == created_user.email
       refute is_nil(token)
+      assert Accounts.verify_token(token) == {:ok, %{user_id: created_user.id}}
     end
 
     test "login with invalid input params", %{conn: conn} do

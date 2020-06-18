@@ -8,7 +8,10 @@ defmodule GodelloWeb.Router do
   scope "/", GodelloWeb do
     pipe_through :api
 
-    post "/login", UserController, :login
+    scope "/users" do
+      post "/users", UserController, :create
+      post "/login", UserController, :login
+    end
   end
 
   # Enables LiveDashboard only for development

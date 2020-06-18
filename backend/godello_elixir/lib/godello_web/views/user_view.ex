@@ -6,7 +6,7 @@ defmodule GodelloWeb.UserView do
   end
 
   def render("show.json", %{user: user}) do
-    %{data: render_one(user, __MODULE__, "user.json")}
+    %{user: render_one(user, __MODULE__, "user.json")}
   end
 
   def render("user.json", %{user: user}) do
