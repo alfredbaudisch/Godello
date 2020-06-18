@@ -6,8 +6,8 @@ defmodule GodelloWeb.UserController do
 
   action_fallback GodelloWeb.FallbackController
 
-  def login(conn, %{"email" => email, "password" => password}) do
-    with {:ok, %User{} = user} <- Accounts.authenticate_user(email, password) do
+  def login(conn, params) do
+    with {:ok, %User{} = user} <- Accounts.login(params) do
       conn
       |> put_status(:ok)
       |> put_view(GodelloWeb.UserView)

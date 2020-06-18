@@ -43,6 +43,15 @@ defmodule GodelloWeb.UserControllerTest do
       refute is_nil(token)
     end
 
+    test "login with invalid input params", %{conn: conn} do
+      conn = post(conn, Routes.user_path(conn, :login), wrong_key: @create_attrs.email)
+
+      assert json_response(conn, 422)["errors"]["details"] == %{
+               "email" => ["can't be blank"],
+               "password" => ["can't be blank"]
+             }
+    end
+
     test "login with invalid password", %{conn: conn} do
       conn =
         post(conn, Routes.user_path(conn, :login),

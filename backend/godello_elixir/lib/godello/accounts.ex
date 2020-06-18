@@ -4,11 +4,21 @@ defmodule Godello.Accounts do
   @salt "Godello.Accounts.UserToken"
 
   import Ecto.Query, warn: false
-  alias Godello.Repo
 
+  alias Ecto.Changeset
+  alias Godello.Repo
   alias Godello.Accounts.User
 
-  def authenticate_user(email, plain_text_password) do
+  def login(params) when is_map(params) do
+    with %Changeset{valid?: true} = changeset <- User.login_changeset(%User{}, params),
+         %User{email: email, password: password} <- Changeset.apply_changes(changeset) do
+      login(email, password)
+    else
+      changeset -> {:error, changeset}
+    end
+  end
+
+  def login(email, plain_text_password) do
     query = from u in User, where: u.email == ^email
 
     case Repo.one(query) do

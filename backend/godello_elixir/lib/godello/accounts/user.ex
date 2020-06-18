@@ -25,6 +25,12 @@ defmodule Godello.Accounts.User do
     |> unique_constraint(:email)
   end
 
+  def login_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email, :password])
+  end
+
   defp put_password_hash(
          %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset
        ) do
