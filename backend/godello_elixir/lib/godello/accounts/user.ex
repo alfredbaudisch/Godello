@@ -11,6 +11,14 @@ defmodule Godello.Accounts.User do
     field :password, :string, virtual: true
     field :password_hash, :string
 
+    has_many(:boards, Godello.Kanban.Board, foreign_key: :owner_user_id)
+
+    many_to_many(:users, Godello.Accounts.User,
+      join_through: Godello.Kanban.BoardUser,
+      on_replace: :delete,
+      on_delete: :delete_all
+    )
+
     timestamps()
   end
 
