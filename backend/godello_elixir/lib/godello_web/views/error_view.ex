@@ -11,10 +11,14 @@ defmodule GodelloWeb.ErrorView do
   # the template name. For example, "404.json" becomes
   # "Not Found".
   def template_not_found(template, _assigns) do
-    %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
+    %{errors: %{details: Phoenix.Controller.status_message_from_template(template)}}
+  end
+
+  def render("generic_error.json", %{error: error}) do
+    %{errors: error}
   end
 
   def render("translatable_error.json", %{error: error}) do
-    %{errors: %{detail: translate_error(error)}}
+    %{errors: %{details: translate_error(error)}}
   end
 end

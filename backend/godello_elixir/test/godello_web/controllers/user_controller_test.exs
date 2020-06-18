@@ -50,7 +50,7 @@ defmodule GodelloWeb.UserControllerTest do
           password: "12234234"
         )
 
-      assert json_response(conn, 422)["errors"]["detail"] == "invalid_credentials"
+      assert json_response(conn, 400)["errors"]["reason"] == "invalid_credentials"
     end
 
     test "login with inexistent email", %{conn: conn} do
@@ -60,7 +60,7 @@ defmodule GodelloWeb.UserControllerTest do
           password: @create_attrs.password
         )
 
-      assert json_response(conn, 422)["errors"]["detail"] == "invalid_credentials"
+      assert json_response(conn, 400)["errors"]["reason"] == "invalid_credentials"
     end
   end
 end

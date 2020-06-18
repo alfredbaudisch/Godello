@@ -5,11 +5,11 @@ defmodule GodelloWeb.ErrorViewTest do
   import Phoenix.View
 
   test "renders 404.json" do
-    assert render(GodelloWeb.ErrorView, "404.json", []) == %{errors: %{detail: "Not Found"}}
+    assert render(GodelloWeb.ErrorView, "404.json", []) == %{errors: %{details: "Not Found"}}
   end
 
   test "renders 500.json" do
     assert render(GodelloWeb.ErrorView, "500.json", []) ==
-             %{errors: %{detail: "Internal Server Error"}}
+             %{errors: %{details: "Internal Server Error"}}
   end
 end

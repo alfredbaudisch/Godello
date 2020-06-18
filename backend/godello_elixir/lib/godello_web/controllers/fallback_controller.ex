@@ -24,8 +24,8 @@ defmodule GodelloWeb.FallbackController do
 
   def call(conn, {:error, error}) do
     conn
-    |> put_status(:unprocessable_entity)
+    |> put_status(:bad_request)
     |> put_view(GodelloWeb.ErrorView)
-    |> render("translatable_error.json", %{error: error})
+    |> render("generic_error.json", error: GodelloWeb.GenericError.new_translatable(error))
   end
 end
