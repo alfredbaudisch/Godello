@@ -14,7 +14,8 @@ defmodule Godello.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Godello.PubSub},
       # Start the Endpoint (http/https)
-      GodelloWeb.Endpoint
+      GodelloWeb.Endpoint,
+      GodelloWeb.Presence
       # Start a worker by calling: Godello.Worker.start_link(arg)
       # {Godello.Worker, arg}
     ]

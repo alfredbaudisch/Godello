@@ -54,6 +54,8 @@ defmodule GodelloWeb do
     quote do
       use Phoenix.Channel
       import GodelloWeb.Gettext
+      alias GodelloWeb.Presence
+      import GodelloWeb.ChannelHelpers
     end
   end
 
