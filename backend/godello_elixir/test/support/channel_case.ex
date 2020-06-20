@@ -23,6 +23,9 @@ defmodule GodelloWeb.ChannelCase do
       import Phoenix.ChannelTest
       import GodelloWeb.ChannelCase
 
+      alias Godello.Kanban.{Board, List, Card}
+      import GodelloWeb.TestHelpers
+
       # The default endpoint for testing
       @endpoint GodelloWeb.Endpoint
     end

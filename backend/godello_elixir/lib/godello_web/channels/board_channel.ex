@@ -22,7 +22,7 @@ defmodule GodelloWeb.BoardChannel do
     try do
       join_board_id = join_board_id |> String.to_integer()
 
-      if Accounts.has_permission_to_board?(user_id, join_board_id) do
+      if Kanban.user_has_permission_to_board?(user_id, join_board_id) do
         # Uniquely identify the channel connection
         conn_id = Ecto.UUID.generate()
 

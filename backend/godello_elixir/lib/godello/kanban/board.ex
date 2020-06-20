@@ -18,7 +18,7 @@ defmodule Godello.Kanban.Board do
   @doc false
   def changeset(board, attrs) do
     board
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :owner_user_id])
+    |> validate_required([:name, :owner_user_id])
   end
 end

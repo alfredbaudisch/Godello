@@ -9,10 +9,6 @@ defmodule Godello.Accounts do
   alias Godello.Repo
   alias Godello.Accounts.User
 
-  def has_permission_to_board?(user_id, board_id) do
-    true
-  end
-
   def login(params) when is_map(params) do
     with %Changeset{valid?: true} = changeset <- User.login_changeset(%User{}, params),
          %User{email: email, password: password} <- Changeset.apply_changes(changeset) do

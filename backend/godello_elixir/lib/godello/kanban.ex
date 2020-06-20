@@ -6,7 +6,27 @@ defmodule Godello.Kanban do
   import Ecto.Query, warn: false
   alias Godello.Repo
 
-  alias Godello.Kanban.Board
+  alias Godello.Accounts.User
+  alias Godello.Kanban.{Board, BoardUser}
+
+  def user_has_permission_to_board?(user_id, board_id) do
+    from(b in Board,
+      left_join: bm in BoardUser,
+      on: bm.board_id == ^board_id and bm.user_id == ^user_id,
+      select: %{owner_user_id: b.owner_user_id, board_user: bm}
+    )
+    |> Repo.one()
+    |> case do
+      %{owner_user_id: owner_user_id} when owner_user_id == user_id ->
+        true
+
+      %{board_user: %{user_id: board_user_id}} when board_user_id == user_id ->
+        true
+
+      _ ->
+        false
+    end
+  end
 
   @doc """
   Returns the list of boards.
@@ -35,7 +55,9 @@ defmodule Godello.Kanban do
       ** (Ecto.NoResultsError)
 
   """
-  def get_board!(id), do: Repo.get!(Board, id)
+  def get_board!(id) do
+    Repo.get!(Board, id)
+  end
 
   @doc """
   Creates a board.
@@ -49,9 +71,9 @@ defmodule Godello.Kanban do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_board(attrs \\ %{}) do
+  def create_board(attrs, %User{id: user_id}) do
     %Board{}
-    |> Board.changeset(attrs)
+    |> Board.changeset(attrs |> Map.put(:owner_user_id, user_id))
     |> Repo.insert()
   end
 
@@ -131,7 +153,9 @@ defmodule Godello.Kanban do
       ** (Ecto.NoResultsError)
 
   """
-  def get_list!(id), do: Repo.get!(List, id)
+  def get_list!(id) do
+    Repo.get!(List, id)
+  end
 
   @doc """
   Creates a list.
@@ -227,7 +251,9 @@ defmodule Godello.Kanban do
       ** (Ecto.NoResultsError)
 
   """
-  def get_card!(id), do: Repo.get!(Card, id)
+  def get_card!(id) do
+    Repo.get!(Card, id)
+  end
 
   @doc """
   Creates a card.
