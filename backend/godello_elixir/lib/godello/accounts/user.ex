@@ -4,6 +4,7 @@ defmodule Godello.Accounts.User do
 
   @email_regex ~r/[\w-]+@([\w-]+\.)+[\w-]+/
 
+  @derive {Jason.Encoder, only: [:id, :email, :first_name, :last_name]}
   schema "users" do
     field :email, :string
     field :first_name, :string
