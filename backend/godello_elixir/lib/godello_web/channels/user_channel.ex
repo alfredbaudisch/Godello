@@ -4,6 +4,10 @@ defmodule GodelloWeb.UserChannel do
 
   alias Godello.{Accounts, Kanban}
 
+  #
+  # JOIN
+  #
+
   @impl true
   def join(@user_channel <> _id, _params, %{assigns: %{user: nil}} = _socket) do
     not_authenticated()
@@ -52,10 +56,24 @@ defmodule GodelloWeb.UserChannel do
     {:noreply, socket}
   end
 
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
+  #
+  # EVENT DEFINITIONS
+  #
+
+  # In
+  @ping "ping"
+  @create_board "create_board"
+  @get_boards "get_boards"
+
+  #
+  # EVENTS IN
+  #
+
   @impl true
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
+  def handle_in(@ping, _params, socket) do
+    {:reply, {:ok, %{"pong" => true}}, socket}
+  end
+
+  def handle_in(@create_board, params, socket) do
   end
 end

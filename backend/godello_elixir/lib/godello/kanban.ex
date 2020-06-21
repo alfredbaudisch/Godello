@@ -41,36 +41,10 @@ defmodule Godello.Kanban do
     Repo.all(Board)
   end
 
-  @doc """
-  Gets a single board.
-
-  Raises `Ecto.NoResultsError` if the Board does not exist.
-
-  ## Examples
-
-      iex> get_board!(123)
-      %Board{}
-
-      iex> get_board!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_board!(id) do
     Repo.get!(Board, id)
   end
 
-  @doc """
-  Creates a board.
-
-  ## Examples
-
-      iex> create_board(%{field: value})
-      {:ok, %Board{}}
-
-      iex> create_board(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_board(attrs, %User{id: user_id}) do
     %Board{}
     |> Board.changeset(attrs |> Map.put(:owner_user_id, user_id))

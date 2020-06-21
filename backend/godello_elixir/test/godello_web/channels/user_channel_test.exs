@@ -14,8 +14,8 @@ defmodule GodelloWeb.UserChannelTest do
   end
 
   test "ping replies with status ok", %{socket: socket} do
-    ref = push(socket, "ping", %{"hello" => "there"})
-    assert_reply ref, :ok, %{"hello" => "there"}
+    ref = push(socket, "ping")
+    assert_reply ref, :ok, %{"pong" => true}
   end
 
   # test "shout broadcasts to user:lobby", %{socket: socket} do
