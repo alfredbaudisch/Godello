@@ -5,15 +5,14 @@ defmodule Godello.Kanban do
 
   import Ecto.Query, warn: false
   alias Godello.Repo
-
-  alias Godello.Accounts.User
+  import Godello.Helpers
   alias Godello.Kanban.{Board, BoardUser}
 
   def user_has_permission_to_board?(user_id, board_id) do
     from(b in Board,
-      left_join: bm in BoardUser,
-      on: bm.board_id == ^board_id and bm.user_id == ^user_id,
-      select: %{owner_user_id: b.owner_user_id, board_user: bm}
+      left_join: bu in BoardUser,
+      on: bu.board_id == ^board_id and bu.user_id == ^user_id,
+      select: %{owner_user_id: b.owner_user_id, board_user: bu}
     )
     |> Repo.one()
     |> case do
@@ -28,26 +27,60 @@ defmodule Godello.Kanban do
     end
   end
 
-  @doc """
-  Returns the list of boards.
-
-  ## Examples
-
-      iex> list_boards()
-      [%Board{}, ...]
-
-  """
-  def list_boards do
-    Repo.all(Board)
+  def get_boards(user_id) do
+    from(b in Board,
+      join: bu in BoardUser,
+      on: bu.board_id == b.id and bu.user_id == ^user_id,
+      where: bu.user_id == ^user_id,
+      join: u in assoc(bu, :user),
+      preload: [
+        users: {bu, [user: u]}
+      ],
+      order_by: [desc: b.updated_at]
+    )
+    |> Repo.all()
+    |> wrap_collection(:boards)
   end
 
-  def get_board!(id) do
-    Repo.get!(Board, id)
+  def get_board_info(id) do
+    from(b in Board,
+      join: bu in BoardUser,
+      on: bu.board_id == b.id,
+      join: u in assoc(bu, :user),
+      where: b.id == ^id,
+      preload: [
+        users: {bu, [user: u]}
+      ]
+    )
+    |> Repo.one()
+  end
+
+  def get_board(id) do
+    from(b in get_board_info(id),
+      left_join: l in assoc(b, :lists),
+      left_join: c in assoc(l, :cards),
+      preload: [
+        lists: {l, [cards: c]}
+      ]
+    )
+    |> Repo.one()
   end
 
   def create_board(attrs, user_id) do
-    %Board{}
-    |> Board.changeset(attrs |> Map.put(:owner_user_id, user_id))
+    transaction_with_direct_result(fn ->
+      with {:ok, board} <-
+             %Board{}
+             |> Board.changeset(attrs |> Map.put(:owner_user_id, user_id))
+             |> Repo.insert(),
+           {:ok, _board_user} <- add_board_user(board.id, user_id, true) do
+        {:ok, get_board_info(board.id)}
+      end
+    end)
+  end
+
+  def add_board_user(board_id, user_id, is_owner \\ false) do
+    %BoardUser{}
+    |> BoardUser.changeset(%{board_id: board_id, user_id: user_id, is_owner: is_owner})
     |> Repo.insert()
   end
 

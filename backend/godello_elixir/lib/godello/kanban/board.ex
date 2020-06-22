@@ -2,7 +2,7 @@ defmodule Godello.Kanban.Board do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @derive {Jason.Encoder, only: [:id, :name, :owner_user_id]}
+  @derive {Jason.Encoder, only: [:id, :name, :owner_user_id, :users, :inserted_at, :updated_at]}
   schema "boards" do
     field :name, :string
     belongs_to(:owner_user, Godello.Accounts.User)
