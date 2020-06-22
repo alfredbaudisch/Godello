@@ -3,6 +3,8 @@ defmodule GodelloWeb.ErrorHelpers do
   Conveniences for translating and building error messages.
   """
 
+  alias Ecto.Changeset
+
   def translate_error(msg) when is_atom(msg) do
     translate_error(msg |> to_string())
   end
@@ -37,5 +39,15 @@ defmodule GodelloWeb.ErrorHelpers do
     else
       Gettext.dgettext(GodelloWeb.Gettext, "errors", msg, opts)
     end
+  end
+
+  @doc """
+  Traverses and translates changeset errors.
+
+  See `Ecto.Changeset.traverse_errors/2` and
+  `GodelloWeb.ErrorHelpers.translate_error/1` for more details.
+  """
+  def translate_errors(%Changeset{} = changeset) do
+    Changeset.traverse_errors(changeset, &translate_error/1)
   end
 end

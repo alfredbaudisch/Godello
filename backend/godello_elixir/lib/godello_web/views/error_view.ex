@@ -14,11 +14,7 @@ defmodule GodelloWeb.ErrorView do
     %{errors: %{details: Phoenix.Controller.status_message_from_template(template)}}
   end
 
-  def render("422.json", error) do
-    render("generic_error.json", error)
-  end
-
-  def render("generic_error.json", %{error: error}) do
+  def render("json", %{error: error}) do
     %{errors: error}
   end
 
