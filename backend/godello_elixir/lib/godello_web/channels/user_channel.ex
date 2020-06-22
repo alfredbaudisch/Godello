@@ -2,7 +2,7 @@ defmodule GodelloWeb.UserChannel do
   use GodelloWeb, :channel
   @user_channel "user:"
 
-  alias Godello.{Accounts, Kanban}
+  alias Godello.Kanban
 
   #
   # JOIN
@@ -65,6 +65,9 @@ defmodule GodelloWeb.UserChannel do
   @create_board "create_board"
   @get_boards "get_boards"
 
+  # Out
+  @board_created "board_created"
+
   #
   # EVENTS IN
   #
@@ -75,7 +78,10 @@ defmodule GodelloWeb.UserChannel do
   end
 
   def handle_in(@create_board, params, %{assigns: %{user: %{id: user_id}}} = socket) do
-    Kanban.create_board(params |> atomize_keys(), user_id)
+    with {:ok, board} = result <- Kanban.create_board(params |> atomize_keys(), user_id) do
+      broadcast_user_channel(user_id, @board_created, board)
+      result
+    end
     |> json_response(socket)
   end
 

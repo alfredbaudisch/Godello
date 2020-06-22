@@ -52,6 +52,8 @@ defmodule GodelloWeb.UserChannelTest do
     ref = push(socket, "create_board", %{"name" => name})
     assert_reply ref, :ok, payload
     validate_single_board(json_response(payload), user, name)
+    assert_broadcast "board_created", _board
+
     payload
   end
 
