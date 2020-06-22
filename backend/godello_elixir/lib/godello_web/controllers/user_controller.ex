@@ -19,7 +19,7 @@ defmodule GodelloWeb.UserController do
   end
 
   defp render_user_with_token(conn, user) do
-    conn
-    |> json_response(%{user: user, token: Accounts.create_token(user)})
+    %{user: user, token: Accounts.create_token(user)}
+    |> json_response(conn)
   end
 end

@@ -33,9 +33,6 @@ defmodule GodelloWeb.TestHelpers do
     board
   end
 
-  def board_member_fixture(board, user) do
-  end
-
   def create_user_and_board do
     user = user_fixture()
     %{user: user, board: board_fixture(user)}

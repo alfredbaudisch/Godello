@@ -1,6 +1,5 @@
 defmodule GodelloWeb.ChannelHelpers do
-  alias GodelloWeb.{GenericError, ChangesetError, GenericView, ErrorView}
-  alias Phoenix.View
+  alias GodelloWeb.GenericError
 
   @spec error(any) :: {:error, GodelloWeb.GenericError.t()}
   def error(details) do
