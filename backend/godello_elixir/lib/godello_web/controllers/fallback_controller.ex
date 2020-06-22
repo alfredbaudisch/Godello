@@ -18,7 +18,7 @@ defmodule GodelloWeb.FallbackController do
     conn
     |> put_status(:bad_request)
     |> put_view(GodelloWeb.ErrorView)
-    |> render("json", error: error)
+    |> render("error.json", error: error)
   end
 
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do

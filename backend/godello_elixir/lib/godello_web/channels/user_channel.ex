@@ -75,7 +75,7 @@ defmodule GodelloWeb.UserChannel do
   end
 
   def handle_in(@create_board, params, %{assigns: %{user: %{id: user_id}}} = socket) do
-    Kanban.create_board(params, user_id)
+    Kanban.create_board(params |> atomize_keys(), user_id)
     |> json_response(socket)
   end
 end

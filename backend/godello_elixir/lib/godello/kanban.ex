@@ -47,7 +47,7 @@ defmodule Godello.Kanban do
 
   def create_board(attrs, user_id) do
     %Board{}
-    |> Board.changeset(attrs |> Map.put("owner_user_id", user_id))
+    |> Board.changeset(attrs |> Map.put(:owner_user_id, user_id))
     |> Repo.insert()
   end
 

@@ -30,7 +30,7 @@ defmodule GodelloWeb.UserControllerTest do
   describe "crud" do
     test "signup", %{conn: conn} do
       conn = post(conn, Routes.user_path(conn, :create), @create_attrs)
-      %{"user" => user, "token" => token} = json_response(conn, 201)
+      %{"user" => user, "token" => token} = json_response(conn, 200)
       assert is_nil(user["password_hash"])
       assert is_nil(user["password"])
       assert user["email"] == @create_attrs.email
@@ -40,13 +40,13 @@ defmodule GodelloWeb.UserControllerTest do
 
     test "signup invalid", %{conn: conn} do
       conn = post(conn, Routes.user_path(conn, :create), @create_attrs |> Map.put("email", "foo"))
-      assert json_response(conn, 422)["errors"]["details"]["email"] == ["has invalid format"]
+      assert json_response(conn, 400)["errors"]["details"]["email"] == ["has invalid format"]
     end
 
     test "signup with duplicated email", %{conn: conn} do
       _user = fixture(:user)
       conn = post(conn, Routes.user_path(conn, :create), @create_attrs)
-      assert json_response(conn, 422)["errors"]["details"]["email"] == ["has already been taken"]
+      assert json_response(conn, 400)["errors"]["details"]["email"] == ["has already been taken"]
     end
   end
 
@@ -70,7 +70,7 @@ defmodule GodelloWeb.UserControllerTest do
     test "login with invalid input params", %{conn: conn} do
       conn = post(conn, Routes.user_path(conn, :login), wrong_key: @create_attrs.email)
 
-      assert json_response(conn, 422)["errors"]["details"] == %{
+      assert json_response(conn, 400)["errors"]["details"] == %{
                "email" => ["can't be blank"],
                "password" => ["can't be blank"]
              }
