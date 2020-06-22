@@ -5,12 +5,14 @@ defmodule GodelloWeb.UserChannelTest do
   @moduletag :channels
 
   setup do
+    user = user_fixture()
+
     {:ok, _, socket} =
       GodelloWeb.UserSocket
-      |> socket("user", %{user: %{id: 1}})
-      |> subscribe_and_join(GodelloWeb.UserChannel, "user:1")
+      |> socket("user", %{user: user})
+      |> subscribe_and_join(GodelloWeb.UserChannel, "user:#{user.id}")
 
-    %{socket: socket}
+    %{socket: socket, user: user}
   end
 
   test "ping replies with status ok", %{socket: socket} do
@@ -18,13 +20,18 @@ defmodule GodelloWeb.UserChannelTest do
     assert_reply ref, :ok, %{"pong" => true}
   end
 
-  # test "shout broadcasts to user:lobby", %{socket: socket} do
-  #   push socket, "shout", %{"hello" => "all"}
-  #   assert_broadcast "shout", %{"hello" => "all"}
-  # end
+  describe "create board" do
+    test "with invalid params", %{socket: socket} do
+      ref = push(socket, "create_board", %{})
+      assert_reply ref, :error, payload
+      assert contains_changeset_error?(payload, :name, "can't be blank")
+    end
 
-  # test "broadcasts are pushed to the client", %{socket: socket} do
-  #   broadcast_from! socket, "broadcast", %{"some" => "data"}
-  #   assert_push "broadcast", %{"some" => "data"}
-  # end
+    test "with valid params", %{socket: socket, user: user} do
+      ref = push(socket, "create_board", %{"name" => "Project Board"})
+      assert_reply ref, :ok, payload
+      assert_key(payload, "name", "Project Board")
+      assert_key(payload, "owner_user_id", user.id)
+    end
+  end
 end

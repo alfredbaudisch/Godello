@@ -74,6 +74,8 @@ defmodule GodelloWeb.UserChannel do
     {:reply, {:ok, %{"pong" => true}}, socket}
   end
 
-  def handle_in(@create_board, params, socket) do
+  def handle_in(@create_board, params, %{assigns: %{user: %{id: user_id}}} = socket) do
+    Kanban.create_board(params, user_id)
+    |> json_response(socket)
   end
 end

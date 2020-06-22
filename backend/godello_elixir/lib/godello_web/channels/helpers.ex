@@ -1,13 +1,17 @@
 defmodule GodelloWeb.ChannelHelpers do
-  alias GodelloWeb.{GenericError, GenericView, ErrorView}
+  alias GodelloWeb.{GenericError, ChangesetError, GenericView, ErrorView}
   alias Phoenix.View
 
-  def reply({:ok, value}, socket) do
+  def json_response({:ok, value}, socket) do
     {:reply, {:ok, View.render(GenericView, "json", %{value: value})}, socket}
   end
 
-  def reply({:error, error}, socket) do
-    {:reply, {:error, View.render(ErrorView, "generic_error.json", %{error: error})}, socket}
+  def json_response({:error, %Ecto.Changeset{} = changeset}, socket) do
+    json_response({:error, ChangesetError.new_translate_errors(changeset)}, socket)
+  end
+
+  def json_response({:error, error}, socket) do
+    {:reply, {:error, View.render(ErrorView, "json", %{error: error})}, socket}
   end
 
   @spec error(any) :: {:error, GodelloWeb.GenericError.t()}
