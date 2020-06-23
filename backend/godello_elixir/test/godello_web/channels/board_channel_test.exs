@@ -10,11 +10,6 @@ defmodule GodelloWeb.BoardChannelTest do
     %{socket: socket} |> Map.merge(fixtures)
   end
 
-  test "ping replies with status ok", %{socket: socket} do
-    ref = push(socket, "ping", %{"hello" => "there"})
-    assert_reply ref, :ok, %{"hello" => "there"}
-  end
-
   test "non-member can't join board", %{board: board} do
     another_user = user_fixture(%{email: "another@user.com"})
 

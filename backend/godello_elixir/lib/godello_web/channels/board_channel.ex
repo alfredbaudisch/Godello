@@ -2,7 +2,8 @@ defmodule GodelloWeb.BoardChannel do
   use GodelloWeb, :channel
   @board_channel "board:"
 
-  alias Godello.{Accounts, Kanban}
+  alias Godello.Kanban
+  alias Godello.Kanban.{Board}
 
   @impl true
   def join(@board_channel <> _id, _params, %{assigns: %{user: nil}} = _socket) do
@@ -22,18 +23,21 @@ defmodule GodelloWeb.BoardChannel do
     try do
       join_board_id = join_board_id |> String.to_integer()
 
-      if Kanban.user_has_permission_to_board?(user_id, join_board_id) do
-        # Uniquely identify the channel connection
-        conn_id = Ecto.UUID.generate()
+      Kanban.get_board(join_board_id)
+      |> case do
+        %Board{} = board ->
+          if Kanban.user_has_permission_to_board?(user_id, board) do
+            conn_id = Ecto.UUID.generate()
+            socket = assign(socket, :conn_id, conn_id)
 
-        socket =
-          socket
-          |> assign(:conn_id, conn_id)
+            send(self(), :after_join)
+            {:ok, render_response_value(%{conn_id: conn_id, board: board}), socket}
+          else
+            error("join_unauthorized", "You can't join this board")
+          end
 
-        send(self(), :after_join)
-        {:ok, %{conn_id: conn_id}, socket}
-      else
-        error("join_unauthorized", "You can't join this board")
+        nil ->
+          error("join_error", "The board doesn't exist")
       end
     rescue
       _e in ArgumentError ->
@@ -52,10 +56,16 @@ defmodule GodelloWeb.BoardChannel do
     {:noreply, socket}
   end
 
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
-  @impl true
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
-  end
+  #
+  # EVENT DEFINITIONS
+  #
+
+  # In
+  @get_board "get_board"
+
+  # Out
+
+  #
+  # EVENTS IN
+  #
 end

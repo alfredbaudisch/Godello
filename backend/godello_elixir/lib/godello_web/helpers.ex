@@ -16,7 +16,7 @@ defmodule GodelloWeb.Helpers do
   end
 
   def json_response({:ok, value}, %Socket{} = socket) do
-    {:reply, {:ok, View.render(GenericView, "generic.json", %{value: value})}, socket}
+    {:reply, {:ok, render_response_value(value)}, socket}
   end
 
   def json_response({:error, %Ecto.Changeset{} = changeset}, %Socket{} = socket) do
@@ -30,5 +30,9 @@ defmodule GodelloWeb.Helpers do
   def json_response(value, %Socket{} = socket) do
     {:ok, value}
     |> json_response(socket)
+  end
+
+  def render_response_value(value) do
+    View.render(GenericView, "generic.json", %{value: value})
   end
 end
