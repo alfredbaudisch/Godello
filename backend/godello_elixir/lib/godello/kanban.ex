@@ -8,7 +8,24 @@ defmodule Godello.Kanban do
   import Godello.Helpers
   alias Godello.Kanban.{Board, BoardUser}
 
-  def user_has_permission_to_board?(user_id, board_id) do
+  def user_has_permission_to_board?(user_id, %Board{users: users}) when is_list(users) do
+    user_has_permission_to_board?(user_id, users)
+  end
+
+  def user_has_permission_to_board?(user_id, [%{user: %{id: board_user_id}} | _users])
+      when user_id == board_user_id do
+    true
+  end
+
+  def user_has_permission_to_board?(user_id, [_user | users]) do
+    user_has_permission_to_board?(user_id, users)
+  end
+
+  def user_has_permission_to_board?(_user_id, []) do
+    false
+  end
+
+  def user_has_permission_to_board?(user_id, board_id) when is_integer(board_id) do
     from(b in Board,
       left_join: bu in BoardUser,
       on: bu.board_id == ^board_id and bu.user_id == ^user_id,
@@ -27,6 +44,10 @@ defmodule Godello.Kanban do
     end
   end
 
+  def user_has_permission_to_board?(_, _) do
+    false
+  end
+
   def get_boards(user_id) do
     from(b in Board,
       join: bu in BoardUser,
@@ -42,7 +63,7 @@ defmodule Godello.Kanban do
     |> wrap_collection(:boards)
   end
 
-  def get_board_info(id) do
+  def get_board_info_query(id) do
     from(b in Board,
       join: bu in BoardUser,
       on: bu.board_id == b.id,
@@ -52,11 +73,15 @@ defmodule Godello.Kanban do
         users: {bu, [user: u]}
       ]
     )
+  end
+
+  def get_board_info(id) do
+    get_board_info_query(id)
     |> Repo.one()
   end
 
   def get_board(id) do
-    from(b in get_board_info(id),
+    from(b in get_board_info_query(id),
       left_join: l in assoc(b, :lists),
       left_join: c in assoc(l, :cards),
       preload: [
