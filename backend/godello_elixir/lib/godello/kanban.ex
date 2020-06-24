@@ -9,20 +9,7 @@ defmodule Godello.Kanban do
   alias Godello.Kanban.{Board, BoardUser}
 
   def user_has_permission_to_board?(user_id, %Board{users: users}) when is_list(users) do
-    user_has_permission_to_board?(user_id, users)
-  end
-
-  def user_has_permission_to_board?(user_id, [%{user: %{id: board_user_id}} | _users])
-      when user_id == board_user_id do
-    true
-  end
-
-  def user_has_permission_to_board?(user_id, [_user | users]) do
-    user_has_permission_to_board?(user_id, users)
-  end
-
-  def user_has_permission_to_board?(_user_id, []) do
-    false
+    Enum.find(users, fn %{user: %{id: board_user_id}} -> board_user_id == user_id end) != nil
   end
 
   def user_has_permission_to_board?(user_id, board_id) when is_integer(board_id) do
