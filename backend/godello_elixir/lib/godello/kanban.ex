@@ -6,6 +6,8 @@ defmodule Godello.Kanban do
   import Ecto.Query, warn: false
   alias Godello.Repo
   import Godello.Helpers
+  alias Godello.Accounts
+  alias Godello.Accounts.User
   alias Godello.Kanban.{Board, BoardUser}
 
   def user_has_permission_to_board?(user_id, %Board{users: users}) when is_list(users) do
@@ -90,10 +92,15 @@ defmodule Godello.Kanban do
     end)
   end
 
-  def add_board_user(board_id, user_id, is_owner \\ false) do
-    %BoardUser{}
-    |> BoardUser.changeset(%{board_id: board_id, user_id: user_id, is_owner: is_owner})
-    |> Repo.insert()
+  def add_board_user(board_id, user_detail, is_owner \\ false) do
+    with %User{id: user_id} <- Accounts.find_user(user_detail) do
+      %BoardUser{}
+      |> BoardUser.changeset(%{board_id: board_id, user_id: user_id, is_owner: is_owner})
+      |> Repo.insert()
+    else
+      nil ->
+        {:error, :user_not_found}
+    end
   end
 
   @doc """

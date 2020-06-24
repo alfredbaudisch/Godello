@@ -40,6 +40,16 @@ defmodule Godello.Accounts do
     |> Repo.insert()
   end
 
+  def find_user(email) when is_binary(email) do
+    from(u in User, where: u.email == ^email)
+    |> Repo.one()
+  end
+
+  def find_user(id) do
+    from(u in User, where: u.id == ^id)
+    |> Repo.one()
+  end
+
   def create_token(%User{id: user_id}, salt \\ @salt) do
     Phoenix.Token.sign(@context, salt, %{
       user_id: user_id
