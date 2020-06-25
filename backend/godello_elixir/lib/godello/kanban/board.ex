@@ -25,4 +25,10 @@ defmodule Godello.Kanban.Board do
     |> cast(attrs, [:name, :owner_user_id])
     |> validate_required([:name, :owner_user_id])
   end
+
+  def update_changeset(board, attrs) do
+    board
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
+  end
 end

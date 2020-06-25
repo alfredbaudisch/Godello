@@ -120,51 +120,14 @@ defmodule Godello.Kanban do
     end
   end
 
-  @doc """
-  Updates a board.
-
-  ## Examples
-
-      iex> update_board(board, %{field: new_value})
-      {:ok, %Board{}}
-
-      iex> update_board(board, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_board(%Board{} = board, attrs) do
-    board
-    |> Board.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a board.
-
-  ## Examples
-
-      iex> delete_board(board)
-      {:ok, %Board{}}
-
-      iex> delete_board(board)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_board(%Board{} = board) do
     Repo.delete(board)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking board changes.
-
-  ## Examples
-
-      iex> change_board(board)
-      %Ecto.Changeset{data: %Board{}}
-
-  """
-  def change_board(%Board{} = board, attrs \\ %{}) do
-    Board.changeset(board, attrs)
+  def update_board(%Board{} = board, attrs) do
+    board
+    |> Board.update_changeset(attrs)
+    |> Repo.update()
   end
 
   alias Godello.Kanban.List

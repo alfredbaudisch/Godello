@@ -21,14 +21,44 @@ defmodule GodelloWeb.BoardChannelTest do
       join_board_channel(user, %Board{id: -1})
   end
 
-  test "non-member can't join board", %{board: board} do
-    another_user = user_fixture(%{email: "another@user.com"})
+  test "get board again", %{socket: socket} do
+    ref = push(socket, "get_board")
+    assert_reply ref, :ok, board
+    assert is_list(board.lists)
+    assert is_list(board.users)
+  end
 
-    {:error, %{details: "You can't join this board", reason: "join_unauthorized"}} =
-      join_board_channel(another_user, board)
+  test "delete board", %{socket: socket} do
+    ref = push(socket, "delete_board")
+    assert_reply ref, :ok, _board
+
+    ref = push(socket, "delete_board")
+    assert_reply ref, :error, error
+    assert error.errors.reason == "board_not_found"
+  end
+
+  @tag :update_board
+  test "update board", %{socket: socket} do
+    ref = push(socket, "update_board", %{"name" => ""})
+    assert_reply ref, :error, errors
+    assert contains_changeset_error?(errors, :name, "can't be blank")
+
+    ref = push(socket, "update_board", %{"name" => "New Name"})
+    assert_reply ref, :ok, board_updated
+    assert board_updated.name == "New Name"
+
+    assert_broadcast "board_updated", board_updated_broadcasted
+    assert board_updated_broadcasted.name == "New Name"
   end
 
   describe "membership" do
+    test "non-member can't join board", %{board: board} do
+      another_user = user_fixture(%{email: "another@user.com"})
+
+      {:error, %{details: "You can't join this board", reason: "join_unauthorized"}} =
+        join_board_channel(another_user, board)
+    end
+
     test "added member can join board", %{socket: socket} do
       another_user = user_fixture(%{email: "another@user.com"})
 

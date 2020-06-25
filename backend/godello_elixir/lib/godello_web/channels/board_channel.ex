@@ -67,11 +67,15 @@ defmodule GodelloWeb.BoardChannel do
 
   # In
   @get_board "get_board"
+  @update_board "update_board"
+  @delete_board "delete_board"
   @add_member "add_member"
   @remove_member "remove_member"
 
   # Out
   @board_updated "board_updated"
+  @board_deleted "board_deleted"
+  @board_membership_added "board_membership_added"
   @board_membership_removed "board_membership_removed"
 
   #
@@ -79,10 +83,42 @@ defmodule GodelloWeb.BoardChannel do
   #
 
   @impl true
+  def handle_in(@get_board, _params, %{assigns: %{board_id: board_id}} = socket) do
+    Kanban.get_board(board_id)
+    |> json_response(socket)
+  end
+
+  def handle_in(@update_board, params, %{assigns: %{board_id: board_id}} = socket) do
+    with %Board{} = board <- Kanban.get_board_info(board_id),
+         {:ok, updated_board} = result <- Kanban.update_board(board, params) do
+      # TODO: may cause duplicate data, because of data also going through user channels. Maybe remove me:
+      broadcast_board_updated(socket, updated_board)
+      broadcast_board_updated_all_members(socket, updated_board, board)
+      result
+    end
+    |> json_response(socket)
+  end
+
+  def handle_in(@delete_board, _params, %{assigns: %{board_id: board_id}} = socket) do
+    # The list of members is needed, so fetch the board in advance
+    with %Board{} = board <- Kanban.get_board_info(board_id),
+         {:ok, _del_board} <- Kanban.delete_board(board) do
+      broadcast_to_all_board_members(@board_deleted, board)
+      {:ok, %{deleted: true, board_id: board_id}}
+    else
+      nil -> {:error, GenericError.new("board_not_found", "This Board has already been deleted.")}
+    end
+    |> json_response(socket)
+  end
+
   def handle_in(@add_member, %{"email" => email}, %{assigns: %{board_id: board_id}} = socket) do
-    with {:ok, _board_user} <- Kanban.add_board_user(board_id, email) do
+    with {:ok, board_user} <- Kanban.add_board_user(board_id, email) do
       board = get_board_info(socket)
       broadcast_board_updated(socket, board)
+
+      # Notify the added user about their new membership
+      broadcast_user_channel(board_user.user_id, @board_membership_added, board)
+
       board
     else
       {:error, :user_not_found} ->
@@ -102,7 +138,10 @@ defmodule GodelloWeb.BoardChannel do
     with {:ok, deleted_board_user} <- Kanban.remove_board_user(board_id, user_id) do
       board = get_board_info(socket)
       broadcast_board_updated_all_members(socket, board)
+
+      # Notify the removed user about their membership removed
       broadcast_user_channel(deleted_board_user.user_id, @board_membership_removed, board)
+
       board
     else
       {:error, :user_not_found} ->
@@ -129,16 +168,30 @@ defmodule GodelloWeb.BoardChannel do
     Kanban.get_board_info(board_id)
   end
 
-  @doc """
-  Broadcasts an event to the UserChannel of all members of a `%Board{}`.
-  """
-  defp broadcast_board_updated_all_members(socket, %Board{users: users} = board) do
-    Enum.each(users, fn %{id: user_id} ->
-      broadcast_user_channel(user_id, @board_updated, board)
-    end)
+  defp broadcast_board_updated_all_members(socket, %Board{} = board) do
+    broadcast_board_updated_all_members(socket, board, board)
+  end
 
-    # TODO: this may not be necessary - check again after integrating the channels into the frontend
+  defp broadcast_board_updated_all_members(socket, %Board{} = board, %Board{} = board_user_list) do
+    broadcast_to_all_board_members(@board_updated, board, board_user_list)
+
+    # TODO: check whether this is really necessary after integrating channels to the frontend,
+    # because it would mean receibing duplicate data (both in the user channel and board channel)
     broadcast_board_updated(socket, board)
+  end
+
+  defp broadcast_to_all_board_members(event, %Board{} = board) do
+    broadcast_to_all_board_members(event, board, board)
+  end
+
+  @doc """
+  Broadcasts an event to the UserChannel of all members of a `%Board{}`. It's possible
+  to provide a different list of members from the desired board content to submit.
+  """
+  defp broadcast_to_all_board_members(event, %Board{} = board, %Board{users: board_users}) do
+    Enum.each(board_users, fn %{id: user_id} ->
+      broadcast_user_channel(user_id, event, board)
+    end)
   end
 
   defp broadcast_board_updated(socket, board) do
