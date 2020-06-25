@@ -103,6 +103,23 @@ defmodule Godello.Kanban do
     end
   end
 
+  def remove_board_user(board_id, user_id) do
+    from(bu in BoardUser,
+      where: bu.board_id == ^board_id and bu.user_id == ^user_id
+    )
+    |> Repo.one()
+    |> case do
+      %BoardUser{is_owner: true} ->
+        {:error, :user_is_owner}
+
+      %BoardUser{} = board_user ->
+        board_user |> Repo.delete()
+
+      _ ->
+        {:error, :user_not_found}
+    end
+  end
+
   @doc """
   Updates a board.
 

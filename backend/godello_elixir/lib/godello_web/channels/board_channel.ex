@@ -68,9 +68,11 @@ defmodule GodelloWeb.BoardChannel do
   # In
   @get_board "get_board"
   @add_member "add_member"
+  @remove_member "remove_member"
 
   # Out
   @board_updated "board_updated"
+  @board_membership_removed "board_membership_removed"
 
   #
   # EVENTS IN
@@ -92,8 +94,51 @@ defmodule GodelloWeb.BoardChannel do
     |> json_response(socket)
   end
 
+  def handle_in(
+        @remove_member,
+        %{"user_id" => user_id},
+        %{assigns: %{board_id: board_id}} = socket
+      ) do
+    with {:ok, deleted_board_user} <- Kanban.remove_board_user(board_id, user_id) do
+      board = get_board_info(socket)
+      broadcast_board_updated_all_members(socket, board)
+      broadcast_user_channel(deleted_board_user.user_id, @board_membership_removed, board)
+      board
+    else
+      {:error, :user_not_found} ->
+        {:error, GenericError.new("user_not_found", "User is not a member of the Board")}
+
+      {:error, :user_is_owner} ->
+        {:error,
+         GenericError.new(
+           "user_is_owner",
+           "This User is the owner of the Board and can't be removed"
+         )}
+
+      error ->
+        error
+    end
+    |> json_response(socket)
+  end
+
+  #
+  # HELPERS
+  #
+
   defp get_board_info(%{assigns: %{board_id: board_id}}) do
     Kanban.get_board_info(board_id)
+  end
+
+  @doc """
+  Broadcasts an event to the UserChannel of all members of a `%Board{}`.
+  """
+  defp broadcast_board_updated_all_members(socket, %Board{users: users} = board) do
+    Enum.each(users, fn %{id: user_id} ->
+      broadcast_user_channel(user_id, @board_updated, board)
+    end)
+
+    # TODO: this may not be necessary - check again after integrating the channels into the frontend
+    broadcast_board_updated(socket, board)
   end
 
   defp broadcast_board_updated(socket, board) do

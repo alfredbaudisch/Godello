@@ -28,7 +28,7 @@ defmodule GodelloWeb.BoardChannelTest do
       join_board_channel(another_user, board)
   end
 
-  describe "add member" do
+  describe "membership" do
     test "added member can join board", %{socket: socket} do
       another_user = user_fixture(%{email: "another@user.com"})
 
@@ -62,6 +62,33 @@ defmodule GodelloWeb.BoardChannelTest do
       ref = push(socket, "add_member", %{"email" => another_user.email})
       assert_reply ref, :error, error
       assert contains_changeset_error?(error, :board_id, "has already been taken")
+    end
+
+    test "can remove added member", %{socket: socket} do
+      another_user = user_fixture(%{email: "another@user.com"})
+      ref = push(socket, "add_member", %{"email" => another_user.email})
+      assert_reply ref, :ok, board
+      assert_broadcast "board_updated", _board_updated
+
+      ref = push(socket, "remove_member", %{"user_id" => another_user.id})
+      assert_reply ref, :ok, board
+      assert Enum.count(board.users) == 1
+      assert_broadcast "board_updated", board_updated
+      assert Enum.count(board_updated.users) == 1
+    end
+
+    test "can't remove nonexistent member", %{socket: socket} do
+      another_user = user_fixture(%{email: "another@user.com"})
+
+      ref = push(socket, "remove_member", %{"user_id" => another_user.id})
+      assert_reply ref, :error, error
+      assert error.errors.reason == "user_not_found"
+    end
+
+    test "can't remove owner", %{socket: socket, user: user} do
+      ref = push(socket, "remove_member", %{"user_id" => user.id})
+      assert_reply ref, :error, error
+      assert error.errors.reason == "user_is_owner"
     end
   end
 
