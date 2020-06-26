@@ -3,7 +3,7 @@ defmodule GodelloWeb.BoardChannel do
   @board_channel "board:"
 
   alias Godello.Kanban
-  alias Godello.Kanban.{Board, List, Card}
+  alias Godello.Kanban.{Board, List, Card, Positioning}
   alias GodelloWeb.GenericError
   alias Ecto.Changeset
 
@@ -84,6 +84,7 @@ defmodule GodelloWeb.BoardChannel do
   @card_created "card_created"
   @card_updated "card_updated"
   @card_deleted "card_deleted"
+  @cards_repositioned "cards_repositioned"
 
   #
   # EVENTS: Board
@@ -209,13 +210,27 @@ defmodule GodelloWeb.BoardChannel do
     |> json_response(socket)
   end
 
-  def handle_in(@update_card, %{"id" => card_id} = params, socket) do
-    get_card_and_run(
-      card_id,
-      fn card -> Kanban.update_card(card, params) end,
-      @card_updated,
-      socket
-    )
+  def handle_in(@update_card, %{"id" => card_id} = params, %{assigns: %{board: board}} = socket) do
+    with %Card{} = card <- Kanban.get_card(card_id) do
+      Kanban.update_card(card, params, board)
+      |> case do
+        {:ok, updated_card, {:recalculated_positions, lists}} ->
+          Enum.each(lists, fn list_id ->
+            positions = Positioning.card_positions(list_id)
+            broadcast(socket, @cards_repositioned, positions)
+          end)
+
+          {:ok, updated_card}
+
+        result ->
+          result
+      end
+    else
+      nil -> {:error, GenericError.new("card_not_found", "Card not found")}
+      error -> error
+    end
+    |> broadcast_flow(socket, @card_updated)
+    |> json_response(socket)
   end
 
   def handle_in(@delete_card, %{"id" => card_id}, socket) do

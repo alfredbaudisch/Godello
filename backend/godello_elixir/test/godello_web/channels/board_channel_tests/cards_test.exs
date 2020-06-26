@@ -19,10 +19,16 @@ defmodule GodelloWeb.BoardChannelCardsTest do
     assert contains_changeset_error?(errors, :title, "can't be blank")
     assert contains_changeset_error?(errors, :list_id, "can't be blank")
 
-    create_card(list, socket)
+    card = create_card(list, socket)
+    assert card.position == 0
 
     assert_broadcast "card_created", broadcasted
     assert broadcasted.title == "New Card"
+
+    card = create_card(list, socket)
+    assert card.position == 1
+    card = create_card(list, socket)
+    assert card.position == 2
   end
 
   test "delete card", %{socket: socket} do

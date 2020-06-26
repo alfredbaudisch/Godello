@@ -10,6 +10,7 @@ defmodule Godello.Kanban do
   alias Godello.Accounts
   alias Godello.Accounts.User
   alias Godello.Kanban.{Board, BoardUser, List, Card}
+  import Godello.Kanban.Positioning
 
   #
   # Board
@@ -182,6 +183,7 @@ defmodule Godello.Kanban do
   def create_list(%Board{id: board_id}, attrs) do
     %List{}
     |> List.changeset(attrs |> Map.put(:board_id, board_id))
+    |> recalculate_new_list_position(board_id)
     |> Repo.insert()
   end
 
@@ -215,16 +217,86 @@ defmodule Godello.Kanban do
   def create_card(%List{id: list_id}, attrs) do
     %Card{}
     |> Card.changeset(attrs |> Map.put(:list_id, list_id))
+    |> recalculate_new_card_position(list_id)
     |> Repo.insert()
   end
 
-  def update_card(%Card{} = card, attrs) do
+  def update_card(
+        %Card{id: card_id, position: current_position, list_id: current_list_id} = card,
+        attrs,
+        %Board{id: board_id}
+      ) do
     card
     |> Card.changeset(attrs)
+    |> run_with_valid_changeset(fn changeset ->
+      list_id = Changeset.get_change(changeset, :list_id)
+      position = Changeset.get_change(changeset, :position)
+
+      set_position = fn ->
+        if not is_nil(position) do
+          recalculate_card_updated_position(card, changeset)
+        else
+          changeset
+        end
+      end
+
+      # List not changed, no need to check for list ownership
+      if is_nil(list_id) do
+        set_position.()
+      else
+        # Check list ownership
+        verify_list_parent(changeset, board_id, card_id, fn _list ->
+          set_position.()
+        end)
+      end
+    end)
     |> Repo.update()
+    |> run_valid(fn
+      # Card moved to another list, recalculate positions of the previous and the new list
+      {:ok, %Card{position: new_position, list_id: new_list_id} = updated_card}
+      when new_list_id != current_list_id ->
+        # Recalculate positions of the originating list
+        recalculate_card_positions_after_delete(current_list_id, current_position)
+        # Recalculate positions of the new list
+        recalculate_card_positions(new_list_id, card_id, new_position)
+
+        {:ok, updated_card, {:recalculated_positions, [current_list_id, new_list_id]}}
+
+      # Changed position, recalculate positions of the current list
+      {:ok, %Card{position: new_position} = updated_card} when new_position != current_position ->
+        recalculate_card_positions_after_update(
+          current_list_id,
+          card_id,
+          current_position,
+          new_position
+        )
+
+        {:ok, updated_card, {:recalculated_positions, [current_list_id]}}
+
+      result ->
+        result
+    end)
   end
 
   def delete_card(%Card{} = card) do
     Repo.delete(card)
+  end
+
+  #
+  # Helpers
+  #
+
+  @doc """
+  Check if the list_id exists and if it is part of board_id
+  """
+  def verify_list_parent(changeset, board_id, list_id, run_when_ok) do
+    case Repo.get_by(List, id: list_id, board_id: board_id) do
+      nil ->
+        changeset
+        |> Changeset.add_error(:list_id, "doesn't exist or doesn't belong to the current board")
+
+      list ->
+        run_when_ok.(list)
+    end
   end
 end

@@ -13,4 +13,20 @@ defmodule Godello.Helpers do
     {_, res} = Repo.transaction(run)
     res
   end
+
+  def run_with_valid_changeset(%Ecto.Changeset{valid?: true} = changeset, run) do
+    run.(changeset)
+  end
+
+  def run_with_valid_changeset(%Ecto.Changeset{} = changeset, _run) do
+    changeset
+  end
+
+  def run_valid({:ok, _v} = payload, run) do
+    run.(payload)
+  end
+
+  def run_valid(value, _run) do
+    value
+  end
 end

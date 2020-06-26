@@ -16,10 +16,16 @@ defmodule GodelloWeb.BoardChannelListsTest do
     assert_reply ref, :error, errors
     assert contains_changeset_error?(errors, :name, "can't be blank")
 
-    create_list(socket)
+    list = create_list(socket)
+    assert list.position == 0
 
     assert_broadcast "list_created", broadcasted
     assert broadcasted.name == "New List"
+
+    list = create_list(socket)
+    assert list.position == 1
+    list = create_list(socket)
+    assert list.position == 2
   end
 
   test "delete list", %{socket: socket} do

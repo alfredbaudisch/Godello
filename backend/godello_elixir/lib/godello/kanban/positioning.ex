@@ -12,6 +12,10 @@ defmodule Godello.Kanban.Positioning do
   # List
   #
 
+  def recalculate_new_list_position(%Changeset{} = changeset, board_id) do
+    recalculate_new_position(changeset, fn -> last_list_position(board_id) end)
+  end
+
   def recalculate_list_updated_position(%List{board_id: board_id}, %Changeset{} = changeset) do
     recalculate_updated_position(changeset, fn -> last_list_position(board_id) end)
   end
@@ -51,31 +55,8 @@ defmodule Godello.Kanban.Positioning do
   # Card
   #
 
-  def recalculate_new_card_position(%Changeset{} = changeset, get_last_position) do
-    case Changeset.get_change(changeset, :position) do
-      nil ->
-        changeset
-
-      position ->
-        new_position =
-          get_last_position.()
-          |> case do
-            nil ->
-              position
-
-            last_position when position > last_position + 1 ->
-              last_position + 1
-
-            _ ->
-              position
-          end
-
-        if position != new_position do
-          Changeset.put_change(changeset, :position, new_position)
-        else
-          changeset
-        end
-    end
+  def recalculate_new_card_position(%Changeset{} = changeset, list_id) do
+    recalculate_new_position(changeset, fn -> last_card_position(list_id) end)
   end
 
   def recalculate_card_updated_position(%Card{list_id: list_id}, %Changeset{} = changeset) do
@@ -118,6 +99,26 @@ defmodule Godello.Kanban.Positioning do
   #
   # Algorithms / Queries
   #
+
+  defp recalculate_new_position(%Changeset{valid?: false} = changeset, _get_last_position) do
+    changeset
+  end
+
+  defp recalculate_new_position(%Changeset{} = changeset, get_last_position) do
+    # For now, new lists and cards are always added at the end/bottom,
+    # so force the initial position to be after the last
+    new_position =
+      get_last_position.()
+      |> case do
+        last_position when is_number(last_position) ->
+          last_position + 1
+
+        _ ->
+          0
+      end
+
+    Changeset.put_change(changeset, :position, new_position)
+  end
 
   defp recalculate_updated_position(%Changeset{} = changeset, get_last_position) do
     case Changeset.get_change(changeset, :position) do
