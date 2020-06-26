@@ -94,8 +94,8 @@ defmodule GodelloWeb.BoardChannel do
     |> json_response(socket)
   end
 
-  def handle_in(@update_board, params, %{assigns: %{board: %{id: board_id}}} = socket) do
-    with %Board{} = board <- Kanban.get_board_info(board_id),
+  def handle_in(@update_board, params, socket) do
+    with %Board{} = board <- get_board_info(socket),
          {:ok, updated_board} = result <- Kanban.update_board(board, params) do
       # TODO: may cause duplicate data, because of data also going through user channels. Maybe remove me:
       broadcast_board_updated(socket, updated_board)
@@ -105,12 +105,12 @@ defmodule GodelloWeb.BoardChannel do
     |> json_response(socket)
   end
 
-  def handle_in(@delete_board, _params, %{assigns: %{board: %{id: board_id}}} = socket) do
+  def handle_in(@delete_board, _params, socket) do
     # The list of members is needed, so fetch the board in advance
-    with %Board{} = board <- Kanban.get_board_info(board_id),
+    with %Board{} = board <- get_board_info(socket),
          {:ok, _del_board} <- Kanban.delete_board(board) do
       broadcast_to_all_board_members(@board_deleted, board)
-      {:ok, %{deleted: true, board_id: board_id}}
+      {:ok, %{deleted: true, board: board}}
     else
       nil -> {:error, GenericError.new("board_not_found", "This Board has already been deleted.")}
     end
@@ -177,32 +177,68 @@ defmodule GodelloWeb.BoardChannel do
   end
 
   def handle_in(@update_list, %{"id" => list_id} = params, socket) do
-    with %List{} = list <- Kanban.get_list_info(list_id),
-         {:ok, _list_updated} = result <- Kanban.update_list(list, params) do
-      broadcast_flow(result, socket, @list_updated)
-    else
-      nil -> {:error, GenericError.new("list_not_found", "List not found")}
-      error -> error
-    end
-    |> json_response(socket)
+    get_list_and_run(
+      list_id,
+      fn list -> Kanban.update_list(list, params) end,
+      @list_updated,
+      socket
+    )
   end
 
   def handle_in(@delete_list, %{"id" => list_id}, socket) do
-    with %List{} = list <- Kanban.get_list_info(list_id),
-         {:ok, _list_deleted} = result <- Kanban.delete_list(list) do
-      broadcast_flow(result, socket, @list_deleted)
-    else
-      nil -> {:error, GenericError.new("list_not_found", "List not found")}
-      error -> error
-    end
+    get_list_and_run(list_id, &Kanban.delete_list/1, @list_deleted, socket)
+  end
+
+  #
+  # EVENTS: Card
+  #
+
+  def handle_in(@create_card, params, %{assigns: %{board: board}} = socket) do
+    Kanban.create_card(board, params |> atomize_keys())
+    |> broadcast_flow(socket, @card_created)
     |> json_response(socket)
+  end
+
+  def handle_in(@update_card, %{"id" => card_id} = params, socket) do
+    get_card_and_run(
+      card_id,
+      fn card -> Kanban.update_card(card, params) end,
+      @card_updated,
+      socket
+    )
+  end
+
+  def handle_in(@delete_card, %{"id" => card_id}, socket) do
+    get_card_and_run(card_id, &Kanban.delete_card/1, @card_deleted, socket)
   end
 
   #
   # HELPERS
   #
 
-  defp get_board_info(%{assigns: %{board: %{id: board_id}}}) do
+  defp get_list_and_run(list_id, run, broadcast_event, socket) do
+    with %List{} = list <- Kanban.get_list_info(list_id),
+         {:ok, _list_updated} = result <- run.(list) do
+      broadcast_flow(result, socket, broadcast_event)
+    else
+      nil -> {:error, GenericError.new("list_not_found", "List not found")}
+      error -> error
+    end
+    |> json_response(socket)
+  end
+
+  defp get_card_and_run(card_id, run, broadcast_event, socket) do
+    with %Card{} = card <- Kanban.get_card(card_id),
+         {:ok, _card_updated} = result <- run.(card) do
+      broadcast_flow(result, socket, broadcast_event)
+    else
+      nil -> {:error, GenericError.new("card_not_found", "Card not found")}
+      error -> error
+    end
+    |> json_response(socket)
+  end
+
+  defp get_board_info(%Phoenix.Socket{assigns: %{board: %{id: board_id}}}) do
     Kanban.get_board_info(board_id)
   end
 

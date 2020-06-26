@@ -169,4 +169,28 @@ defmodule Godello.Kanban do
   def delete_list(%List{} = list) do
     Repo.delete(list)
   end
+
+  #
+  # Card
+  #
+
+  def get_card(id) do
+    Repo.get(Card, id)
+  end
+
+  def create_card(%List{id: list_id}, attrs) do
+    %Card{}
+    |> Card.changeset(attrs |> Map.put(:list_id, list_id))
+    |> Repo.insert()
+  end
+
+  def update_card(%Card{} = card, attrs) do
+    card
+    |> Card.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_card(%Card{} = card) do
+    Repo.delete(card)
+  end
 end

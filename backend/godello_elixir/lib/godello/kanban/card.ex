@@ -15,8 +15,8 @@ defmodule Godello.Kanban.Card do
   @doc false
   def changeset(card, attrs) do
     card
-    |> cast(attrs, [:title, :description, :is_archived])
-    |> validate_required([:title])
+    |> cast(attrs, [:title, :description, :is_archived, :list_id])
+    |> validate_required([:title, :list_id])
     |> cast_embed(:todos)
   end
 end
