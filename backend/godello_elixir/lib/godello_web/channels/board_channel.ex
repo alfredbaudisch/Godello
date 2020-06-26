@@ -5,6 +5,7 @@ defmodule GodelloWeb.BoardChannel do
   alias Godello.Kanban
   alias Godello.Kanban.{Board, List, Card}
   alias GodelloWeb.GenericError
+  alias Ecto.Changeset
 
   @impl true
   def join(@board_channel <> _id, _params, %{assigns: %{user: nil}} = _socket) do
@@ -194,8 +195,17 @@ defmodule GodelloWeb.BoardChannel do
   #
 
   def handle_in(@create_card, params, %{assigns: %{board: board}} = socket) do
-    Kanban.create_card(board, params |> atomize_keys())
-    |> broadcast_flow(socket, @card_created)
+    # Let's get the list_id from params in order to get the list, making
+    # sure it exists and belongs to this board
+    with {:ok, %Changeset{valid?: true, changes: %{list_id: list_id}}} <-
+           Kanban.get_create_card_changeset(params),
+         %List{} = list <- Kanban.get_list_info(board, list_id),
+         {:ok, _card} = result <- Kanban.create_card(list, params |> atomize_keys()) do
+      broadcast_flow(result, socket, @card_created)
+    else
+      nil -> {:error, GenericError.new("list_not_found", "List not found")}
+      error -> error
+    end
     |> json_response(socket)
   end
 
@@ -216,8 +226,8 @@ defmodule GodelloWeb.BoardChannel do
   # HELPERS
   #
 
-  defp get_list_and_run(list_id, run, broadcast_event, socket) do
-    with %List{} = list <- Kanban.get_list_info(list_id),
+  defp get_list_and_run(list_id, run, broadcast_event, %{assigns: %{board: board}} = socket) do
+    with %List{} = list <- Kanban.get_list_info(board, list_id),
          {:ok, _list_updated} = result <- run.(list) do
       broadcast_flow(result, socket, broadcast_event)
     else

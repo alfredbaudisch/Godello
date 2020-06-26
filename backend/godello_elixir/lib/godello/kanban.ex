@@ -150,6 +150,19 @@ defmodule Godello.Kanban do
     |> Repo.one()
   end
 
+  @doc """
+  Retrieves a List, taking board ownership into consideration.
+  Returns nil if the List doesn't belong to the Board.
+  """
+  def get_list_info(%Board{id: board_id}, id) do
+    get_list_info(id)
+    |> case do
+      %List{board_id: list_board_id} = list when board_id == list_board_id -> list
+      %List{} -> nil
+      res -> res
+    end
+  end
+
   def get_list_info(id) do
     Repo.get(List, id)
   end
@@ -176,6 +189,15 @@ defmodule Godello.Kanban do
 
   def get_card(id) do
     Repo.get(Card, id)
+  end
+
+  def get_create_card_changeset(attrs) do
+    %Card{}
+    |> Card.changeset(attrs)
+    |> case do
+      %Changeset{valid?: false} = changeset -> {:error, changeset}
+      changeset -> {:ok, changeset}
+    end
   end
 
   def create_card(%List{id: list_id}, attrs) do
