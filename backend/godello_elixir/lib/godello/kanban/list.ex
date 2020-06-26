@@ -4,6 +4,7 @@ defmodule Godello.Kanban.List do
 
   schema "lists" do
     field :name, :string
+    field :position, :integer, default: 0
     belongs_to(:board, Godello.Kanban.Board)
     has_many(:cards, Godello.Kanban.Card)
 
@@ -13,13 +14,15 @@ defmodule Godello.Kanban.List do
   @doc false
   def changeset(list, attrs) do
     list
-    |> cast(attrs, [:board_id, :name])
-    |> validate_required([:board_id, :name])
+    |> cast(attrs, [:board_id, :name, :position])
+    |> validate_required([:board_id, :name, :position])
+    |> validate_number(:position, greater_than_or_equal_to: 0)
   end
 
   def update_changeset(list, attrs) do
     list
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :position])
+    |> validate_required([:name, :position])
+    |> validate_number(:position, greater_than_or_equal_to: 0)
   end
 end
