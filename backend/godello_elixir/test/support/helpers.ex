@@ -14,6 +14,11 @@ defmodule GodelloWeb.TestHelpers do
     name: "Project Board"
   }
 
+  def as_json(item) do
+    Jason.encode!(item)
+    |> Jason.decode!()
+  end
+
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs

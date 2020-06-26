@@ -245,7 +245,7 @@ defmodule Godello.Kanban do
         set_position.()
       else
         # Check list ownership
-        verify_list_parent(changeset, board_id, card_id, fn _list ->
+        verify_list_parent(changeset, board_id, list_id, fn _list ->
           set_position.()
         end)
       end

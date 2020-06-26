@@ -2,6 +2,7 @@ defmodule Godello.Kanban.List do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id, :board_id, :name, :position, :cards]}
   schema "lists" do
     field :name, :string
     field :position, :integer, default: 0

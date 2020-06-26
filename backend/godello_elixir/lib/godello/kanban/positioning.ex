@@ -130,7 +130,7 @@ defmodule Godello.Kanban.Positioning do
           get_last_position.()
           |> case do
             nil ->
-              position
+              0
 
             last_position when position >= last_position ->
               last_position

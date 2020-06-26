@@ -63,6 +63,12 @@ defmodule GodelloWeb.BoardChannelListsTest do
     assert error.errors.reason == "list_not_found"
   end
 
+  describe "repositioning" do
+    test "update list", %{socket: socket} do
+      throw("IMPLEMENT LIST REPOSITIONING FOR UPDATE AND DELETE")
+    end
+  end
+
   defp create_list(socket) do
     ref = push(socket, "create_list", %{"name" => "New List"})
     assert_reply ref, :ok, list
