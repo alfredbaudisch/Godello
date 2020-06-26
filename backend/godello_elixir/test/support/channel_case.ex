@@ -28,6 +28,12 @@ defmodule GodelloWeb.ChannelCase do
 
       # The default endpoint for testing
       @endpoint GodelloWeb.Endpoint
+
+      def join_board_channel(user, %Board{id: board_id}) do
+        GodelloWeb.UserSocket
+        |> socket("user", %{user: user})
+        |> subscribe_and_join(GodelloWeb.BoardChannel, "board:#{board_id}")
+      end
     end
   end
 

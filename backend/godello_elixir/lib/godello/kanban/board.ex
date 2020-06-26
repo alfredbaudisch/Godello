@@ -31,4 +31,8 @@ defmodule Godello.Kanban.Board do
     |> cast(attrs, [:name])
     |> validate_required([:name])
   end
+
+  def to_basic(%__MODULE__{} = board) do
+    %{board | lists: [], users: []}
+  end
 end

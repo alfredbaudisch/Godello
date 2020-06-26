@@ -3,7 +3,7 @@ defmodule GodelloWeb.BoardChannel do
   @board_channel "board:"
 
   alias Godello.Kanban
-  alias Godello.Kanban.{Board}
+  alias Godello.Kanban.{Board, List, Card}
   alias GodelloWeb.GenericError
 
   @impl true
@@ -28,15 +28,9 @@ defmodule GodelloWeb.BoardChannel do
       |> case do
         %Board{} = board ->
           if Kanban.user_has_permission_to_board?(user_id, board) do
-            conn_id = Ecto.UUID.generate()
-
-            socket =
-              socket
-              |> assign(:conn_id, conn_id)
-              |> assign(:board_id, board.id)
-
+            socket = assign(socket, :board, Board.to_basic(board))
             send(self(), :after_join)
-            {:ok, render_response_value(%{conn_id: conn_id, board: board}), socket}
+            {:ok, render_response_value(%{board: board}), socket}
           else
             error("join_unauthorized", "You can't join this board")
           end
@@ -71,24 +65,36 @@ defmodule GodelloWeb.BoardChannel do
   @delete_board "delete_board"
   @add_member "add_member"
   @remove_member "remove_member"
+  @create_list "create_list"
+  @update_list "update_list"
+  @delete_list "delete_list"
+  @create_card "create_card"
+  @update_card "update_card"
+  @delete_card "delete_card"
 
   # Out
   @board_updated "board_updated"
   @board_deleted "board_deleted"
   @board_membership_added "board_membership_added"
   @board_membership_removed "board_membership_removed"
+  @list_created "list_created"
+  @list_updated "list_updated"
+  @list_deleted "list_deleted"
+  @card_created "card_created"
+  @card_updated "card_updated"
+  @card_deleted "card_deleted"
 
   #
-  # EVENTS IN
+  # EVENTS: Board
   #
 
   @impl true
-  def handle_in(@get_board, _params, %{assigns: %{board_id: board_id}} = socket) do
+  def handle_in(@get_board, _params, %{assigns: %{board: %{id: board_id}}} = socket) do
     Kanban.get_board(board_id)
     |> json_response(socket)
   end
 
-  def handle_in(@update_board, params, %{assigns: %{board_id: board_id}} = socket) do
+  def handle_in(@update_board, params, %{assigns: %{board: %{id: board_id}}} = socket) do
     with %Board{} = board <- Kanban.get_board_info(board_id),
          {:ok, updated_board} = result <- Kanban.update_board(board, params) do
       # TODO: may cause duplicate data, because of data also going through user channels. Maybe remove me:
@@ -99,7 +105,7 @@ defmodule GodelloWeb.BoardChannel do
     |> json_response(socket)
   end
 
-  def handle_in(@delete_board, _params, %{assigns: %{board_id: board_id}} = socket) do
+  def handle_in(@delete_board, _params, %{assigns: %{board: %{id: board_id}}} = socket) do
     # The list of members is needed, so fetch the board in advance
     with %Board{} = board <- Kanban.get_board_info(board_id),
          {:ok, _del_board} <- Kanban.delete_board(board) do
@@ -111,7 +117,7 @@ defmodule GodelloWeb.BoardChannel do
     |> json_response(socket)
   end
 
-  def handle_in(@add_member, %{"email" => email}, %{assigns: %{board_id: board_id}} = socket) do
+  def handle_in(@add_member, %{"email" => email}, %{assigns: %{board: %{id: board_id}}} = socket) do
     with {:ok, board_user} <- Kanban.add_board_user(board_id, email) do
       board = get_board_info(socket)
       broadcast_board_updated(socket, board)
@@ -133,7 +139,7 @@ defmodule GodelloWeb.BoardChannel do
   def handle_in(
         @remove_member,
         %{"user_id" => user_id},
-        %{assigns: %{board_id: board_id}} = socket
+        %{assigns: %{board: %{id: board_id}}} = socket
       ) do
     with {:ok, deleted_board_user} <- Kanban.remove_board_user(board_id, user_id) do
       board = get_board_info(socket)
@@ -161,10 +167,42 @@ defmodule GodelloWeb.BoardChannel do
   end
 
   #
+  # EVENTS: List
+  #
+
+  def handle_in(@create_list, params, %{assigns: %{board: board}} = socket) do
+    Kanban.create_list(board, params |> atomize_keys())
+    |> broadcast_flow(socket, @list_created)
+    |> json_response(socket)
+  end
+
+  def handle_in(@update_list, %{"id" => list_id} = params, socket) do
+    with %List{} = list <- Kanban.get_list_info(list_id),
+         {:ok, _list_updated} = result <- Kanban.update_list(list, params) do
+      broadcast_flow(result, socket, @list_updated)
+    else
+      nil -> {:error, GenericError.new("list_not_found", "List not found")}
+      error -> error
+    end
+    |> json_response(socket)
+  end
+
+  def handle_in(@delete_list, %{"id" => list_id}, socket) do
+    with %List{} = list <- Kanban.get_list_info(list_id),
+         {:ok, _list_deleted} = result <- Kanban.delete_list(list) do
+      broadcast_flow(result, socket, @list_deleted)
+    else
+      nil -> {:error, GenericError.new("list_not_found", "List not found")}
+      error -> error
+    end
+    |> json_response(socket)
+  end
+
+  #
   # HELPERS
   #
 
-  defp get_board_info(%{assigns: %{board_id: board_id}}) do
+  defp get_board_info(%{assigns: %{board: %{id: board_id}}}) do
     Kanban.get_board_info(board_id)
   end
 
@@ -196,6 +234,15 @@ defmodule GodelloWeb.BoardChannel do
 
   defp broadcast_board_updated(socket, board) do
     broadcast_board_channel(socket, @board_updated, board)
+  end
+
+  defp broadcast_flow({:ok, value} = payload, socket, event) do
+    broadcast_board_channel(socket, event, value)
+    payload
+  end
+
+  defp broadcast_flow(payload, _socket, _event) do
+    payload
   end
 
   defp broadcast_board_channel(socket, event, payload) do

@@ -37,7 +37,6 @@ defmodule GodelloWeb.BoardChannelTest do
     assert error.errors.reason == "board_not_found"
   end
 
-  @tag :update_board
   test "update board", %{socket: socket} do
     ref = push(socket, "update_board", %{"name" => ""})
     assert_reply ref, :error, errors
@@ -120,11 +119,5 @@ defmodule GodelloWeb.BoardChannelTest do
       assert_reply ref, :error, error
       assert error.errors.reason == "user_is_owner"
     end
-  end
-
-  defp join_board_channel(user, %Board{id: board_id}) do
-    GodelloWeb.UserSocket
-    |> socket("user", %{user: user})
-    |> subscribe_and_join(GodelloWeb.BoardChannel, "board:#{board_id}")
   end
 end

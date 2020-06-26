@@ -13,6 +13,12 @@ defmodule Godello.Kanban.List do
   @doc false
   def changeset(list, attrs) do
     list
+    |> cast(attrs, [:board_id, :name])
+    |> validate_required([:board_id, :name])
+  end
+
+  def update_changeset(list, attrs) do
+    list
     |> cast(attrs, [:name])
     |> validate_required([:name])
   end
