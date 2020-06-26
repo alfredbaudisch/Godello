@@ -1,4 +1,5 @@
-defmodule GodelloWeb.Helpers do
+defmodule GodelloWeb.ResponseHelpers do
+
   import Phoenix.Controller, only: [json: 2]
   import Plug.Conn, only: [put_status: 2]
   alias GodelloWeb.{ChangesetError, GenericView, ErrorView}

@@ -24,7 +24,7 @@ defmodule GodelloWeb do
       import Plug.Conn
       import GodelloWeb.Gettext
       alias GodelloWeb.Router.Helpers, as: Routes
-      import GodelloWeb.Helpers
+      import GodelloWeb.ResponseHelpers
     end
   end
 
@@ -56,7 +56,7 @@ defmodule GodelloWeb do
       use Phoenix.Channel
       import GodelloWeb.Gettext
       alias GodelloWeb.Presence
-      import GodelloWeb.Helpers
+      import GodelloWeb.ResponseHelpers
       import GodelloWeb.ChannelHelpers
       import Map.Helpers
     end
