@@ -57,18 +57,6 @@ defmodule Godello.Kanban do
     |> wrap_collection(:boards)
   end
 
-  def get_board_info_query(id) do
-    from(b in Board,
-      join: bu in BoardUser,
-      on: bu.board_id == b.id,
-      join: u in assoc(bu, :user),
-      where: b.id == ^id,
-      preload: [
-        users: {bu, [user: u]}
-      ]
-    )
-  end
-
   def get_board_info(id) do
     get_board_info_query(id)
     |> Repo.one()
@@ -133,6 +121,18 @@ defmodule Godello.Kanban do
     board
     |> Board.update_changeset(attrs)
     |> Repo.update()
+  end
+
+  defp get_board_info_query(id) do
+    from(b in Board,
+      join: bu in BoardUser,
+      on: bu.board_id == b.id,
+      join: u in assoc(bu, :user),
+      where: b.id == ^id,
+      preload: [
+        users: {bu, [user: u]}
+      ]
+    )
   end
 
   #

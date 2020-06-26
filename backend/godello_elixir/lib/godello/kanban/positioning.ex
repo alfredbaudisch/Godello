@@ -1,15 +1,24 @@
 defmodule Godello.Kanban.Positioning do
   @moduledoc """
-  The Kanban context.
+  Queries and algorithms to deal with list and card positioning.
   """
 
   import Ecto.Query, warn: false
   alias Godello.Repo
   alias Godello.Kanban.{List, Card}
+  alias Ecto.Changeset
 
   #
   # List
   #
+
+  def recalculate_list_updated_position(%List{board_id: board_id}, %Changeset{} = changeset) do
+    recalculate_updated_position(changeset, fn -> last_list_position(board_id) end)
+  end
+
+  def last_list_position(board_id) do
+    last_position(list_query(), board_id: board_id)
+  end
 
   def list_positions(board_id) do
     %{
@@ -42,6 +51,43 @@ defmodule Godello.Kanban.Positioning do
   # Card
   #
 
+  def recalculate_new_card_position(%Changeset{} = changeset, get_last_position) do
+    case Changeset.get_change(changeset, :position) do
+      nil ->
+        changeset
+
+      position ->
+        new_position =
+          get_last_position.()
+          |> case do
+            nil ->
+              position
+
+            last_position when position > last_position + 1 ->
+              last_position + 1
+
+            _ ->
+              position
+          end
+
+        if position != new_position do
+          Changeset.put_change(changeset, :position, new_position)
+        else
+          changeset
+        end
+    end
+  end
+
+  def recalculate_card_updated_position(%Card{list_id: list_id}, %Changeset{} = changeset) do
+    updated_list_id = Changeset.get_change(changeset, :list_id)
+    use_list_id = updated_list_id || list_id
+    recalculate_updated_position(changeset, fn -> last_card_position(use_list_id) end)
+  end
+
+  def last_card_position(list_id) do
+    last_position(card_query(), list_id: list_id)
+  end
+
   def card_positions(list_id) do
     %{
       "list" => %{
@@ -73,12 +119,49 @@ defmodule Godello.Kanban.Positioning do
   # Algorithms / Queries
   #
 
+  defp recalculate_updated_position(%Changeset{} = changeset, get_last_position) do
+    case Changeset.get_change(changeset, :position) do
+      nil ->
+        changeset
+
+      position ->
+        new_position =
+          get_last_position.()
+          |> case do
+            nil ->
+              position
+
+            last_position when position >= last_position ->
+              last_position
+
+            _ ->
+              position
+          end
+
+        if position != new_position do
+          Changeset.put_change(changeset, :position, new_position)
+        else
+          changeset
+        end
+    end
+  end
+
   defp list_query do
-    from(i in List)
+    from(list in List)
   end
 
   defp card_query do
-    from(i in Card)
+    from(card in Card)
+  end
+
+  defp last_position(base_query, parent_condition) do
+    from(item in base_query,
+      select: item.position,
+      where: ^parent_condition,
+      order_by: [desc: :position],
+      limit: 1
+    )
+    |> Repo.one()
   end
 
   defp positions(base_query, parent_condition) do
