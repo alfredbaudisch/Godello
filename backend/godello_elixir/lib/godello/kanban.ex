@@ -42,6 +42,9 @@ defmodule Godello.Kanban do
     false
   end
 
+  @doc """
+  Gets all the boards that the user `user_id` is a member of.
+  """
   def get_boards(user_id) do
     from(b in Board,
       join: bu in BoardUser,
@@ -57,11 +60,17 @@ defmodule Godello.Kanban do
     |> wrap_collection(:boards)
   end
 
+  @doc """
+  Gets a Board, including member users, but do not preload lists and cards.
+  """
   def get_board_info(id) do
     get_board_info_query(id)
     |> Repo.one()
   end
 
+  @doc """
+  Gets a Board with member users, lists and cards preloaded.
+  """
   def get_board(id) do
     from(b in get_board_info_query(id),
       left_join: l in assoc(b, :lists),
@@ -139,6 +148,9 @@ defmodule Godello.Kanban do
   # Lists
   #
 
+  @doc """
+  Gets a list with cards preloaded.
+  """
   def get_list(id) do
     from(l in List,
       join: c in assoc(l, :cards),
@@ -151,7 +163,7 @@ defmodule Godello.Kanban do
   end
 
   @doc """
-  Retrieves a List, taking board ownership into consideration.
+  Gets a List, taking board ownership into consideration and do not preload cards.
   Returns nil if the List doesn't belong to the Board.
   """
   def get_list_info(%Board{id: board_id}, id) do

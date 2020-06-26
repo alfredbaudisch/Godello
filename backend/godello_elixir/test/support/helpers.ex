@@ -23,7 +23,6 @@ defmodule GodelloWeb.TestHelpers do
     user
   end
 
-  @spec board_fixture(Godello.Accounts.User.t(), any) :: any
   def board_fixture(%Accounts.User{id: user_id}, attrs \\ %{}) do
     {:ok, board} =
       attrs
