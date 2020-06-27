@@ -187,14 +187,54 @@ defmodule Godello.Kanban do
     |> Repo.insert()
   end
 
-  def update_list(%List{} = list, attrs) do
+  def update_list(
+        %List{id: list_id, position: current_position, board_id: board_id} = list,
+        attrs
+      ) do
     list
     |> List.update_changeset(attrs)
+    |> run_with_valid_changeset(fn changeset ->
+      position = Changeset.get_change(changeset, :position)
+
+      if not is_nil(position) do
+        recalculate_list_updated_position(list, changeset)
+      else
+        changeset
+      end
+    end)
     |> Repo.update()
+    |> case do
+      {:ok, %List{position: new_position} = updated_list} when new_position != current_position ->
+        recalculate_list_positions_after_update(
+          board_id,
+          list_id,
+          current_position,
+          new_position
+        )
+
+        {:ok, updated_list, {:recalculated_positions, list_positions(board_id)}}
+
+      result ->
+        result
+    end
   end
 
-  def delete_list(%List{} = list) do
+  def delete_list(%List{board_id: board_id, position: position} = list) do
+    last_position = last_list_position(board_id)
+
     Repo.delete(list)
+    |> case do
+      {:ok, deleted_list} = result ->
+        if last_position == position do
+          result
+        else
+          recalculate_list_positions_after_delete(board_id, position)
+          {:ok, deleted_list, {:recalculated_positions, list_positions(board_id)}}
+        end
+
+      result ->
+        result
+    end
   end
 
   #
@@ -251,7 +291,7 @@ defmodule Godello.Kanban do
       end
     end)
     |> Repo.update()
-    |> run_valid(fn
+    |> case do
       # Card moved to another list, recalculate positions of the previous and the new list
       {:ok, %Card{position: new_position, list_id: new_list_id} = updated_card}
       when new_list_id != current_list_id ->
@@ -276,7 +316,7 @@ defmodule Godello.Kanban do
 
       result ->
         result
-    end)
+    end
   end
 
   def delete_card(%Card{list_id: list_id, position: position} = card) do

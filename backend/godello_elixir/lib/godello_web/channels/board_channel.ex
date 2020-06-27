@@ -85,6 +85,7 @@ defmodule GodelloWeb.BoardChannel do
   @card_updated "card_updated"
   @card_deleted "card_deleted"
   @cards_repositioned "cards_repositioned"
+  @lists_repositioned "lists_repositioned"
 
   #
   # EVENTS: Board
@@ -211,7 +212,7 @@ defmodule GodelloWeb.BoardChannel do
   end
 
   def handle_in(@update_card, %{"id" => card_id} = params, %{assigns: %{board: board}} = socket) do
-    get_card_and_run_with_positioning(
+    get_card_and_run(
       card_id,
       fn card -> Kanban.update_card(card, params, board) end,
       @card_updated,
@@ -220,7 +221,7 @@ defmodule GodelloWeb.BoardChannel do
   end
 
   def handle_in(@delete_card, %{"id" => card_id}, socket) do
-    get_card_and_run_with_positioning(card_id, &Kanban.delete_card/1, @card_deleted, socket)
+    get_card_and_run(card_id, &Kanban.delete_card/1, @card_deleted, socket)
   end
 
   #
@@ -228,17 +229,25 @@ defmodule GodelloWeb.BoardChannel do
   #
 
   defp get_list_and_run(list_id, run, broadcast_event, %{assigns: %{board: board}} = socket) do
-    with %List{} = list <- Kanban.get_list_info(board, list_id),
-         {:ok, _list_updated} = result <- run.(list) do
-      broadcast_flow(result, socket, broadcast_event)
+    with %List{} = list <- Kanban.get_list_info(board, list_id) do
+      run.(list)
+      |> case do
+        {:ok, result_list, {:recalculated_positions, positions}} ->
+          broadcast(socket, @lists_repositioned, Map.take(positions, [:lists]))
+          {:ok, result_list}
+
+        result ->
+          result
+      end
     else
       nil -> {:error, GenericError.new("list_not_found", "List not found")}
       error -> error
     end
+    |> broadcast_flow(socket, broadcast_event)
     |> json_response(socket)
   end
 
-  defp get_card_and_run_with_positioning(card_id, run, broadcast_event, socket) do
+  defp get_card_and_run(card_id, run, broadcast_event, socket) do
     with %Card{} = card <- Kanban.get_card(card_id) do
       run.(card)
       |> case do

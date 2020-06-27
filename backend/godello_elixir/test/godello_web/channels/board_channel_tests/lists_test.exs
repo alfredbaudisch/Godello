@@ -63,9 +63,64 @@ defmodule GodelloWeb.BoardChannelListsTest do
     assert error.errors.reason == "list_not_found"
   end
 
-  describe "repositioning" do
-    test "update list", %{socket: socket} do
-      throw("IMPLEMENT LIST REPOSITIONING FOR UPDATE AND DELETE")
+  describe "list positioning" do
+    @tag :list_position
+    test "move lists", %{socket: socket} do
+      list1 = create_list(socket) |> as_json()
+      list2 = create_list(socket) |> as_json()
+      list3 = create_list(socket) |> as_json()
+      list4 = create_list(socket) |> as_json()
+
+      assert list1["position"] == 0
+      assert list2["position"] == 1
+      assert list3["position"] == 2
+      assert list4["position"] == 3
+
+      ref = push(socket, "update_list", %{list1 | "position" => 2})
+      assert_reply ref, :ok, _updated
+
+      assert_broadcast "lists_repositioned", repositions
+      assert_position(repositions, list2["id"], 0)
+      assert_position(repositions, list3["id"], 1)
+      assert_position(repositions, list1["id"], 2)
+      assert_position(repositions, list4["id"], 3)
+
+      ref = push(socket, "update_list", %{list4 | "position" => 0})
+      assert_reply ref, :ok, _updated
+
+      assert_broadcast "lists_repositioned", repositions
+      assert_position(repositions, list4["id"], 0)
+      assert_position(repositions, list2["id"], 1)
+      assert_position(repositions, list3["id"], 2)
+      assert_position(repositions, list1["id"], 3)
+    end
+
+    @tag :list_position
+    test "when deleting list", %{socket: socket} do
+      list1 = create_list(socket) |> as_json()
+      list2 = create_list(socket) |> as_json()
+      list3 = create_list(socket) |> as_json()
+      list4 = create_list(socket) |> as_json()
+
+      assert list1["position"] == 0
+      assert list2["position"] == 1
+      assert list3["position"] == 2
+      assert list4["position"] == 3
+
+      ref = push(socket, "delete_list", list1)
+      assert_reply ref, :ok, _updated
+
+      assert_broadcast "lists_repositioned", repositions
+      assert_position(repositions, list2["id"], 0)
+      assert_position(repositions, list3["id"], 1)
+      assert_position(repositions, list4["id"], 2)
+
+      ref = push(socket, "delete_list", list3)
+      assert_reply ref, :ok, _updated
+
+      assert_broadcast "lists_repositioned", repositions
+      assert_position(repositions, list2["id"], 0)
+      assert_position(repositions, list4["id"], 1)
     end
   end
 
@@ -74,5 +129,13 @@ defmodule GodelloWeb.BoardChannelListsTest do
     assert_reply ref, :ok, list
     assert list.name == "New List"
     list
+  end
+
+  defp assert_position(repositions, list_id, position) do
+    Enum.find(repositions.lists, fn %{id: found_id} -> found_id == list_id end)
+    |> case do
+      %{position: found_position} -> assert found_position == position
+      _ -> throw("Not found")
+    end
   end
 end
