@@ -174,7 +174,26 @@ defmodule GodelloWeb.BoardChannelCardsTest do
     end
 
     test "when deleting card", %{socket: socket} do
-      throw("IMPLEMENT REPOSITION FOR CARD DELETE")
+      list1 = create_list(socket)
+      card11 = create_card(list1, socket) |> as_json()
+      card12 = create_card(list1, socket) |> as_json()
+      card13 = create_card(list1, socket) |> as_json()
+
+      assert card12["position"] == 1
+      assert card13["position"] == 2
+
+      ref = push(socket, "delete_card", card12)
+      assert_reply ref, :ok, deleted
+      assert deleted.id == card12["id"]
+      assert deleted.position == 1
+
+      assert_broadcast "card_deleted", broadcasted
+      assert broadcasted.id == card12["id"]
+      assert broadcasted.position == 1
+
+      assert_broadcast "cards_repositioned", repositions
+      assert_position(repositions, list1.id, card11["id"], 0)
+      assert_position(repositions, list1.id, card13["id"], 1)
     end
   end
 

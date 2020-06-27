@@ -211,32 +211,16 @@ defmodule GodelloWeb.BoardChannel do
   end
 
   def handle_in(@update_card, %{"id" => card_id} = params, %{assigns: %{board: board}} = socket) do
-    with %Card{} = card <- Kanban.get_card(card_id) do
-      Kanban.update_card(card, params, board)
-      |> case do
-        {:ok, updated_card, {:recalculated_positions, lists}} ->
-          lists =
-            Enum.reduce(lists, %{}, fn list, acc ->
-              Map.put(acc, list.list_id, Map.take(list, [:cards]))
-            end)
-
-          broadcast(socket, @cards_repositioned, %{lists: lists})
-
-          {:ok, updated_card}
-
-        result ->
-          result
-      end
-    else
-      nil -> {:error, GenericError.new("card_not_found", "Card not found")}
-      error -> error
-    end
-    |> broadcast_flow(socket, @card_updated)
-    |> json_response(socket)
+    get_card_and_run_with_positioning(
+      card_id,
+      fn card -> Kanban.update_card(card, params, board) end,
+      @card_updated,
+      socket
+    )
   end
 
   def handle_in(@delete_card, %{"id" => card_id}, socket) do
-    get_card_and_run(card_id, &Kanban.delete_card/1, @card_deleted, socket)
+    get_card_and_run_with_positioning(card_id, &Kanban.delete_card/1, @card_deleted, socket)
   end
 
   #
@@ -254,14 +238,28 @@ defmodule GodelloWeb.BoardChannel do
     |> json_response(socket)
   end
 
-  defp get_card_and_run(card_id, run, broadcast_event, socket) do
-    with %Card{} = card <- Kanban.get_card(card_id),
-         {:ok, _card_updated} = result <- run.(card) do
-      broadcast_flow(result, socket, broadcast_event)
+  defp get_card_and_run_with_positioning(card_id, run, broadcast_event, socket) do
+    with %Card{} = card <- Kanban.get_card(card_id) do
+      run.(card)
+      |> case do
+        {:ok, result_card, {:recalculated_positions, lists}} ->
+          lists =
+            Enum.reduce(lists, %{}, fn list, acc ->
+              Map.put(acc, list.list_id, Map.take(list, [:cards]))
+            end)
+
+          broadcast(socket, @cards_repositioned, %{lists: lists})
+
+          {:ok, result_card}
+
+        result ->
+          result
+      end
     else
       nil -> {:error, GenericError.new("card_not_found", "Card not found")}
       error -> error
     end
+    |> broadcast_flow(socket, broadcast_event)
     |> json_response(socket)
   end
 
