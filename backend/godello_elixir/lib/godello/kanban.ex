@@ -279,8 +279,22 @@ defmodule Godello.Kanban do
     end)
   end
 
-  def delete_card(%Card{} = card) do
+  def delete_card(%Card{list_id: list_id, position: position} = card) do
+    last_position = last_card_position(list_id)
+
     Repo.delete(card)
+    |> case do
+      {:ok, deleted_card} = result ->
+        if last_position == position do
+          result
+        else
+          recalculate_card_positions_after_delete(list_id, position)
+          {:ok, deleted_card, {:recalculated_positions, [card_positions(list_id)]}}
+        end
+
+      result ->
+        result
+    end
   end
 
   #
