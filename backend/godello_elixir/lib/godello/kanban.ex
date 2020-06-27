@@ -78,7 +78,8 @@ defmodule Godello.Kanban do
       left_join: c in assoc(l, :cards),
       preload: [
         lists: {l, [cards: c]}
-      ]
+      ],
+      order_by: [asc: l.position, asc: c.position]
     )
     |> Repo.one()
   end
@@ -158,7 +159,8 @@ defmodule Godello.Kanban do
       preload: [
         cards: c
       ],
-      where: l.id == ^id
+      where: l.id == ^id,
+      order_by: [asc: c.position]
     )
     |> Repo.one()
   end
