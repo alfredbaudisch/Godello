@@ -3,7 +3,7 @@ defmodule GodelloWeb.BoardChannel do
   @board_channel "board:"
 
   alias Godello.Kanban
-  alias Godello.Kanban.{Board, List, Card, Positioning}
+  alias Godello.Kanban.{Board, List, Card}
   alias GodelloWeb.GenericError
   alias Ecto.Changeset
 
@@ -252,11 +252,6 @@ defmodule GodelloWeb.BoardChannel do
       run.(card)
       |> case do
         {:ok, result_card, {:recalculated_positions, lists}} ->
-          lists =
-            Enum.reduce(lists, %{}, fn list, acc ->
-              Map.put(acc, list.list_id, Map.take(list, [:cards]))
-            end)
-
           broadcast(socket, @cards_repositioned, %{lists: lists})
 
           {:ok, result_card}

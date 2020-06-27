@@ -147,7 +147,10 @@ defmodule GodelloWeb.BoardChannelCardsTest do
 
       assert_broadcast "cards_repositioned", repositions
 
-      assert Enum.empty?(repositions.lists[list2.id].cards)
+      %{cards: cards} =
+        Enum.find(repositions.lists, fn %{list_id: list_id} -> list_id == list2.id end)
+
+      assert Enum.empty?(cards)
 
       assert_position(repositions, list1.id, card23["id"], 0)
       assert_position(repositions, list1.id, card11["id"], 1)
@@ -198,9 +201,11 @@ defmodule GodelloWeb.BoardChannelCardsTest do
   end
 
   defp assert_position(repositions, list_id, card_id, position) do
-    %{cards: cards} = repositions.lists[list_id]
-
-    Enum.find(cards, fn %{id: found_id} -> found_id == card_id end)
+    Enum.find(repositions.lists, fn %{list_id: found_id} ->
+      found_id == list_id
+    end)
+    |> Map.get(:cards)
+    |> Enum.find(fn %{id: found_id} -> found_id == card_id end)
     |> case do
       %{position: found_position} -> assert found_position == position
       _ -> throw("Not found")
