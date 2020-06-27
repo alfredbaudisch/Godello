@@ -26,10 +26,8 @@ defmodule Godello.Kanban.Positioning do
 
   def list_positions(board_id) do
     %{
-      "board" => %{
-        "id" => board_id,
-        "lists" => positions(list_query(), board_id: board_id)
-      }
+      board_id: board_id,
+      lists: positions(list_query(), board_id: board_id)
     }
   end
 
@@ -71,10 +69,8 @@ defmodule Godello.Kanban.Positioning do
 
   def card_positions(list_id) do
     %{
-      "list" => %{
-        "id" => list_id,
-        "cards" => positions(card_query(), list_id: list_id)
-      }
+      list_id: list_id,
+      cards: positions(card_query(), list_id: list_id)
     }
   end
 
@@ -167,7 +163,7 @@ defmodule Godello.Kanban.Positioning do
 
   defp positions(base_query, parent_condition) do
     from(item in base_query,
-      select: %{"id" => item.id, "position" => item.position},
+      select: %{id: item.id, position: item.position},
       where: ^parent_condition,
       order_by: [asc: item.position]
     )

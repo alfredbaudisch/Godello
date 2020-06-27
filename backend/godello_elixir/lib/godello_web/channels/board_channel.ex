@@ -215,10 +215,12 @@ defmodule GodelloWeb.BoardChannel do
       Kanban.update_card(card, params, board)
       |> case do
         {:ok, updated_card, {:recalculated_positions, lists}} ->
-          Enum.each(lists, fn list_id ->
-            positions = Positioning.card_positions(list_id)
-            broadcast(socket, @cards_repositioned, positions)
-          end)
+          lists =
+            Enum.reduce(lists, %{}, fn list, acc ->
+              Map.put(acc, list.list_id, Map.take(list, [:cards]))
+            end)
+
+          broadcast(socket, @cards_repositioned, %{lists: lists})
 
           {:ok, updated_card}
 

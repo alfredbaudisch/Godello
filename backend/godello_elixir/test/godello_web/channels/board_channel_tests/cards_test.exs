@@ -89,9 +89,9 @@ defmodule GodelloWeb.BoardChannelCardsTest do
       assert updated.position == 2
 
       assert_broadcast "cards_repositioned", repositions
-      assert_position(repositions, card1["id"], 2)
-      assert_position(repositions, card2["id"], 0)
-      assert_position(repositions, card3["id"], 1)
+      assert_position(repositions, list.id, card1["id"], 2)
+      assert_position(repositions, list.id, card2["id"], 0)
+      assert_position(repositions, list.id, card3["id"], 1)
     end
 
     test "to another list", %{socket: socket} do
@@ -117,26 +117,14 @@ defmodule GodelloWeb.BoardChannelCardsTest do
       #
       # Assert repositioning for both lists
       #
-      assert_positions = fn repositions ->
-        if repositions["list"]["id"] == list2.id do
-          assert_position(repositions, card21["id"], 0)
-          assert_position(repositions, card23["id"], 1)
-        else
-          assert_position(repositions, card11["id"], 0)
-          assert_position(repositions, card22["id"], 1)
-          assert_position(repositions, card12["id"], 2)
-          assert_position(repositions, card13["id"], 3)
-        end
-      end
+      assert_broadcast "cards_repositioned", repositions
+      assert_position(repositions, list2.id, card21["id"], 0)
+      assert_position(repositions, list2.id, card23["id"], 1)
 
-      assert_broadcast "cards_repositioned", repositions1
-      assert_positions.(repositions1)
-      assert_broadcast "cards_repositioned", repositions2
-      assert_positions.(repositions2)
-
-      # Make sure we received positions for both lists
-      assert (repositions1["list"]["id"] == list1.id and repositions2["list"]["id"] == list2.id) or
-               (repositions2["list"]["id"] == list1.id and repositions1["list"]["id"] == list2.id)
+      assert_position(repositions, list1.id, card11["id"], 0)
+      assert_position(repositions, list1.id, card22["id"], 1)
+      assert_position(repositions, list1.id, card12["id"], 2)
+      assert_position(repositions, list1.id, card13["id"], 3)
 
       #
       # Make the 2nd list have just one item, then empty
@@ -144,43 +132,29 @@ defmodule GodelloWeb.BoardChannelCardsTest do
       ref = push(socket, "update_card", %{card21 | "list_id" => list1.id, "position" => 2})
       assert_reply ref, :ok, _updated
 
-      assert_positions = fn repositions ->
-        if repositions["list"]["id"] == list2.id do
-          assert_position(repositions, card23["id"], 0)
-        else
-          assert_position(repositions, card11["id"], 0)
-          assert_position(repositions, card22["id"], 1)
-          assert_position(repositions, card21["id"], 2)
-          assert_position(repositions, card12["id"], 3)
-          assert_position(repositions, card13["id"], 4)
-        end
-      end
+      assert_broadcast "cards_repositioned", repositions
 
-      assert_broadcast "cards_repositioned", repositions1
-      assert_positions.(repositions1)
-      assert_broadcast "cards_repositioned", repositions2
-      assert_positions.(repositions2)
+      assert_position(repositions, list2.id, card23["id"], 0)
+
+      assert_position(repositions, list1.id, card11["id"], 0)
+      assert_position(repositions, list1.id, card22["id"], 1)
+      assert_position(repositions, list1.id, card21["id"], 2)
+      assert_position(repositions, list1.id, card12["id"], 3)
+      assert_position(repositions, list1.id, card13["id"], 4)
 
       ref = push(socket, "update_card", %{card23 | "list_id" => list1.id, "position" => 0})
       assert_reply ref, :ok, _updated
 
-      assert_positions = fn repositions ->
-        if repositions["list"]["id"] == list2.id do
-          assert Enum.empty?(repositions["list"]["cards"])
-        else
-          assert_position(repositions, card23["id"], 0)
-          assert_position(repositions, card11["id"], 1)
-          assert_position(repositions, card22["id"], 2)
-          assert_position(repositions, card21["id"], 3)
-          assert_position(repositions, card12["id"], 4)
-          assert_position(repositions, card13["id"], 5)
-        end
-      end
+      assert_broadcast "cards_repositioned", repositions
 
-      assert_broadcast "cards_repositioned", repositions1
-      assert_positions.(repositions1)
-      assert_broadcast "cards_repositioned", repositions2
-      assert_positions.(repositions2)
+      assert Enum.empty?(repositions.lists[list2.id].cards)
+
+      assert_position(repositions, list1.id, card23["id"], 0)
+      assert_position(repositions, list1.id, card11["id"], 1)
+      assert_position(repositions, list1.id, card22["id"], 2)
+      assert_position(repositions, list1.id, card21["id"], 3)
+      assert_position(repositions, list1.id, card12["id"], 4)
+      assert_position(repositions, list1.id, card13["id"], 5)
 
       #
       # Move back to the empty list
@@ -188,22 +162,15 @@ defmodule GodelloWeb.BoardChannelCardsTest do
       ref = push(socket, "update_card", %{card12 | "list_id" => list2.id})
       assert_reply ref, :ok, _updated
 
-      assert_positions = fn repositions ->
-        if repositions["list"]["id"] == list2.id do
-          assert_position(repositions, card12["id"], 0)
-        else
-          assert_position(repositions, card23["id"], 0)
-          assert_position(repositions, card11["id"], 1)
-          assert_position(repositions, card22["id"], 2)
-          assert_position(repositions, card21["id"], 3)
-          assert_position(repositions, card13["id"], 4)
-        end
-      end
+      assert_broadcast "cards_repositioned", repositions
 
-      assert_broadcast "cards_repositioned", repositions1
-      assert_positions.(repositions1)
-      assert_broadcast "cards_repositioned", repositions2
-      assert_positions.(repositions2)
+      assert_position(repositions, list2.id, card12["id"], 0)
+
+      assert_position(repositions, list1.id, card23["id"], 0)
+      assert_position(repositions, list1.id, card11["id"], 1)
+      assert_position(repositions, list1.id, card22["id"], 2)
+      assert_position(repositions, list1.id, card21["id"], 3)
+      assert_position(repositions, list1.id, card13["id"], 4)
     end
 
     test "when deleting card", %{socket: socket} do
@@ -211,10 +178,12 @@ defmodule GodelloWeb.BoardChannelCardsTest do
     end
   end
 
-  defp assert_position(%{"list" => %{"cards" => cards}}, card_id, position) do
-    Enum.find(cards, fn %{"id" => found_id} -> found_id == card_id end)
+  defp assert_position(repositions, list_id, card_id, position) do
+    %{cards: cards} = repositions.lists[list_id]
+
+    Enum.find(cards, fn %{id: found_id} -> found_id == card_id end)
     |> case do
-      %{"position" => found_position} -> assert found_position == position
+      %{position: found_position} -> assert found_position == position
       _ -> throw("Not found")
     end
   end

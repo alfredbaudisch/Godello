@@ -260,7 +260,8 @@ defmodule Godello.Kanban do
         # Recalculate positions of the new list
         recalculate_card_positions(new_list_id, card_id, new_position)
 
-        {:ok, updated_card, {:recalculated_positions, [current_list_id, new_list_id]}}
+        {:ok, updated_card,
+         {:recalculated_positions, [card_positions(current_list_id), card_positions(new_list_id)]}}
 
       # Changed position, recalculate positions of the current list
       {:ok, %Card{position: new_position} = updated_card} when new_position != current_position ->
@@ -271,7 +272,7 @@ defmodule Godello.Kanban do
           new_position
         )
 
-        {:ok, updated_card, {:recalculated_positions, [current_list_id]}}
+        {:ok, updated_card, {:recalculated_positions, [card_positions(current_list_id)]}}
 
       result ->
         result
