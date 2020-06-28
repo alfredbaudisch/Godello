@@ -34,7 +34,6 @@ defmodule GodelloWeb.UserChannel do
           socket
           |> assign(:conn_id, conn_id)
 
-        send(self(), :after_join)
         {:ok, %{conn_id: conn_id}, socket}
       else
         error("join_unauthorized", "Only the user can join its own board")
@@ -47,13 +46,6 @@ defmodule GodelloWeb.UserChannel do
 
   def join(_, _, _) do
     error("join_error", "Invalid topic or user not provided")
-  end
-
-  @impl true
-  def handle_info(:after_join, socket) do
-    # Track the user being online
-    {:ok, _} = Presence.start_tracking(socket)
-    {:noreply, socket}
   end
 
   #
