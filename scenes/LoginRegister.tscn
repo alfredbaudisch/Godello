@@ -73,7 +73,7 @@ margin_bottom = 302.0
 secret = true
 placeholder_text = "Password"
 
-[node name="ConfirmPassword" parent="Center/SignUpForm" instance=ExtResource( 1 )]
+[node name="PasswordConfirmation" parent="Center/SignUpForm" instance=ExtResource( 1 )]
 margin_top = 306.0
 margin_bottom = 364.0
 secret = true
