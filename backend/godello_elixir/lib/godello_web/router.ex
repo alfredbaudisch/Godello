@@ -9,7 +9,7 @@ defmodule GodelloWeb.Router do
     pipe_through :api
 
     scope "/users" do
-      post "/users", UserController, :create
+      post "/", UserController, :create
       post "/login", UserController, :login
     end
   end
