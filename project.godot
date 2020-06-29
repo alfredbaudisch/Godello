@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Object",
+"class": "BackendUtils",
+"language": "GDScript",
+"path": "res://scripts/backend/Utils.gd"
+}, {
 "base": "Model",
 "class": "BoardModel",
 "language": "GDScript",
@@ -29,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/DragUtils.gd"
 }, {
+"base": "Object",
+"class": "ErrorModel",
+"language": "GDScript",
+"path": "res://scripts/models/ErrorModel.gd"
+}, {
 "base": "Model",
 "class": "ListModel",
 "language": "GDScript",
@@ -43,6 +53,41 @@ _global_script_classes=[ {
 "class": "Model",
 "language": "GDScript",
 "path": "res://scripts/models/Model.gd"
+}, {
+"base": "Node",
+"class": "PhoenixBackend",
+"language": "GDScript",
+"path": "res://scripts/backend/Phoenix.gd"
+}, {
+"base": "Node",
+"class": "PhoenixChannel",
+"language": "GDScript",
+"path": "res://addons/GodotPhoenixChannels/Channel.gd"
+}, {
+"base": "Node",
+"class": "PhoenixMessage",
+"language": "GDScript",
+"path": "res://addons/GodotPhoenixChannels/Message.gd"
+}, {
+"base": "Node",
+"class": "PhoenixPresence",
+"language": "GDScript",
+"path": "res://addons/GodotPhoenixChannels/Presence.gd"
+}, {
+"base": "Node",
+"class": "PhoenixSocket",
+"language": "GDScript",
+"path": "res://addons/GodotPhoenixChannels/Socket.gd"
+}, {
+"base": "Node",
+"class": "PhoenixUtils",
+"language": "GDScript",
+"path": "res://addons/GodotPhoenixChannels/Utils.gd"
+}, {
+"base": "HTTPRequest",
+"class": "RESTBackend",
+"language": "GDScript",
+"path": "res://scripts/backend/REST.gd"
 }, {
 "base": "Model",
 "class": "TaskModel",
@@ -65,13 +110,22 @@ _global_script_classes=[ {
 "path": "res://scripts/Utils.gd"
 } ]
 _global_script_class_icons={
+"BackendUtils": "",
 "BoardModel": "",
 "CardModel": "",
 "CardPreview": "",
 "DragUtils": "",
+"ErrorModel": "",
 "ListModel": "",
 "ListPreview": "",
 "Model": "",
+"PhoenixBackend": "",
+"PhoenixChannel": "",
+"PhoenixMessage": "",
+"PhoenixPresence": "",
+"PhoenixSocket": "",
+"PhoenixUtils": "",
+"RESTBackend": "",
 "TaskModel": "",
 "UUID": "",
 "UserModel": "",
@@ -92,6 +146,7 @@ config/icon="res://icon.png"
 Events="*res://scripts/Events.gd"
 DataRepository="*res://scripts/DataRepository.gd"
 SceneUtils="*res://scripts/SceneUtils.gd"
+Backend="*res://scripts/Backend.gd"
 
 [editor_plugins]
 
