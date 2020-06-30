@@ -29,7 +29,7 @@ defmodule Godello.Accounts.User do
     |> validate_required([:first_name, :last_name, :email, :password])
     |> validate_format(:email, @email_regex)
     |> validate_length(:password, min: 6)
-    |> validate_confirmation(:password)
+    |> validate_confirmation(:password, required: true)
     |> put_password_hash()
     |> unique_constraint(:email)
   end

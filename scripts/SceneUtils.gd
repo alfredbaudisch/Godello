@@ -39,7 +39,9 @@ func create_single_error_popup(message : String, focus_after_close : Control, pa
 	
 	if popup: popup.queue_free()
 	popup = null
-	focus_after_close.grab_focus()
+		
+	if(focus_after_close):
+		focus_after_close.grab_focus()
 
 func create_delete_confirm_popup(parent : Node, confirm_target : Object, binds := [], title := "Are you sure?"):
 	var dialog = ConfirmationDialog.new()
