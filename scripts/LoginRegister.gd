@@ -18,6 +18,8 @@ onready var login_email_input := $"/root/LoginRegister".find_node("SignInEmail")
 onready var login_password_input := $"/root/LoginRegister".find_node("SignInPassword")
 
 func _ready():
+	Backend.connect("on_backend_response", self, "_on_backend_response")
+	
 	_go_to_sign_in()
 	
 func _input(event):
@@ -99,7 +101,17 @@ func _sign_up():
 				password = password,
 				password_confirmation = password_confirmation
 			})
+
+func _on_backend_response(action : int, is_success : bool, body):
+	if not is_success:
+		return
+		
+	match action:
+		Backend.BackendAction.SIGN_UP:
+			var user = body["user"]
+			var model = UserModel.new(user["id"], user["first_name"], user["last_name"], user["email"], body["token"])
+			DataRepository.set_active_user(model)
+			SceneUtils.go_to_main_route()
 			
-#			var user = UserModel.new(UUID.v4(), first_name, last_name, email)			
-#			DataRepository.set_active_user(user)
-#			SceneUtils.go_to_main_route()
+		Backend.BackendAction.LOGIN:
+			pass

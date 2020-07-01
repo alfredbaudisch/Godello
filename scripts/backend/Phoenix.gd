@@ -10,8 +10,8 @@ const DATA_ERROR_CODE := 400
 const SUCCESS_CODE := 200
 const SERVER_ERROR_CODE := 500
 
-enum PhoenixHttpOperation {IDLE, SIGN_UP, LOGIN}
-var current_http_operation : int = PhoenixHttpOperation.IDLE
+enum AdapterHttpAction {IDLE, SIGN_UP, LOGIN}
+var current_http_action : int = AdapterHttpAction.IDLE
 
 signal on_backend_adapter_requesting(is_requesting, is_global)
 signal on_backend_adapter_response(is_success, body)
@@ -26,13 +26,13 @@ func _enter_tree():
 func sign_up(user_details : Dictionary):
 	_emit_requesting(true, true)
 	_http_post(ENDPONT_SIGN_UP, user_details)
-	current_http_operation = PhoenixHttpOperation.SIGN_UP
+	current_http_action = AdapterHttpAction.SIGN_UP
 	
 func login():
 	_emit_requesting(true, true)
 	
 func _http_post(url, body):
-	if current_http_operation != PhoenixHttpOperation.IDLE:
+	if current_http_action != AdapterHttpAction.IDLE:
 		return		
 
 	var result = http.json_post_request(url, body)
@@ -41,7 +41,7 @@ func _http_post(url, body):
 		_emit_error("HTTP REQUEST ERROR", true, result)
 
 func _on_http_request_completed(result, response_code, headers, body):
-	current_http_operation = PhoenixHttpOperation.IDLE
+	current_http_action = AdapterHttpAction.IDLE
 	
 	if result == HTTPRequest.RESULT_SUCCESS:
 		var response = http.parse_json_response(body)
