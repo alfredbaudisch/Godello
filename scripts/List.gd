@@ -31,7 +31,7 @@ func _ready():
 
 func set_model(_model : ListModel, shallow_update := false):
 	model = _model
-	set_name("List_" + model.id)
+	set_name("List_" + str(model.id))
 	
 	title_label.set_text(model.title)
 	

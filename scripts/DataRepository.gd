@@ -7,6 +7,8 @@ var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
 var list_draft_cards : Dictionary = {}
 
+const DRAFT_ITEM_TEMP_ID := -1
+
 signal board_created(board)
 signal board_updated(board)
 signal board_deleted(board)
@@ -22,7 +24,7 @@ func _ready():
 	Events.connect("user_logged_in", self, "_on_user_logged_in")
 	Events.connect("user_logged_out", self, "_on_user_logged_out")
 	
-	set_active_user(UserModel.new("1", "Alfred", "R Baudisch", "alfred@alfred"))
+	set_active_user(UserModel.new(1, "Alfred", "R Baudisch", "alfred@alfred"))
 
 func _on_user_logged_in(user : UserModel):
 	set_active_user(user)
@@ -32,10 +34,11 @@ func _on_user_logged_out():
 
 func set_active_user(value : UserModel):
 	active_user = value
+	# TODO: persist token and user
 	
 func add_board_member(email : String, board : BoardModel):
 	# TODO: check if member exists
-	var user_found = UserModel.new(UUID.v4(), "Member", "Name", email)
+	var user_found = UserModel.new(DRAFT_ITEM_TEMP_ID, "Member", "Name", email)
 	board.add_member(user_found)
 	
 func set_active_board(value : BoardModel):
@@ -47,10 +50,10 @@ func get_active_board() -> BoardModel:
 func add_board(board : BoardModel):
 	boards_by_id[board.id] = board
 
-func get_board(id: String):
+func get_board(id: int):
 	return boards_by_id[id]
 
-func get_list(id: String):
+func get_list(id: int):
 	return lists_by_id[id]
 	
 func add_list(list : ListModel):
@@ -130,7 +133,7 @@ func create_task(card, title, is_done := false) -> Dictionary:
 	}
 
 func create_list(board, title):
-	var list = ListModel.new(UUID.v4(), board.id, title)
+	var list = ListModel.new(DRAFT_ITEM_TEMP_ID, board.id, title)
 	add_list(list)
 	emit_signal("list_created", list)
 	
@@ -139,13 +142,13 @@ func create_board(board):
 	emit_signal("board_created", board)
 	
 func get_draft_board(is_public : bool) -> BoardModel:
-	return BoardModel.new(UUID.v4(), active_user, is_public)
+	return BoardModel.new(DRAFT_ITEM_TEMP_ID, active_user, is_public)
 
 func get_draft_card(list):
 	var draft_card = _find_draft_card_for_list(list)
 	
 	if not draft_card:	
-		draft_card = CardModel.new(UUID.v4(), list.id)
+		draft_card = CardModel.new(DRAFT_ITEM_TEMP_ID, list.id)
 		draft_card.set_draft()
 		
 	_set_draft_card_for_list(list, draft_card)

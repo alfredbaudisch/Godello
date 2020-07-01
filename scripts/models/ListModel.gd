@@ -3,9 +3,9 @@ class_name ListModel extends Model
 var title : String = ""
 var cards : Array = []
 var cards_by_id : Dictionary = {}
-var board_id : String = ""
+var board_id : int = 0
 
-func _init(_id : String, _board_id : String, _title : String, _cards : Array = []).(ModelTypes.LIST, _id):
+func _init(_id : int, _board_id : int, _title : String, _cards : Array = []).(ModelTypes.LIST, _id):
 	title = _title
 	board_id = _board_id
 	cards = _cards

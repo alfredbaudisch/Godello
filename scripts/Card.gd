@@ -43,7 +43,7 @@ func set_is_in_archives(value : bool):
 
 func set_model(_model : CardModel):
 	model = _model
-	set_name("Card_" + model.id + ("_archived" if in_archives else ""))
+	set_name("Card_" + str(model.id) + ("_archived" if in_archives else ""))
 	
 	# Card is instantiated in the Archived Cards list but it's not archived anymore
 	if not model.is_archived and in_archives:

@@ -25,7 +25,7 @@ onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/Tit
 
 func set_model(_model : BoardModel):
 	model = _model
-	set_name("Board_" + model.id)
+	set_name("Board_" + str(model.id))
 	title_label.set_text(model.title)
 	
 	board_owner_button.set_model(model.user_owner)

@@ -2,12 +2,12 @@ class_name CardModel extends Model
 
 var title : String = ""
 var description : String = "" setget set_description
-var list_id : String = ""
+var list_id : int = 0
 var tasks : Array = []
 var is_archived := false
 var is_draft := false setget set_draft
 
-func _init(_id : String, _list_id : String, _title : String = "", _description : String = "").(ModelTypes.CARD, _id):
+func _init(_id : int, _list_id : int, _title : String = "", _description : String = "").(ModelTypes.CARD, _id):
 	list_id = _list_id
 	title = _title
 	description = _description
