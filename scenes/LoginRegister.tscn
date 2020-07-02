@@ -31,6 +31,7 @@ __meta__ = {
 }
 
 [node name="SignUpForm" type="VBoxContainer" parent="Center"]
+visible = false
 margin_left = 5.0
 margin_right = 355.0
 margin_bottom = 488.0
@@ -99,7 +100,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GoToSignInButton" type="ToolButton" parent="Center/SignUpForm"]
+[node name="GoToLoginButton" type="ToolButton" parent="Center/SignUpForm"]
 margin_top = 430.0
 margin_right = 350.0
 margin_bottom = 488.0
@@ -108,10 +109,9 @@ mouse_default_cursor_shape = 2
 custom_colors/font_color = Color( 0.784314, 0.788235, 0.803922, 1 )
 custom_colors/font_color_hover = Color( 0.921569, 0.92549, 0.941176, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0.92549, 0.941176, 1 )
-text = "Already have an account? Sign in!"
+text = "Already have an account? Log in!"
 
-[node name="SignInForm" type="VBoxContainer" parent="Center"]
-visible = false
+[node name="LoginForm" type="VBoxContainer" parent="Center"]
 margin_left = 5.0
 margin_top = 93.0
 margin_right = 355.0
@@ -120,7 +120,7 @@ rect_min_size = Vector2( 350, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label2" type="Label" parent="Center/SignInForm"]
+[node name="Label2" type="Label" parent="Center/LoginForm"]
 margin_right = 350.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 6 )
@@ -128,24 +128,24 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Log in to Godello"
 align = 1
 
-[node name="VSplitContainer2" type="VSplitContainer" parent="Center/SignInForm"]
+[node name="VSplitContainer2" type="VSplitContainer" parent="Center/LoginForm"]
 margin_top = 34.0
 margin_right = 350.0
 margin_bottom = 54.0
 rect_min_size = Vector2( 0, 20 )
 
-[node name="SignInEmail" parent="Center/SignInForm" instance=ExtResource( 1 )]
+[node name="LoginEmail" parent="Center/LoginForm" instance=ExtResource( 1 )]
 margin_top = 58.0
 margin_bottom = 116.0
 placeholder_text = "Email"
 
-[node name="SignInPassword" parent="Center/SignInForm" instance=ExtResource( 1 )]
+[node name="LoginPassword" parent="Center/LoginForm" instance=ExtResource( 1 )]
 margin_top = 120.0
 margin_bottom = 178.0
 secret = true
 placeholder_text = "Password"
 
-[node name="SignInButton" type="Button" parent="Center/SignInForm"]
+[node name="LoginButton" type="Button" parent="Center/LoginForm"]
 margin_top = 182.0
 margin_right = 350.0
 margin_bottom = 240.0
@@ -165,7 +165,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GoToSignUpButton" type="ToolButton" parent="Center/SignInForm"]
+[node name="GoToSignUpButton" type="ToolButton" parent="Center/LoginForm"]
 margin_top = 244.0
 margin_right = 350.0
 margin_bottom = 302.0
@@ -176,6 +176,6 @@ custom_colors/font_color_hover = Color( 0.921569, 0.92549, 0.941176, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0.92549, 0.941176, 1 )
 text = "Don't have an account? Create one!"
 [connection signal="pressed" from="Center/SignUpForm/SignUpButton" to="." method="_on_SignUpButton_pressed"]
-[connection signal="pressed" from="Center/SignUpForm/GoToSignInButton" to="." method="_on_GoToSignInButton_pressed"]
-[connection signal="pressed" from="Center/SignInForm/SignInButton" to="." method="_on_SignInButton_pressed"]
-[connection signal="pressed" from="Center/SignInForm/GoToSignUpButton" to="." method="_on_GoToSignUpButton_pressed"]
+[connection signal="pressed" from="Center/SignUpForm/GoToLoginButton" to="." method="_on_GoToLoginButton_pressed"]
+[connection signal="pressed" from="Center/LoginForm/LoginButton" to="." method="_on_LoginButton_pressed"]
+[connection signal="pressed" from="Center/LoginForm/GoToSignUpButton" to="." method="_on_GoToSignUpButton_pressed"]

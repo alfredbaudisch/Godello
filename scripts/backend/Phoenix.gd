@@ -4,13 +4,13 @@ var http
 
 const BASE_URL := "http://127.0.0.1:4000"
 const ENDPONT_SIGN_UP := BASE_URL + "/users"
-const ENDPONT_LOGIN := BASE_URL + "/users/login"
+const ENDPONT_LOG_IN := BASE_URL + "/users/login"
 
 const DATA_ERROR_CODE := 400
 const SUCCESS_CODE := 200
 const SERVER_ERROR_CODE := 500
 
-enum AdapterHttpAction {IDLE, SIGN_UP, LOGIN}
+enum AdapterHttpAction {IDLE, SIGN_UP, LOG_IN}
 var current_http_action : int = AdapterHttpAction.IDLE
 
 signal on_backend_adapter_requesting(is_requesting, is_global)
@@ -24,17 +24,25 @@ func _enter_tree():
 	http.connect("request_completed", self, "_on_http_request_completed")
 	
 func sign_up(user_details : Dictionary):
+	if not _can_perform_http_request():
+		return
+		
+	current_http_action = AdapterHttpAction.SIGN_UP
 	_emit_requesting(true, true)
 	_http_post(ENDPONT_SIGN_UP, user_details)
-	current_http_action = AdapterHttpAction.SIGN_UP
 	
-func login():
+func log_in(credentials : Dictionary):
+	if not _can_perform_http_request():
+		return
+	
+	current_http_action = AdapterHttpAction.LOG_IN	
 	_emit_requesting(true, true)
+	_http_post(ENDPONT_LOG_IN, credentials)	
+	
+func _can_perform_http_request() -> bool:
+	return current_http_action == AdapterHttpAction.IDLE
 	
 func _http_post(url, body):
-	if current_http_action != AdapterHttpAction.IDLE:
-		return		
-
 	var result = http.json_post_request(url, body)
 	
 	if result != OK:

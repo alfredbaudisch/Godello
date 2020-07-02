@@ -8,7 +8,7 @@ signal on_backend_requesting(action, is_requesting, is_global)
 signal on_backend_response(action, is_success, body)
 signal on_backend_error(action, should_try_again, result)
 
-enum BackendAction {IDLE, SIGN_UP, LOGIN}
+enum BackendAction {IDLE, SIGN_UP, LOG_IN}
 var last_action : int = BackendAction.IDLE setget ,get_action
 
 func _ready():
@@ -32,8 +32,9 @@ func sign_up(user_details : Dictionary):
 	last_action = BackendAction.SIGN_UP
 	adapter.sign_up(user_details)
 	
-func login():
-	last_action = BackendAction.LOGIN
+func log_in(credentials : Dictionary):
+	last_action = BackendAction.LOG_IN
+	adapter.log_in(credentials)
 	
 func get_action() -> int:
 	return last_action
