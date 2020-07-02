@@ -8,6 +8,7 @@ var cards_by_id : Dictionary = {}
 var list_draft_cards : Dictionary = {}
 
 const DRAFT_ITEM_TEMP_ID := -1
+const PERSISTED_USER_FILE_NAME := "user://user_data.json"
 
 signal board_created(board)
 signal board_updated(board)
@@ -34,7 +35,7 @@ func _on_user_logged_out():
 
 func set_active_user(value : UserModel):
 	active_user = value
-	# TODO: persist token and user
+	_persist_user()
 	
 func add_board_member(email : String, board : BoardModel):
 	# TODO: check if member exists
@@ -168,3 +169,10 @@ func _set_draft_card_for_list(list, draft_card = null):
 		list_draft_cards[list.id] = draft_card
 	else:
 		list_draft_cards.erase(list.id)
+
+func _persist_user():
+	if active_user:
+		var file = File.new()
+		file.open(PERSISTED_USER_FILE_NAME, File.WRITE)
+		file.store_line(active_user.to_string())
+		file.close()
