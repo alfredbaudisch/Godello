@@ -13,7 +13,7 @@ var last_action : int = BackendAction.IDLE setget ,get_action
 
 func _ready():
 	loading_overlay = load("res://scenes/LoadingOverlay.tscn").instance()
-	get_parent().call_deferred("add_child", loading_overlay)
+	get_node("/root").call_deferred("add_child", loading_overlay)
 	loading_overlay.set_visible(false)
 	
 	adapter = PhoenixBackend.new()
@@ -47,6 +47,10 @@ func _on_backend_adapter_requesting(is_requesting, is_global):
 	emit_signal("on_backend_requesting", last_action, is_requesting, is_global)
 	
 	if is_global:
+		# Move overlay to cover everything
+		if is_requesting:
+			get_node("/root").move_child(loading_overlay, get_node("/root").get_child_count() - 1)
+			
 		loading_overlay.set_visible(is_requesting)
 
 func _on_backend_adapter_response(is_success, body):	
