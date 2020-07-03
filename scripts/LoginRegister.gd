@@ -18,6 +18,7 @@ onready var login_email_input := $"/root/LoginRegister".find_node("LoginEmail")
 onready var login_password_input := $"/root/LoginRegister".find_node("LoginPassword")
 
 func _ready():
+	Events.connect("user_logged_in", self, "_on_user_logged_in")
 	Backend.connect("on_backend_response", self, "_on_backend_response")
 	
 	_go_to_login()
@@ -116,4 +117,6 @@ func _on_backend_response(action : int, is_success : bool, body):
 			var user = body["user"]
 			var model = UserModel.new(user["id"], user["first_name"], user["last_name"], user["email"], body["token"])
 			DataRepository.set_active_user(model)
-			SceneUtils.go_to_main_route()
+
+func _on_user_logged_in(_user):
+	SceneUtils.go_to_main_route()

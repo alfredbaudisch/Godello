@@ -22,20 +22,20 @@ signal card_deleted(card)
 
 func _ready():
 	Events.connect("card_dropped", self, "_on_card_dropped")
-	Events.connect("user_logged_in", self, "_on_user_logged_in")
 	Events.connect("user_logged_out", self, "_on_user_logged_out")
 	
-	set_active_user(UserModel.new(1, "Alfred", "R Baudisch", "alfred@alfred"))
-
-func _on_user_logged_in(user : UserModel):
-	set_active_user(user)
+	call_deferred("_load_persisted_user")
 	
 func _on_user_logged_out():
 	set_active_user(null)
 
-func set_active_user(value : UserModel):
+func set_active_user(value : UserModel, persist : bool = true):
 	active_user = value
-	_persist_user()
+	
+	if persist:
+		_persist_user()
+		
+	Events.emit_signal("user_logged_in", active_user)	
 	
 func add_board_member(email : String, board : BoardModel):
 	# TODO: check if member exists
@@ -170,9 +170,34 @@ func _set_draft_card_for_list(list, draft_card = null):
 	else:
 		list_draft_cards.erase(list.id)
 
+func _load_persisted_user():
+	var file = File.new()
+	if not file.file_exists(PERSISTED_USER_FILE_NAME):
+		return
+	
+	file.open(PERSISTED_USER_FILE_NAME, File.READ)	
+	var saved_data = parse_json(file.get_line())	
+	file.close()
+	
+	if typeof(saved_data) == TYPE_DICTIONARY:
+		var user = UserModel.new(
+			saved_data["id"],
+			saved_data["first_name"], saved_data["last_name"],
+			saved_data["email"], saved_data["token"]
+		)	
+		set_active_user(user, false)	
+	else:		
+		_remove_persisted_user_file()
+
 func _persist_user():
 	if active_user:
 		var file = File.new()
 		file.open(PERSISTED_USER_FILE_NAME, File.WRITE)
 		file.store_line(active_user.to_string())
-		file.close()
+		file.close()		
+	else:
+		_remove_persisted_user_file()
+		
+func _remove_persisted_user_file():
+	var dir = Directory.new()
+	dir.remove(PERSISTED_USER_FILE_NAME)

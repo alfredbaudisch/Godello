@@ -11,12 +11,16 @@ var route : int
 var route_scene : Node
 
 func _ready():
+	Events.connect("user_logged_in", self, "_on_user_logged_in")
 	Events.connect("user_logged_out", self, "_on_user_logged_out")
 	
 	SceneUtils.connect("change_route_requested", self, "_on_change_scene_requested")
-	SceneUtils.go_to_boards()
 	
-	user_button.set_text(DataRepository.active_user.get_full_name())
+	if DataRepository.active_user:
+		user_button.set_text(DataRepository.active_user.get_full_name())
+		SceneUtils.go_to_boards()
+	else:
+		call_deferred("_on_user_logged_out")
 
 func _on_change_scene_requested(next_route : int):
 	_go_ro_route(next_route)
@@ -38,6 +42,9 @@ func _get_scene_for_route(next_route : int) -> PackedScene:
 			return BOARDS_SCENE
 
 func _on_HomeButton_pressed():
+	SceneUtils.go_to_boards()
+	
+func _on_user_logged_in(user):
 	SceneUtils.go_to_boards()
 
 func _on_user_logged_out():
