@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Backend",
+"language": "GDScript",
+"path": "res://scripts/backend/Backend.gd"
+}, {
 "base": "Object",
 "class": "BackendUtils",
 "language": "GDScript",
@@ -54,7 +59,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/models/Model.gd"
 }, {
-"base": "Node",
+"base": "Backend",
 "class": "PhoenixBackend",
 "language": "GDScript",
 "path": "res://scripts/backend/Phoenix.gd"
@@ -110,6 +115,7 @@ _global_script_classes=[ {
 "path": "res://scripts/Utils.gd"
 } ]
 _global_script_class_icons={
+"Backend": "",
 "BackendUtils": "",
 "BoardModel": "",
 "CardModel": "",
@@ -146,7 +152,7 @@ config/icon="res://icon.png"
 Events="*res://scripts/Events.gd"
 DataRepository="*res://scripts/DataRepository.gd"
 SceneUtils="*res://scripts/SceneUtils.gd"
-Backend="*res://scripts/Backend.gd"
+DI="*res://scripts/DI.gd"
 
 [editor_plugins]
 

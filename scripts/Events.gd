@@ -12,3 +12,7 @@ signal card_dropped(drop_data, into_list)
 signal list_dragged(node, model)
 signal list_dropped(drop_data)
 signal add_card_clicked(list)
+
+signal backend_requesting(action, is_requesting, is_global)
+signal backend_response(action, is_success, body)
+signal backend_error(action, should_try_again, result)

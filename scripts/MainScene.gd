@@ -17,7 +17,7 @@ func _ready():
 	
 	if DataRepository.active_user:
 		user_button.set_text(DataRepository.active_user.get_full_name())
-		Backend.connect_realtime(DataRepository.active_user)
+		DI.backend().connect_realtime(DataRepository.active_user)
 		#SceneUtils.go_to_boards()		
 	else:
 		call_deferred("_on_user_logged_out")
@@ -45,7 +45,7 @@ func _on_HomeButton_pressed():
 	SceneUtils.go_to_boards()
 
 func _on_user_logged_out():
-	Backend.disconnect_realtime()
+	DI.backend().disconnect_realtime()
 	SceneUtils.go_to_login()
 	
 func _on_LogOutButton_pressed():

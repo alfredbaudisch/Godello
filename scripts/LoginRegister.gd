@@ -19,7 +19,7 @@ onready var login_password_input := $"/root/LoginRegister".find_node("LoginPassw
 
 func _ready():
 	Events.connect("user_logged_in", self, "_on_user_logged_in")
-	Backend.connect("on_backend_response", self, "_on_backend_response")
+	Events.connect("backend_response", self, "_on_backend_response")
 	
 	_go_to_login()
 	
@@ -68,7 +68,7 @@ func _log_in():
 		and Utils.validate_email_field(login_email_input, self)
 		and Utils.validate_not_empty_text(password, login_password_input.get_placeholder(), login_password_input, self)
 	):
-		Backend.log_in({
+		DI.backend().log_in({
 			email = email,
 			password = password
 		})
@@ -100,7 +100,7 @@ func _sign_up():
 		
 		# All good, sign up
 		else:
-			Backend.sign_up({
+			DI.backend().sign_up({
 				first_name = first_name,
 				last_name = last_name,
 				email = email,
@@ -113,7 +113,7 @@ func _on_backend_response(action : int, is_success : bool, body):
 		return
 		
 	match action:
-		Backend.BackendAction.SIGN_UP, Backend.BackendAction.LOG_IN:
+		Backend.Action.SIGN_UP, Backend.Action.LOG_IN:
 			var user = body["user"]
 			var model = UserModel.new(user["id"], user["first_name"], user["last_name"], user["email"], body["token"])
 			DataRepository.set_active_user(model)
