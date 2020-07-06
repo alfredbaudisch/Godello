@@ -28,6 +28,12 @@ func _ready():
 # Public Interface
 #
 
+func connect_realtime(user : UserModel):
+	adapter.connect_realtime(user)
+	
+func disconnect_realtime():
+	adapter.disconnect_realtime()
+
 func sign_up(user_details : Dictionary):
 	last_action = BackendAction.SIGN_UP
 	adapter.sign_up(user_details)
