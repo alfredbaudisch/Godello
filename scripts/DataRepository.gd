@@ -34,8 +34,9 @@ func set_active_user(value : UserModel, persist : bool = true):
 	
 	if persist:
 		_persist_user()
-		
-	Events.emit_signal("user_logged_in", active_user)	
+	
+	if active_user:
+		Events.emit_signal("user_logged_in", active_user)	
 	
 func add_board_member(email : String, board : BoardModel):
 	# TODO: check if member exists
