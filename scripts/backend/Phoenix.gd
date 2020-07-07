@@ -1,7 +1,5 @@
 class_name PhoenixBackend extends Backend
 
-var http
-
 const BASE_URL := "http://127.0.0.1:4000"
 const WS_BASE_URL := "ws://127.0.0.1:4000/socket"
 
@@ -34,6 +32,8 @@ const ENDPONT_LOG_IN := BASE_URL + "/users/login"
 const DATA_ERROR_CODE := 400
 const SUCCESS_CODE := 200
 const SERVER_ERROR_CODE := 500
+
+var http
 
 func _enter_tree():
 	http = RESTBackend.new()
@@ -89,7 +89,7 @@ func join_user_channel():
 	else:
 		if not user_channel:			
 			user_channel = socket.channel(_get_user_connected_topic())
-			
+
 			user_channel.connect("on_event", self, "_on_user_channel_event")
 			user_channel.connect("on_join_result", self, "_on_user_channel_join_result")
 			user_channel.connect("on_error", self, "_on_user_channel_error")
@@ -114,7 +114,31 @@ func create_board(name : String):
 #
 
 func join_board_channel(board : BoardModel):
-	pass
+	if not socket:
+		._emit_error("join_user_channel", false, "No socket, can't join user channel")
+
+	else:
+		if not board_channel:			
+			if not board_presence:
+				board_presence = PhoenixPresence.new()	
+
+				board_presence.connect("on_join", self, "_on_board_presence_join")
+				board_presence.connect("on_leave", self, "_on_board_presence_leave")
+
+			board_channel = socket.channel(_get_board_topic(board))
+
+			board_channel.connect("on_event", self, "_on_board_channel_event")
+			board_channel.connect("on_join_result", self, "_on_board_channel_join_result")
+			board_channel.connect("on_error", self, "_on_board_channel_error")
+			board_channel.connect("on_close", self, "_on_board_channel_close")
+				
+		if board_channel.is_joined():
+			board_channel.leave()
+			
+		if board_channel.is_closed():
+			._emit_requesting(true)			
+			board_channel.set_topic(_get_board_topic(board))
+			board_channel.join()
 
 #
 # HTTP public interface
@@ -169,8 +193,11 @@ func _on_http_request_completed(result, response_code, headers, body):
 # Channel helpers
 #
 
-func _get_user_connected_topic():
+func _get_user_connected_topic() -> String:
 	return USER_CHANNEL + str(user_connected.id)
+
+func _get_board_topic(board : BoardModel) -> String:
+	return BOARD_CHANNEL + str(board.id)
 	
 func _can_push_user_channel():
 	return user_channel.is_joined()
@@ -221,6 +248,38 @@ func _on_socket_connecting(is_connecting):
 		._emit_requesting(true)
 		
 	print("_on_socket_connecting: " + str(is_connecting))	
+	
+#
+# Board PhoenixChannel events
+#
+
+func _on_board_channel_event(event, payload, status):
+	print("_on_board_channel_event:  " + event + ", status: " + status + ", payload: " + str(payload))
+
+	if event == PhoenixChannel.PRESENCE_EVENTS.diff:
+		board_presence.sync_diff(payload)		
+	elif event == PhoenixChannel.PRESENCE_EVENTS.state:
+		board_presence.sync_state(payload)
+	else:
+		var emit_event = _get_event_for_channel_event(event)
+		._emit_response(status == PhoenixChannel.STATUS.ok, payload, emit_event, false)
+	
+func _on_board_channel_join_result(status, result):
+	._emit_board_channel_joined(status == PhoenixChannel.STATUS.ok, result)
+	
+func _on_board_channel_error(error):
+	print("_on_board_channel_error: " + str(error))
+	
+func _on_board_channel_close(closed):	
+	print("_on_board_channel_close: " + str(closed))
+	._emit_board_channel_left()
+
+func _on_board_presence_join(joins):
+	print("_on_board_presence_join: " + str(joins))
+	
+func _on_board_presence_leave(leaves):
+	print("_on_board_presence_leave: " + str(leaves))
+
 	
 #
 # User PhoenixChannel events
