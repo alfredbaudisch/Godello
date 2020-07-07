@@ -14,9 +14,14 @@ enum Event {
 	CONNECT_REALTIME,
 	GET_BOARDS,
 	CREATE_BOARD,
-	BOARD_CREATED
+	BOARD_CREATED,
 	
 	# Board channel
+	JOIN_BOARD_CHANNEL,
+	EDIT_BOARD,
+	BOARD_EDITED,
+	DELETE_BOARD,
+	BOARD_DELETED
 }
 
 var last_event : int = Event.IDLE setget ,get_event
@@ -48,13 +53,22 @@ func create_board(name : String):
 	
 func get_boards():
 	last_event = Event.GET_BOARDS
-
-func get_event() -> int:
-	return last_event
+	
+func join_board_channel(board : BoardModel):
+	pass
+	
+func edit_board(board : BoardModel):
+	pass
+	
+func delete_board(board : BoardModel):
+	pass
 
 #
 # Helpers
 #
+
+func get_event() -> int:
+	return last_event
 
 func _set_idle():
 	_set_event(Event.IDLE)

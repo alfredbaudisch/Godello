@@ -6,6 +6,7 @@ var boards_by_id : Dictionary = {} setget ,get_boards
 var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
 var list_draft_cards : Dictionary = {}
+var users_by_id : Dictionary = {}
 
 var boards_loaded := false
 
@@ -34,6 +35,7 @@ func _ready():
 func _reset():
 	set_active_user(null)
 	set_active_board(null)
+	users_by_id.clear()
 	cards_by_id.clear()
 	list_draft_cards.clear()
 	lists_by_id.clear()
@@ -48,7 +50,11 @@ func set_active_user(value : UserModel, persist : bool = true):
 		_persist_user()
 	
 	if active_user:
+		add_user(active_user)
 		Events.emit_signal("user_logged_in", active_user)	
+		
+func add_user(user : UserModel):
+	users_by_id[user.id] = user
 	
 func add_board_member(email : String, board : BoardModel):
 	# TODO: check if member exists
@@ -77,29 +83,28 @@ func add_board(board : BoardModel):
 	boards_by_id[board.id] = board
 
 func get_board(id: int):
-	return boards_by_id[id]
+	return boards_by_id.get(id)
 
 func get_list(id: int):
-	return lists_by_id[id]
+	return lists_by_id.get(id)
+	
+func get_user(id: int):
+	return users_by_id.get(id)
 	
 func add_list(list : ListModel):
 	lists_by_id[list.id] = list	
 	_map_cards_by_id(list.cards)
 
-	var board = boards_by_id[list.board_id]
+	var board = boards_by_id.get(list.board_id)
 	board.add_list(list)
 
 func move_card_to_list(card : CardModel, list : ListModel):
-	var from_list = lists_by_id[card.list_id]
-	var to_list = lists_by_id[list.id]
+	var from_list = lists_by_id.get(card.list_id)
+	var to_list = lists_by_id.get(list.id)
 	
 	if from_list and to_list:
 		to_list.add_card(card)
 		from_list.remove_card(card)
-
-func _on_card_dropped(drop_data, into_list):
-	if drop_data["model"].list_id != into_list.id:
-		move_card_to_list(drop_data["model"], into_list)
 
 func _map_cards_by_id(cards : Array):
 	for card in cards:
@@ -164,8 +169,7 @@ func create_list(board, title):
 	emit_signal("list_created", list)
 	
 func create_board(board):
-	add_board(board)
-	emit_signal("board_created", board)
+	DI.backend().create_board(board.name)	
 	
 func get_draft_board(is_public : bool) -> BoardModel:
 	return BoardModel.new(DRAFT_ITEM_TEMP_ID, active_user, is_public)
@@ -228,8 +232,44 @@ func _remove_persisted_user_file():
 	dir.remove(PERSISTED_USER_FILE_NAME)
 	
 #
+# Raw data utils
+#
+
+func _get_or_create_user_from_details(details : Dictionary) -> UserModel:
+	var user = get_user(details["id"])
+	
+	if not user:		
+		user = UserModel.new(details["id"], details["first_name"], details["last_name"], details["email"])
+		add_user(user)
+		
+	return user
+
+func _board_from_details(details : Dictionary) -> BoardModel:
+	var members := []
+	var lists := []
+	var owner_user
+	
+	for user_details in details["users"]:
+		var user = _get_or_create_user_from_details(user_details["user"])
+		
+		if user_details["is_owner"]:
+			owner_user = user			
+		else:
+			members.append(user)
+	
+	# TODO: create lists
+	for list_details in details["lists"]:
+		pass
+
+	return BoardModel.new(details["id"], owner_user, false, details["name"], lists, members)
+	
+#
 # Signals
 #
+
+func _on_card_dropped(drop_data, into_list):
+	if drop_data["model"].list_id != into_list.id:
+		move_card_to_list(drop_data["model"], into_list)
 
 func _on_user_logged_out():	
 	_reset()
@@ -243,9 +283,16 @@ func _on_backend_response(action : int, is_success : bool, body):
 		return
 		
 	match action:
-		Backend.Action.GET_BOARDS:
+		Backend.Event.BOARD_CREATED:			
+			var board = _board_from_details(body)
+			add_board(board)
+			emit_signal("board_created", board)
+			
+		Backend.Event.GET_BOARDS:
+			var boards := []			
 			for details in body:
-				assert("Create BoardModel from backend board")
+				boards.append(_board_from_details(details))
 				
+			add_boards(boards)
 			boards_loaded = true
 			emit_signal("boards_loaded")
