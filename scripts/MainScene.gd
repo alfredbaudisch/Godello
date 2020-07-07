@@ -12,15 +12,22 @@ var route_scene : Node
 
 func _ready():
 	Events.connect("user_logged_out", self, "_on_user_logged_out")
+	Events.connect("user_channel_joined", self, "_on_user_channel_joined")
+	Events.connect("user_channel_left", self, "_on_user_channel_left")
 	
 	SceneUtils.connect("change_route_requested", self, "_on_change_scene_requested")
 	
 	if DataRepository.active_user:
 		user_button.set_text(DataRepository.active_user.get_full_name())
 		DI.backend().connect_realtime(DataRepository.active_user)
-		#SceneUtils.go_to_boards()		
 	else:
-		call_deferred("_on_user_logged_out")
+		call_deferred("logout")
+
+func go_home():
+	SceneUtils.go_to_boards()
+	
+func logout():
+	Events.emit_signal("user_logged_out")
 
 func _on_change_scene_requested(next_route : int):
 	_go_ro_route(next_route)
@@ -42,11 +49,17 @@ func _get_scene_for_route(next_route : int) -> PackedScene:
 			return BOARDS_SCENE
 
 func _on_HomeButton_pressed():
-	SceneUtils.go_to_boards()
+	go_home()
+	
+func _on_user_channel_joined():
+	go_home()
+	
+func _on_user_channel_left():
+	pass
+	
+func _on_LogOutButton_pressed():
+	logout()
 
 func _on_user_logged_out():
 	DI.backend().disconnect_realtime()
 	SceneUtils.go_to_login()
-	
-func _on_LogOutButton_pressed():
-	Events.emit_signal("user_logged_out")

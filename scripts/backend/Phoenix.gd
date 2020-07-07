@@ -5,18 +5,25 @@ var http
 const BASE_URL := "http://127.0.0.1:4000"
 const WS_BASE_URL := "ws://127.0.0.1:4000/socket"
 
+#
 # CHANNEL
+#
 const USER_CHANNEL := "user:"
 const BOARD_CHANNEL := "board:"
 
 var socket : PhoenixSocket
 var user_channel : PhoenixChannel
 var board_channel : PhoenixChannel
-var presence : PhoenixPresence
+var board_presence : PhoenixPresence
+
+# Channel state
 var token_connected : String = ""
 var user_connected : UserModel
+var board_connected : BoardModel
 
+#
 # HTTP
+#
 const ENDPONT_SIGN_UP := BASE_URL + "/users"
 const ENDPONT_LOG_IN := BASE_URL + "/users/login"
 const DATA_ERROR_CODE := 400
@@ -30,7 +37,7 @@ func _enter_tree():
 	http.connect("request_completed", self, "_on_http_request_completed")
 	
 #
-# Channel public interface
+# User channel public interface
 #
 
 func connect_realtime(user : UserModel):
@@ -45,12 +52,14 @@ func connect_realtime(user : UserModel):
 	else:
 		socket = PhoenixSocket.new(WS_BASE_URL)
 		
-		socket.connect("on_open", self, "_on_Socket_open")
-		socket.connect("on_close", self, "_on_Socket_close")
-		socket.connect("on_error", self, "_on_Socket_error")
-		socket.connect("on_connecting", self, "_on_Socket_connecting")
+		socket.connect("on_open", self, "_on_socket_open")
+		socket.connect("on_close", self, "_on_socket_close")
+		socket.connect("on_error", self, "_on_socket_error")
+		socket.connect("on_connecting", self, "_on_socket_connecting")
 		
 		.call_deferred("add_child", socket, true)
+		
+	.connect_realtime(user)
 
 	# Remember connection details
 	user_connected = user
@@ -68,23 +77,34 @@ func disconnect_realtime():
 func join_user_channel():
 	if not socket:
 		._emit_error("join_user_channel", false, "No socket, can't join user channel")
+		
+	elif not user_connected:
+		._emit_error("join_user_channel", false, "No user, can't join user channel")
 	
 	else:
 		if not user_channel:			
 			user_channel = socket.channel(_get_user_connected_topic())
 			
-			user_channel.connect("on_event", self, "_on_UserChannel_event")
-			user_channel.connect("on_join_result", self, "_on_UserChannel_join_result")
-			user_channel.connect("on_error", self, "_on_UserChannel_error")
-			user_channel.connect("on_close", self, "_on_UserChannel_close")
+			user_channel.connect("on_event", self, "_on_user_channel_event")
+			user_channel.connect("on_join_result", self, "_on_user_channel_join_result")
+			user_channel.connect("on_error", self, "_on_user_channel_error")
+			user_channel.connect("on_close", self, "_on_user_channel_close")
 				
 		if user_channel.is_joined():
 			user_channel.leave()
 			
 		if user_channel.is_closed():
+			._emit_requesting(true)			
 			user_channel.set_topic(_get_user_connected_topic())
 			user_channel.join()
 	
+#
+# Board channel public interface
+#
+
+func join_board_channel(board : BoardModel):
+	pass
+
 #
 # HTTP public interface
 #
@@ -94,7 +114,7 @@ func sign_up(user_details : Dictionary):
 		return
 		
 	.sign_up(user_details)
-	._emit_requesting(true, true)
+	._emit_requesting(true)
 	_http_post(ENDPONT_SIGN_UP, user_details)
 	
 func log_in(credentials : Dictionary):
@@ -102,7 +122,7 @@ func log_in(credentials : Dictionary):
 		return
 	
 	.log_in(credentials)
-	._emit_requesting(true, true)
+	._emit_requesting(true)
 	_http_post(ENDPONT_LOG_IN, credentials)	
 
 #
@@ -145,18 +165,35 @@ func _get_user_connected_topic():
 # PhoenixSocket events
 #
 
-func _on_Socket_open(payload):	
-	._emit_requesting(false)
-	print("_on_Socket_open: " + str(payload))	
+func _on_socket_open(payload):	
+	print("_on_socket_open: " + str(payload))	
+	join_user_channel()
 	
-func _on_Socket_close(payload):
-	print("_on_Socket_close: " + str(payload))
+func _on_socket_close(payload):
+	print("_on_socket_close: " + str(payload))
 	
-func _on_Socket_error(payload):
-	print("_on_Socket_error: " + str(payload))
+func _on_socket_error(payload):
+	print("_on_socket_error: " + str(payload))
 
-func _on_Socket_connecting(is_connecting):
+func _on_socket_connecting(is_connecting):
 	if is_connecting:
 		._emit_requesting(true)
 		
-	print("_on_Socket_connecting: " + str(is_connecting))	
+	print("_on_socket_connecting: " + str(is_connecting))	
+	
+#
+# User PhoenixChannel events
+#
+
+func _on_user_channel_event(event, payload, status):
+	print("_on_user_channel_event:  " + event + ", status: " + status + ", payload: " + str(payload))
+	
+func _on_user_channel_join_result(status, result):
+	._emit_user_channel_joined(status == PhoenixChannel.STATUS.ok, result)
+	
+func _on_user_channel_error(error):
+	print("_on_user_channel_error: " + str(error))
+	
+func _on_user_channel_close(closed):	
+	print("_on_user_channel_close: " + str(closed))
+	._emit_user_channel_left()

@@ -2,7 +2,18 @@ class_name Backend extends Node
 
 var loading_overlay
 
-enum Action {IDLE, SIGN_UP, LOG_IN}
+enum Action {
+	IDLE,
+	
+	# HTTP
+	SIGN_UP, LOG_IN,
+	
+	# User channel
+	CONNECT_REALTIME
+	
+	# Board channel
+}
+
 var last_action : int = Action.IDLE setget ,get_action
 
 func _ready():
@@ -15,7 +26,7 @@ func _ready():
 #
 
 func connect_realtime(user : UserModel):
-	pass
+	last_action = Action.CONNECT_REALTIME
 	
 func disconnect_realtime():
 	pass
@@ -46,16 +57,19 @@ func _can_perform_http_request() -> bool:
 # Signal helpers
 #
 
-func _emit_error(error_location : String, should_try_again := true, result = null, is_global := true):
+func _emit_error(error_location : String, should_try_again := true, result = null,
+	 is_global := true, message := "An error has occurred. Try again."):
 	_emit_requesting(false, is_global)
 	
-	SceneUtils.create_single_error_popup("An error has occurred. Try again.", null, get_parent())
+	var error_message = result if result and typeof(result) == TYPE_STRING else message
+	SceneUtils.create_single_error_popup(error_message, null, get_parent())
 	
 	Events.emit_signal("backend_error", last_action, should_try_again, result)
 	_set_idle()
-	print("ERROR: " + error_location, "should_try_again: ", should_try_again, "result: ", result)
 	
-func _emit_response(is_success, body, is_global := true):
+	print("BACKEND ERROR: " + error_location, "should_try_again: ", should_try_again, "result: ", result)
+	
+func _emit_response(is_success : bool, body, is_global := true):
 	_emit_requesting(false, is_global)
 	
 	# For now, handle and display errors from here
@@ -75,3 +89,19 @@ func _emit_requesting(is_requesting, is_global := true):
 			get_node("/root").move_child(loading_overlay, get_node("/root").get_child_count() - 1)
 			
 		loading_overlay.set_visible(is_requesting)
+
+func _emit_user_channel_joined(is_success : bool, result):
+	_emit_requesting(false)
+	
+	if is_success:
+		Events.emit_signal("user_channel_joined")
+	else:
+		_emit_error("join_user_channel", false, "Could not join user channel.")
+
+	_set_idle()
+	
+	print("_on_user_channel_join_result: " + str(is_success) + ", " + str(result))
+
+func _emit_user_channel_left():	
+	Events.emit_signal("user_channel_left")
+	print("_on_user_channel_left")
