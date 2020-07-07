@@ -2,7 +2,7 @@ class_name Backend extends Node
 
 var loading_overlay
 
-enum Action {
+enum Event {
 	ERROR,
 	IDLE,
 	
@@ -13,12 +13,13 @@ enum Action {
 	# User channel
 	CONNECT_REALTIME,
 	GET_BOARDS,
-	CREATE_BOARD
+	CREATE_BOARD,
+	BOARD_CREATED
 	
 	# Board channel
 }
 
-var last_action : int = Action.IDLE setget ,get_action
+var last_event : int = Event.IDLE setget ,get_event
 var pending_local_requests : int = 0
 
 func _ready():
@@ -31,35 +32,38 @@ func _ready():
 #
 
 func connect_realtime(user : UserModel):
-	last_action = Action.CONNECT_REALTIME
+	last_event = Event.CONNECT_REALTIME
 	
 func disconnect_realtime():
 	pass
 
 func sign_up(user_details : Dictionary):
-	last_action = Action.SIGN_UP
+	last_event = Event.SIGN_UP
 	
 func log_in(credentials : Dictionary):
-	last_action = Action.LOG_IN
+	last_event = Event.LOG_IN
+	
+func create_board(name : String):
+	last_event = Event.CREATE_BOARD
 	
 func get_boards():
-	last_action = Action.GET_BOARDS
+	last_event = Event.GET_BOARDS
 
-func get_action() -> int:
-	return last_action
+func get_event() -> int:
+	return last_event
 
 #
 # Helpers
 #
 
 func _set_idle():
-	_set_action(Action.IDLE)
+	_set_event(Event.IDLE)
 
-func _set_action(action : int):
-	last_action = action
+func _set_event(event : int):
+	last_event = event
 
 func _can_perform_http_request() -> bool:
-	return last_action == Action.IDLE
+	return last_event == Event.IDLE
 
 #
 # Signal helpers
@@ -72,12 +76,12 @@ func _emit_error(error_location : String, should_try_again := true, result = nul
 	var error_message = result if result and typeof(result) == TYPE_STRING else message
 	SceneUtils.create_single_error_popup(error_message, null, get_parent())
 	
-	Events.emit_signal("backend_error", last_action, should_try_again, result)
+	Events.emit_signal("backend_error", last_event, should_try_again, result)
 	_set_idle()
 	
 	print("BACKEND ERROR: " + error_location, "should_try_again: ", should_try_again, "result: ", result)
 	
-func _emit_response(is_success : bool, body, action : int = Action.IDLE, is_global := true):
+func _emit_response(is_success : bool, body, event : int = Event.IDLE, is_global := true):
 	_emit_requesting(false, is_global)
 	
 	# For now, handle and display errors from here
@@ -85,8 +89,8 @@ func _emit_response(is_success : bool, body, action : int = Action.IDLE, is_glob
 		var first_error = BackendUtils.get_first_response_error(body)
 		SceneUtils.create_single_error_popup(first_error.details, null, get_node("/root"))
 	
-	var emit_action = last_action if action == Action.IDLE else action
-	Events.emit_signal("backend_response", emit_action, is_success, body)
+	var emit_event = last_event if event == Event.IDLE else event
+	Events.emit_signal("backend_response", emit_event, is_success, body)
 	_set_idle()
 
 func _emit_requesting(is_requesting, is_global := true):
@@ -102,7 +106,7 @@ func _emit_requesting(is_requesting, is_global := true):
 			if pending_local_requests > 0:
 				return
 	
-	Events.emit_signal("backend_requesting", last_action, is_requesting, is_global)
+	Events.emit_signal("backend_requesting", last_event, is_requesting, is_global)
 	
 	if is_global:
 		# Move overlay to cover everything

@@ -61,8 +61,8 @@ func _on_backend_response(action : int, is_success : bool, body):
 		return
 		
 	match action:
-		Backend.Action.GET_BOARDS:
+		Backend.Event.GET_BOARDS:
 			pass
 			
-		Backend.Action.CREATE_BOARD:
+		Backend.Event.CREATE_BOARD:
 			pass

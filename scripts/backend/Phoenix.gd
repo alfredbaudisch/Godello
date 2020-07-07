@@ -12,7 +12,8 @@ const USER_CHANNEL := "user:"
 const BOARD_CHANNEL := "board:"
 const USER_EVENTS := {
 	create_board = "create_board",
-	get_boards = "get_boards"
+	get_boards = "get_boards",
+	board_created = "board_created"
 }
 
 var socket : PhoenixSocket
@@ -105,8 +106,8 @@ func join_user_channel():
 func get_boards():
 	_push_user_channel(USER_EVENTS.get_boards)
 		
-func create_board(details : Dictionary):
-	_push_user_channel(USER_EVENTS.create_board, details)
+func create_board(name : String):
+	_push_user_channel(USER_EVENTS.create_board, {name = name})
 
 #
 # Board channel public interface
@@ -190,14 +191,16 @@ func _push_board_channel(event, payload := {}):
 	if board_channel.push(event, payload):
 		._emit_requesting(true, false)
 
-func _get_action_for_event(event : String) -> int:
+func _get_event_for_channel_event(event : String) -> int:
 	match(event):
 		USER_EVENTS.get_boards:
-			return Action.GET_BOARDS
+			return Event.GET_BOARDS
 		USER_EVENTS.create_board:
-			return Action.CREATE_BOARD		
+			return Event.BOARD_CREATED
+		USER_EVENTS.board_created:
+			return Event.BOARD_CREATED
 		
-	return Action.ERROR
+	return Event.ERROR
 	
 #
 # PhoenixSocket events
@@ -226,9 +229,10 @@ func _on_socket_connecting(is_connecting):
 func _on_user_channel_event(event, payload, status):
 	print("_on_user_channel_event:  " + event + ", status: " + status + ", payload: " + str(payload))
 	
-	# Get action separately, because GET_BOARDS is a global action
-	var action = _get_action_for_event(event)
-	._emit_response(status == PhoenixChannel.STATUS.ok, payload, action, action == Backend.Action.GET_BOARDS)
+	var emit_event = _get_event_for_channel_event(event)	
+	if emit_event == Backend.Event.GET_BOARDS:
+		payload = payload["boards"]	
+	._emit_response(status == PhoenixChannel.STATUS.ok, payload, emit_event, emit_event == Backend.Event.GET_BOARDS)
 	
 func _on_user_channel_join_result(status, result):
 	._emit_user_channel_joined(status == PhoenixChannel.STATUS.ok, result)

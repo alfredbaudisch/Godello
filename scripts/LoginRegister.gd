@@ -113,7 +113,7 @@ func _on_backend_response(action : int, is_success : bool, body):
 		return
 		
 	match action:
-		Backend.Action.SIGN_UP, Backend.Action.LOG_IN:
+		Backend.Event.SIGN_UP, Backend.Event.LOG_IN:
 			var user = body["user"]
 			var model = UserModel.new(user["id"], user["first_name"], user["last_name"], user["email"], body["token"])
 			DataRepository.set_active_user(model)
