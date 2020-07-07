@@ -55,13 +55,13 @@ func save():
 				list.set_title(title)
 				
 			SceneUtils.InputFieldDialogMode.EDIT_BOARD:
-				board.set_title(title)
+				board.set_name(title)
 				
 			SceneUtils.InputFieldDialogMode.CREATE_LIST:
 				DataRepository.create_list(board, title)
 				
 			SceneUtils.InputFieldDialogMode.CREATE_BOARD:
-				board.set_title(title)
+				board.set_name(title)
 				DataRepository.create_board(board)
 				
 			SceneUtils.InputFieldDialogMode.ADD_BOARD_MEMBER:
@@ -90,7 +90,7 @@ func _on_InputFieldDialog_about_to_show():
 			input_field.set_text(list.title)
 			
 		SceneUtils.InputFieldDialogMode.EDIT_BOARD:
-			input_field.set_text(board.title)
+			input_field.set_text(board.name)
 			
 		_:
 			input_field.set_text("")

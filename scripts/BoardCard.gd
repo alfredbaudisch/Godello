@@ -9,7 +9,7 @@ func _ready():
 
 func set_model(_model : BoardModel):
 	model = _model
-	title_label.set_text(model.title)
+	title_label.set_text(model.name)
 
 func get_model():
 	return model

@@ -1,6 +1,6 @@
 class_name BoardModel extends Model
 
-var title : String = ""
+var name : String = ""
 var archived_cards : Dictionary = {} setget ,get_archived_cards
 var is_public : bool = false
 
@@ -10,15 +10,16 @@ var members : Array = []
 var lists : Array = []
 var lists_by_id : Dictionary = {}
 
-func _init(_id : int, _owner : UserModel, _is_public := false, _title := "", _lists := []).(ModelTypes.BOARD, _id):
-	title = _title
+func _init(_id : int, _owner : UserModel, _is_public := false, _name := "", _lists := [], _members := []).(ModelTypes.BOARD, _id):
+	name = _name
 	user_owner = _owner
 	is_public = _is_public
 	lists = _lists
+	members = _members
 	_map_lists_by_id()
 	
-func set_title(_title : String):
-	title = _title
+func set_name(_name : String):
+	name = _name
 	_notify_updated()
 	
 func add_archived_card(card):
@@ -63,7 +64,7 @@ func _map_lists_by_id():
 func _to_string():
 	return to_json({
 		"id": id,
-		"title": title
+		"name": name
 	})
 
 func _notify_updated():
