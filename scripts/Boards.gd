@@ -9,13 +9,16 @@ const BOARD_CARD := preload("res://scenes/BoardCard.tscn")
 
 func _ready():
 	DataRepository.connect("board_created", self, "_on_board_created")
+	DataRepository.connect("boards_loaded", self, "_on_boards_loaded")
+	Events.connect("backend_response", self, "_on_backend_response")
+	
 	_refresh_boards()
 
 func _refresh_boards():
 	Utils.clear_children(personal_boards_container, [create_personal_board_button])
 	Utils.clear_children(public_boards_container)
 	
-	for board in DataRepository.boards_by_id.values():
+	for board in DataRepository.get_boards().values():
 		var board_card = BOARD_CARD.instance()	
 		
 		if board.members.size() == 0:
@@ -41,7 +44,25 @@ func _on_CreateBoard_pressed(is_public : bool):
 func _on_board_created(board : BoardModel):
 	_refresh_boards()
 	
+func _on_boards_loaded():
+	_refresh_boards()
+	
 func _make_button_last_item(container : Node, button : Node):
 	var amount = container.get_child_count()  
 	if amount > 1:
 		container.move_child(button, amount - 1)
+
+#
+# Backend signals
+#
+
+func _on_backend_response(action : int, is_success : bool, body):
+	if not is_success:
+		return
+		
+	match action:
+		Backend.Action.GET_BOARDS:
+			pass
+			
+		Backend.Action.CREATE_BOARD:
+			pass

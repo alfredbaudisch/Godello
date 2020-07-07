@@ -10,6 +10,10 @@ const WS_BASE_URL := "ws://127.0.0.1:4000/socket"
 #
 const USER_CHANNEL := "user:"
 const BOARD_CHANNEL := "board:"
+const USER_EVENTS := {
+	create_board = "create_board",
+	get_boards = "get_boards"
+}
 
 var socket : PhoenixSocket
 var user_channel : PhoenixChannel
@@ -97,7 +101,13 @@ func join_user_channel():
 			._emit_requesting(true)			
 			user_channel.set_topic(_get_user_connected_topic())
 			user_channel.join()
-	
+			
+func get_boards():
+	_push_user_channel(USER_EVENTS.get_boards)
+		
+func create_board(details : Dictionary):
+	_push_user_channel(USER_EVENTS.create_board, details)
+
 #
 # Board channel public interface
 #
@@ -160,7 +170,35 @@ func _on_http_request_completed(result, response_code, headers, body):
 
 func _get_user_connected_topic():
 	return USER_CHANNEL + str(user_connected.id)
+	
+func _can_push_user_channel():
+	return user_channel.is_joined()
+	
+func _push_user_channel(event, payload := {}):
+	if not _can_push_user_channel():
+		._emit_error(event, false, "Can't push user event: " + event + ", because the user channel is not joined")
+
+	else:		
+		if user_channel.push(event, payload):
+			._emit_requesting(true, event == USER_EVENTS.get_boards)
+			return true
+	
+	._emit_error(event, false, "Could not push user event: " + event)
+	return false
 		
+func _push_board_channel(event, payload := {}):
+	if board_channel.push(event, payload):
+		._emit_requesting(true, false)
+
+func _get_action_for_event(event : String) -> int:
+	match(event):
+		USER_EVENTS.get_boards:
+			return Action.GET_BOARDS
+		USER_EVENTS.create_board:
+			return Action.CREATE_BOARD		
+		
+	return Action.ERROR
+	
 #
 # PhoenixSocket events
 #
@@ -187,6 +225,10 @@ func _on_socket_connecting(is_connecting):
 
 func _on_user_channel_event(event, payload, status):
 	print("_on_user_channel_event:  " + event + ", status: " + status + ", payload: " + str(payload))
+	
+	# Get action separately, because GET_BOARDS is a global action
+	var action = _get_action_for_event(event)
+	._emit_response(status == PhoenixChannel.STATUS.ok, payload, action, action == Backend.Action.GET_BOARDS)
 	
 func _on_user_channel_join_result(status, result):
 	._emit_user_channel_joined(status == PhoenixChannel.STATUS.ok, result)

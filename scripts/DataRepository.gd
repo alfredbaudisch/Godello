@@ -2,14 +2,17 @@ extends Node
 
 var active_user : UserModel setget set_active_user
 var active_board : BoardModel setget set_active_board,get_active_board
-var boards_by_id : Dictionary = {}
+var boards_by_id : Dictionary = {} setget ,get_boards
 var lists_by_id : Dictionary = {}
 var cards_by_id : Dictionary = {}
 var list_draft_cards : Dictionary = {}
 
+var boards_loaded := false
+
 const DRAFT_ITEM_TEMP_ID := -1
 const PERSISTED_USER_FILE_NAME := "user://user_data.json"
 
+signal boards_loaded()
 signal board_created(board)
 signal board_updated(board)
 signal board_deleted(board)
@@ -26,9 +29,18 @@ func _ready():
 	
 	call_deferred("_load_persisted_user")
 	
-func _on_user_logged_out():
-	set_active_user(null)
+	Events.connect("backend_response", self, "_on_backend_response")
 
+func _reset():
+	set_active_user(null)
+	set_active_board(null)
+	cards_by_id.clear()
+	list_draft_cards.clear()
+	lists_by_id.clear()
+	boards_by_id.clear()
+		
+	boards_loaded = false	
+	
 func set_active_user(value : UserModel, persist : bool = true):
 	active_user = value
 	
@@ -48,6 +60,18 @@ func set_active_board(value : BoardModel):
 
 func get_active_board() -> BoardModel:
 	return active_board
+
+func get_boards() -> Dictionary:
+	if not boards_loaded:
+		DI.backend().get_boards()
+		return {}
+				
+	else:
+		return boards_by_id
+	
+func add_boards(boards : Array):
+	for board in boards:
+		add_board(board)
 	
 func add_board(board : BoardModel):
 	boards_by_id[board.id] = board
@@ -202,3 +226,26 @@ func _persist_user():
 func _remove_persisted_user_file():
 	var dir = Directory.new()
 	dir.remove(PERSISTED_USER_FILE_NAME)
+	
+#
+# Signals
+#
+
+func _on_user_logged_out():	
+	_reset()
+
+#
+# Backend signals
+#
+
+func _on_backend_response(action : int, is_success : bool, body):
+	if not is_success:
+		return
+		
+	match action:
+		Backend.Action.GET_BOARDS:
+			for details in body:
+				assert("Create BoardModel from backend board")
+				
+			boards_loaded = true
+			emit_signal("boards_loaded")
