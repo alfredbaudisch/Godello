@@ -288,6 +288,10 @@ func _on_backend_response(action : int, is_success : bool, body):
 			add_board(board)
 			emit_signal("board_created", board)
 			
+		Backend.Event.GET_BOARD:
+			print("TODO IMPLEMENT ME - Backend.Event.GET_BOARD", body)
+			# TODO: load full board into the model
+			
 		Backend.Event.GET_BOARDS:
 			var boards := []			
 			for details in body:

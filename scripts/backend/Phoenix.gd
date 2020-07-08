@@ -7,11 +7,15 @@ const WS_BASE_URL := "ws://127.0.0.1:4000/socket"
 # CHANNEL
 #
 const USER_CHANNEL := "user:"
-const BOARD_CHANNEL := "board:"
 const USER_EVENTS := {
-	create_board = "create_board",
+	create_board = "create_board",	
 	get_boards = "get_boards",
 	board_created = "board_created"
+}
+
+const BOARD_CHANNEL := "board:"
+const BOARD_EVENTS := {
+	get_board = "get_board"
 }
 
 var socket : PhoenixSocket
@@ -125,7 +129,7 @@ func join_board_channel(board : BoardModel):
 				board_presence.connect("on_join", self, "_on_board_presence_join")
 				board_presence.connect("on_leave", self, "_on_board_presence_leave")
 
-			board_channel = socket.channel(_get_board_topic(board))
+			board_channel = socket.channel(_get_board_topic(board), {}, board_presence)
 
 			board_channel.connect("on_event", self, "_on_board_channel_event")
 			board_channel.connect("on_join_result", self, "_on_board_channel_join_result")
@@ -136,9 +140,13 @@ func join_board_channel(board : BoardModel):
 			board_channel.leave()
 			
 		if board_channel.is_closed():
-			._emit_requesting(true)			
+			._emit_requesting(true)
 			board_channel.set_topic(_get_board_topic(board))
 			board_channel.join()
+
+func leave_board_channel():
+	if board_channel and board_channel.is_joined():
+		board_channel.leave()
 
 #
 # HTTP public interface
@@ -226,6 +234,9 @@ func _get_event_for_channel_event(event : String) -> int:
 			return Event.BOARD_CREATED
 		USER_EVENTS.board_created:
 			return Event.BOARD_CREATED
+			
+		BOARD_EVENTS.get_board:
+			return Event.GET_BOARD
 		
 	return Event.ERROR
 	
@@ -265,14 +276,18 @@ func _on_board_channel_event(event, payload, status):
 		._emit_response(status == PhoenixChannel.STATUS.ok, payload, emit_event, false)
 	
 func _on_board_channel_join_result(status, result):
-	._emit_board_channel_joined(status == PhoenixChannel.STATUS.ok, result)
+	var is_success = status == PhoenixChannel.STATUS.ok	
+	._emit_channel_joined("board_channel", is_success, result)
+	
+	if is_success:
+		._emit_response(is_success, result["board"], _get_event_for_channel_event(BOARD_EVENTS.get_board))
 	
 func _on_board_channel_error(error):
 	print("_on_board_channel_error: " + str(error))
 	
 func _on_board_channel_close(closed):	
 	print("_on_board_channel_close: " + str(closed))
-	._emit_board_channel_left()
+	._emit_channel_left("board_channel")
 
 func _on_board_presence_join(joins):
 	print("_on_board_presence_join: " + str(joins))
@@ -294,11 +309,16 @@ func _on_user_channel_event(event, payload, status):
 	._emit_response(status == PhoenixChannel.STATUS.ok, payload, emit_event, emit_event == Backend.Event.GET_BOARDS)
 	
 func _on_user_channel_join_result(status, result):
-	._emit_user_channel_joined(status == PhoenixChannel.STATUS.ok, result)
+	._emit_channel_joined("user_channel", status == PhoenixChannel.STATUS.ok, result)
 	
 func _on_user_channel_error(error):
 	print("_on_user_channel_error: " + str(error))
 	
+	if user_channel.is_joined() and (not error or (typeof(error) == TYPE_DICTIONARY and error.empty())):
+		SceneUtils.create_single_error_popup("An error has occurred, try again.", null, get_node("/root"))
+	elif not user_channel.is_joined():
+		print("_on_user_channel_error: error when trying to join the channel")
+	
 func _on_user_channel_close(closed):	
 	print("_on_user_channel_close: " + str(closed))
-	._emit_user_channel_left()
+	._emit_channel_left("user_channel")

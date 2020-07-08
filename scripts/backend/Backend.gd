@@ -18,6 +18,7 @@ enum Event {
 	
 	# Board channel
 	JOIN_BOARD_CHANNEL,
+	GET_BOARD,
 	EDIT_BOARD,
 	BOARD_EDITED,
 	DELETE_BOARD,
@@ -55,6 +56,9 @@ func get_boards():
 	last_event = Event.GET_BOARDS
 	
 func join_board_channel(board : BoardModel):
+	pass
+	
+func leave_board_channel():
 	pass
 	
 func edit_board(board : BoardModel):
@@ -128,19 +132,19 @@ func _emit_requesting(is_requesting, is_global := true):
 			get_node("/root").move_child(loading_overlay, get_node("/root").get_child_count() - 1)
 			
 		loading_overlay.set_visible(is_requesting)
-
-func _emit_user_channel_joined(is_success : bool, result):
+		
+func _emit_channel_joined(name : String, is_success : bool, result):
 	_emit_requesting(false)
 	
 	if is_success:
-		Events.emit_signal("user_channel_joined")
+		Events.emit_signal(name + "_joined")
 	else:
-		_emit_error("join_user_channel", false, "Could not join user channel.")
+		_emit_error("join_" + name, false, "Could not join " + name)
 
 	_set_idle()
 	
-	print("_on_user_channel_join_result: " + str(is_success) + ", " + str(result))
+	print("_on_" + name + "_join_result: " + str(is_success) + ", " + str(result))
 
-func _emit_user_channel_left():	
-	Events.emit_signal("user_channel_left")
-	print("_on_user_channel_left")
+func _emit_channel_left(name : String):	
+	Events.emit_signal(name + "_left")
+	print("_on_" + name + "_left")

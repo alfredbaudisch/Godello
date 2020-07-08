@@ -23,6 +23,25 @@ var card_details
 
 onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/TitleLabel
 
+func _ready():	
+	Events.connect("card_clicked", self, "_on_card_clicked")
+	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
+	DataRepository.connect("list_created", self, "_on_list_created")
+	DataRepository.connect("board_updated", self, "_on_board_updated")
+	DataRepository.connect("board_deleted", self, "_on_board_deleted")
+	
+	full_screen_overlay.set_visible(false)
+	
+	var board = DataRepository.get_active_board()
+	assert(board != null)
+	set_model(board)
+	
+	DI.backend().join_board_channel(board)
+
+func _exit_tree():
+	# Leave the channel when leaving the Board scene
+	DI.backend().leave_board_channel()
+		
 func set_model(_model : BoardModel):
 	model = _model
 	set_name("Board_" + str(model.id))
@@ -48,19 +67,6 @@ func set_model(_model : BoardModel):
 		list_element.set_model(list)
 		
 	_make_button_last_item()
-
-func _ready():	
-	Events.connect("card_clicked", self, "_on_card_clicked")
-	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
-	DataRepository.connect("list_created", self, "_on_list_created")
-	DataRepository.connect("board_updated", self, "_on_board_updated")
-	DataRepository.connect("board_deleted", self, "_on_board_deleted")
-	
-	full_screen_overlay.set_visible(false)
-	
-	var board = DataRepository.get_active_board()
-	assert(board)
-	set_model(board)
 		
 func _make_button_last_item():
 	var amount = list_container.get_child_count()  
