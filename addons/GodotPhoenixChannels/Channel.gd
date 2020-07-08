@@ -100,7 +100,7 @@ func join() -> bool:
 func close(params := {}, should_rejoin := false):
 	_joined_once = false
 	_state = ChannelStates.CLOSED
-	_presence.clear()
+	if _presence: _presence.clear()
 	emit_signal("on_close", params)
 	
 	if should_rejoin:
@@ -191,7 +191,7 @@ func trigger(message : PhoenixMessage):
 
 func _error(error):
 	_state = ChannelStates.ERRORED
-	_presence.clear()
+	if _presence: _presence.clear()
 	emit_signal("on_error", error)
 	
 func _start_rejoin(reset := false):
