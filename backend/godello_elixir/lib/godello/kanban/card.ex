@@ -4,14 +4,14 @@ defmodule Godello.Kanban.Card do
   alias Ecto.Changeset
 
   @derive {Jason.Encoder,
-           only: [:id, :title, :list_id, :description, :is_archived, :position, :todos]}
+           only: [:id, :title, :list_id, :description, :is_archived, :position, :tasks]}
   schema "cards" do
     field :description, :string
     field :is_archived, :boolean, default: false
     field :title, :string
     field :position, :integer, default: 0
     belongs_to(:list, Godello.Kanban.List)
-    embeds_many(:todos, Godello.Kanban.Todo)
+    embeds_many(:tasks, Godello.Kanban.Task)
 
     timestamps()
   end
@@ -22,7 +22,7 @@ defmodule Godello.Kanban.Card do
     |> cast(attrs, [:title, :description, :is_archived, :list_id, :position])
     |> validate_required([:title, :list_id, :position])
     |> validate_number(:position, greater_than_or_equal_to: 0)
-    |> cast_embed(:todos)
+    |> cast_embed(:tasks)
     |> force_position_when_list_is_changed(card)
   end
 

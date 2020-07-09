@@ -1,4 +1,4 @@
-defmodule Godello.Kanban.Todo do
+defmodule Godello.Kanban.Task do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,8 +7,8 @@ defmodule Godello.Kanban.Todo do
     field :is_done, :boolean, default: false
   end
 
-  def changeset(todo, attrs) do
-    todo
+  def changeset(task, attrs) do
+    task
     |> cast(attrs, [:title, :is_done])
     |> validate_required([:title, :is_done])
   end
