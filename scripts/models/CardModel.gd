@@ -7,10 +7,12 @@ var tasks : Array = []
 var is_archived := false
 var is_draft := false setget set_draft
 
-func _init(_id : int, _list_id : int, _title : String = "", _description : String = "").(ModelTypes.CARD, _id):
+func _init(_id : int, _list_id : int, _title := "", _description := "", _tasks := [], _is_archived := false).(ModelTypes.CARD, _id):
 	list_id = _list_id
 	title = _title
 	description = _description
+	tasks = _tasks
+	is_archived = _is_archived
 
 func set_title(_title: String):
 	var was_draft = is_draft
@@ -59,6 +61,12 @@ func _notify_updated(was_draft := false, was_archived := false):
 	
 func set_draft(value := true):
 	is_draft = value
+	
+func update_with_details(details : Dictionary):
+	title = details["title"]
+	description = details["description"]
+	tasks = details["tasks"]
+	is_archived = details["is_archived"]
 
 func _to_string():
 	# TODO: add tasks

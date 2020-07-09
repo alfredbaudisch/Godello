@@ -84,9 +84,12 @@ func add_board(board : BoardModel):
 
 func get_board(id: int):
 	return boards_by_id.get(id)
-
+	
 func get_list(id: int):
 	return lists_by_id.get(id)
+	
+func get_card(id: int):
+	return cards_by_id.get(id)
 	
 func get_user(id: int):
 	return users_by_id.get(id)
@@ -235,7 +238,20 @@ func _remove_persisted_user_file():
 # Raw data utils
 #
 
-func _get_or_create_user_from_details(details : Dictionary) -> UserModel:
+func _card_from_details(details : Dictionary) -> CardModel:
+	var card = get_card(details["id"])
+	
+	# TODO: positioning???
+	
+	if not card:
+		card = CardModel.new(details["id"], details["list_id"], details["title"], 
+		details["description"], details["tasks"], details["is_archived"])
+	else:
+		card.update_with_details(details)
+		
+	return card
+
+func _user_from_details(details : Dictionary) -> UserModel:
 	var user = get_user(details["id"])
 	
 	if not user:		
@@ -250,19 +266,39 @@ func _board_from_details(details : Dictionary) -> BoardModel:
 	var owner_user
 	
 	for user_details in details["users"]:
-		var user = _get_or_create_user_from_details(user_details["user"])
+		var user = _user_from_details(user_details["user"])
 		
 		if user_details["is_owner"]:
 			owner_user = user			
 		else:
 			members.append(user)
 	
-	# TODO: create lists
+	# TODO: Update board?
+	
 	for list_details in details["lists"]:
-		pass
+		var list = _list_from_details(list_details)
+		lists.append(list)
 
 	return BoardModel.new(details["id"], owner_user, false, details["name"], lists, members)
 	
+func _list_from_details(details : Dictionary) -> ListModel:
+	var cards := []
+	
+	# TODO: positioning???
+	
+	for card_details in details["cards"]:
+		var card = _card_from_details(card_details)
+		cards.append(card)
+				
+	var list = get_list(details["id"])
+	
+	if not list:
+		list = ListModel.new(details["id"], details["board_id"], details["name"], cards)
+	else:
+		list.update_with_details(details, cards)
+		
+	return list
+		
 #
 # Signals
 #

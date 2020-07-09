@@ -31,6 +31,13 @@ func remove_card(card):
 		cards.remove(card_idx)		
 	
 	cards_by_id.erase(card.id)
+	
+func update_with_details(details : Dictionary, _cards : Array):
+	title = details["title"]
+	remove_cards()
+	
+	for card in _cards:
+		add_card(card)
 
 func _map_cards_by_id():
 	for card in cards:
