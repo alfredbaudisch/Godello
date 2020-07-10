@@ -15,7 +15,9 @@ const USER_EVENTS := {
 
 const BOARD_CHANNEL := "board:"
 const BOARD_EVENTS := {
-	get_board = "get_board"
+	get_board = "get_board",
+	update_board = "update_board",
+	board_updated = "board_updated"
 }
 
 var socket : PhoenixSocket
@@ -147,6 +149,12 @@ func join_board_channel(board : BoardModel):
 func leave_board_channel():
 	if board_channel and board_channel.is_joined():
 		board_channel.leave()
+		
+func update_board(name : String):
+	_push_board_channel(BOARD_EVENTS.update_board, {name = name})
+	
+func delete_board(board : BoardModel):
+	pass
 
 #
 # HTTP public interface
@@ -210,21 +218,32 @@ func _get_board_topic(board : BoardModel) -> String:
 func _can_push_user_channel():
 	return user_channel.is_joined()
 	
+func _can_push_board_channel():
+	return board_channel.is_joined()
+	
 func _push_user_channel(event, payload := {}):
 	if not _can_push_user_channel():
 		._emit_error(event, false, "Can't push user event: " + event + ", because the user channel is not joined")
 
 	else:		
 		if user_channel.push(event, payload):
-			._emit_requesting(true, event == USER_EVENTS.get_boards)
+			._emit_requesting(true, _is_event_global(event))
 			return true
 	
 	._emit_error(event, false, "Could not push user event: " + event)
 	return false
 		
 func _push_board_channel(event, payload := {}):
+	if not _can_push_board_channel():
+		._emit_error(event, false, "Can't push board event: " + event + ", because the board channel is not joined")
+		
 	if board_channel.push(event, payload):
-		._emit_requesting(true, false)
+		._emit_requesting(true, _is_event_global(event))		
+		return true
+	else:
+		._emit_error(event, false, "Could not push board event: " + event)
+		
+	return false
 
 func _get_event_for_channel_event(event : String) -> int:
 	match(event):
@@ -237,8 +256,19 @@ func _get_event_for_channel_event(event : String) -> int:
 			
 		BOARD_EVENTS.get_board:
 			return Event.GET_BOARD
+		BOARD_EVENTS.update_board:
+			return Event.UPDATE_BOARD
+		BOARD_EVENTS.board_updated:
+			return Event.BOARD_UPDATED
 		
 	return Event.ERROR
+
+func _is_event_global(event : String) -> bool:
+	return event in [
+		USER_EVENTS.get_boards,
+		USER_EVENTS.create_board,
+		BOARD_EVENTS.update_board
+	]
 	
 #
 # PhoenixSocket events
@@ -265,7 +295,7 @@ func _on_socket_connecting(is_connecting):
 #
 
 func _on_board_channel_event(event, payload, status):
-	print("_on_board_channel_event:  " + event + ", status: " + status + ", payload: " + str(payload))
+	print("_on_board_channel_event:  " + event + ", status: " + status + ", payload: " + str(payload))	
 
 	if event == PhoenixChannel.PRESENCE_EVENTS.diff:
 		board_presence.sync_diff(payload)		
@@ -273,7 +303,7 @@ func _on_board_channel_event(event, payload, status):
 		board_presence.sync_state(payload)
 	else:
 		var emit_event = _get_event_for_channel_event(event)
-		._emit_response(status == PhoenixChannel.STATUS.ok, payload, emit_event, false)
+		._emit_response(status == PhoenixChannel.STATUS.ok, payload, emit_event, _is_event_global(event))
 	
 func _on_board_channel_join_result(status, result):
 	var is_success = status == PhoenixChannel.STATUS.ok	
@@ -306,7 +336,7 @@ func _on_user_channel_event(event, payload, status):
 	var emit_event = _get_event_for_channel_event(event)	
 	if emit_event == Backend.Event.GET_BOARDS:
 		payload = payload["boards"]	
-	._emit_response(status == PhoenixChannel.STATUS.ok, payload, emit_event, emit_event == Backend.Event.GET_BOARDS)
+	._emit_response(status == PhoenixChannel.STATUS.ok, payload, emit_event, _is_event_global(event))
 	
 func _on_user_channel_join_result(status, result):
 	._emit_channel_joined("user_channel", status == PhoenixChannel.STATUS.ok, result)

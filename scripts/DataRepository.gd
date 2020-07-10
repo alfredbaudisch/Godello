@@ -336,3 +336,6 @@ func _on_backend_response(action : int, is_success : bool, body):
 			add_boards(boards)
 			boards_loaded = true
 			emit_signal("boards_loaded")
+			
+		Backend.Event.BOARD_UPDATED:
+			print("TODO IMPLEMENT ME - Backend.Event.BOARD_UPDATED", body)

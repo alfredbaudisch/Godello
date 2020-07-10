@@ -19,8 +19,8 @@ enum Event {
 	# Board channel
 	JOIN_BOARD_CHANNEL,
 	GET_BOARD,
-	EDIT_BOARD,
-	BOARD_EDITED,
+	UPDATE_BOARD,
+	BOARD_UPDATED,
 	DELETE_BOARD,
 	BOARD_DELETED
 }
@@ -61,7 +61,7 @@ func join_board_channel(board : BoardModel):
 func leave_board_channel():
 	pass
 	
-func edit_board(board : BoardModel):
+func update_board(name : String):
 	pass
 	
 func delete_board(board : BoardModel):
