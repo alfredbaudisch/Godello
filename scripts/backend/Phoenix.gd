@@ -17,7 +17,9 @@ const BOARD_CHANNEL := "board:"
 const BOARD_EVENTS := {
 	get_board = "get_board",
 	update_board = "update_board",
-	board_updated = "board_updated"
+	board_updated = "board_updated",
+	delete_board = "delete_board",
+	board_deleted = "board_deleted"
 }
 
 var socket : PhoenixSocket
@@ -257,7 +259,7 @@ func _get_event_for_channel_event(event : String) -> int:
 		BOARD_EVENTS.get_board:
 			return Event.GET_BOARD
 		BOARD_EVENTS.update_board:
-			return Event.UPDATE_BOARD
+			return Event.BOARD_UPDATED
 		BOARD_EVENTS.board_updated:
 			return Event.BOARD_UPDATED
 		
@@ -267,7 +269,8 @@ func _is_event_global(event : String) -> bool:
 	return event in [
 		USER_EVENTS.get_boards,
 		USER_EVENTS.create_board,
-		BOARD_EVENTS.update_board
+		BOARD_EVENTS.update_board,
+		BOARD_EVENTS.delete_board
 	]
 	
 #

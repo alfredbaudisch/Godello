@@ -152,7 +152,7 @@ func update_list(list):
 	emit_signal("list_updated", list)
 	
 func update_board(board):
-	emit_signal("board_updated", board)
+	DI.backend().update_board(board.name)
 	
 func delete_board(board):
 	boards_by_id.erase(board.id)
@@ -260,7 +260,7 @@ func _user_from_details(details : Dictionary) -> UserModel:
 		
 	return user
 
-func _board_from_details(details : Dictionary) -> BoardModel:
+func _board_from_details(details : Dictionary, should_update_lists := true) -> BoardModel:
 	var members := []
 	var lists := []
 	var owner_user
@@ -273,13 +273,19 @@ func _board_from_details(details : Dictionary) -> BoardModel:
 		else:
 			members.append(user)
 	
-	# TODO: Update board?
+	var board = get_board(details["id"])
 	
-	for list_details in details["lists"]:
-		var list = _list_from_details(list_details)
-		lists.append(list)
+	if should_update_lists:
+		for list_details in details["lists"]:
+			var list = _list_from_details(list_details)
+			lists.append(list)
 
-	return BoardModel.new(details["id"], owner_user, false, details["name"], lists, members)
+	if not board:
+		board = BoardModel.new(details["id"], owner_user, false, details["name"], lists, members)
+	else:
+		board.update_with_details(details, members, should_update_lists, lists)
+		
+	return board
 	
 func _list_from_details(details : Dictionary) -> ListModel:
 	var cards := []
@@ -338,4 +344,4 @@ func _on_backend_response(action : int, is_success : bool, body):
 			emit_signal("boards_loaded")
 			
 		Backend.Event.BOARD_UPDATED:
-			print("TODO IMPLEMENT ME - Backend.Event.BOARD_UPDATED", body)
+			emit_signal("board_updated", _board_from_details(body, false))

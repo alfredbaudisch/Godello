@@ -100,7 +100,6 @@ defmodule GodelloWeb.BoardChannel do
   def handle_in(@update_board, params, socket) do
     with %Board{} = board <- get_board_info(socket),
          {:ok, updated_board} = result <- Kanban.update_board(board, params) do
-      # TODO: may cause duplicate data, because of data also going through user channels. Maybe remove me:
       broadcast_board_updated(socket, updated_board)
       broadcast_board_updated_all_members(socket, updated_board, board)
       result

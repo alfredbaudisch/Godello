@@ -18,6 +18,17 @@ func _init(_id : int, _owner : UserModel, _is_public := false, _name := "", _lis
 	members = _members
 	_map_lists_by_id()
 	
+func update_with_details(details : Dictionary, _members := [], should_update_lists := true, _lists := []):
+	name = details["name"]
+	
+	if should_update_lists:
+		remove_lists()
+		lists = _lists
+		_map_lists_by_id()
+	
+	members.clear()
+	members = _members
+	
 func set_name(_name : String):
 	name = _name
 	_notify_updated()
