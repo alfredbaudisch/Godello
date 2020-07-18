@@ -152,11 +152,10 @@ func update_list(list):
 	emit_signal("list_updated", list)
 	
 func update_board(board):
-	DI.backend().update_board(board.name)
+	DI.backend().update_board(board)
 	
 func delete_board(board):
-	boards_by_id.erase(board.id)
-	emit_signal("board_deleted", board)
+	DI.backend().delete_board(board)
 	
 func create_task(card, title, is_done := false) -> Dictionary:
 	var task = TaskModel.new(card.id + str(card.tasks.size()), card.id, title, is_done) # todo: task id
@@ -345,3 +344,9 @@ func _on_backend_response(action : int, is_success : bool, body):
 			
 		Backend.Event.BOARD_UPDATED:
 			emit_signal("board_updated", _board_from_details(body, false))
+			
+		Backend.Event.BOARD_DELETED:
+			if body["deleted"]:
+				var board = _board_from_details(body["board"], false)
+				boards_by_id.erase(board.id)
+				emit_signal("board_deleted", board)

@@ -152,11 +152,11 @@ func leave_board_channel():
 	if board_channel and board_channel.is_joined():
 		board_channel.leave()
 		
-func update_board(name : String):
-	_push_board_channel(BOARD_EVENTS.update_board, {name = name})
+func update_board(board : BoardModel):
+	_push_board_channel(BOARD_EVENTS.update_board, {name = board.name})
 	
 func delete_board(board : BoardModel):
-	pass
+	_push_board_channel(BOARD_EVENTS.delete_board)
 
 #
 # HTTP public interface
@@ -218,10 +218,10 @@ func _get_board_topic(board : BoardModel) -> String:
 	return BOARD_CHANNEL + str(board.id)
 	
 func _can_push_user_channel():
-	return user_channel.is_joined()
+	return user_channel and user_channel.is_joined()
 	
 func _can_push_board_channel():
-	return board_channel.is_joined()
+	return board_channel and board_channel.is_joined()
 	
 func _push_user_channel(event, payload := {}):
 	if not _can_push_user_channel():
@@ -238,13 +238,13 @@ func _push_user_channel(event, payload := {}):
 func _push_board_channel(event, payload := {}):
 	if not _can_push_board_channel():
 		._emit_error(event, false, "Can't push board event: " + event + ", because the board channel is not joined")
-		
-	if board_channel.push(event, payload):
-		._emit_requesting(true, _is_event_global(event))		
-		return true
-	else:
-		._emit_error(event, false, "Could not push board event: " + event)
-		
+	
+	else:	
+		if board_channel.push(event, payload):
+			._emit_requesting(true, _is_event_global(event))		
+			return true
+			
+	._emit_error(event, false, "Could not push board event: " + event)		
 	return false
 
 func _get_event_for_channel_event(event : String) -> int:
@@ -262,6 +262,10 @@ func _get_event_for_channel_event(event : String) -> int:
 			return Event.BOARD_UPDATED
 		BOARD_EVENTS.board_updated:
 			return Event.BOARD_UPDATED
+		BOARD_EVENTS.delete_board:
+			return Event.BOARD_DELETED
+		BOARD_EVENTS.board_deleted:
+			return Event.BOARD_DELETED
 		
 	return Event.ERROR
 

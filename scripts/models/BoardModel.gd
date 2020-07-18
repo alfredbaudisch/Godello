@@ -29,9 +29,9 @@ func update_with_details(details : Dictionary, _members := [], should_update_lis
 	members.clear()
 	members = _members
 	
-func set_name(_name : String):
+func set_name(_name : String, should_notify := true):
 	name = _name
-	_notify_updated()
+	if should_notify: _notify_updated()
 	
 func add_archived_card(card):
 	archived_cards[card.id] = card

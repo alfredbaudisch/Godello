@@ -61,7 +61,7 @@ func save():
 				DataRepository.create_list(board, title)
 				
 			SceneUtils.InputFieldDialogMode.CREATE_BOARD:
-				board.set_name(title)
+				board.set_name(title, false)
 				DataRepository.create_board(board)
 				
 			SceneUtils.InputFieldDialogMode.ADD_BOARD_MEMBER:

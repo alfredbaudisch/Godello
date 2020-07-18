@@ -61,7 +61,7 @@ func join_board_channel(board : BoardModel):
 func leave_board_channel():
 	pass
 	
-func update_board(name : String):
+func update_board(board : BoardModel):
 	pass
 	
 func delete_board(board : BoardModel):
@@ -97,7 +97,7 @@ func _emit_error(error_location : String, should_try_again := true, result = nul
 	Events.emit_signal("backend_error", last_event, should_try_again, result)
 	_set_idle()
 	
-	print("BACKEND ERROR: " + error_location, "should_try_again: ", should_try_again, "result: ", result)
+	print("BACKEND ERROR: " + error_location, ", should_try_again: ", should_try_again, ", result: ", result)
 	
 func _emit_response(is_success : bool, body, event : int = Event.IDLE, is_global := true):
 	_emit_requesting(false, is_global)
