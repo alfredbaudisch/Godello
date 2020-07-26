@@ -16,6 +16,9 @@ func _ready():
 	SceneUtils.connect("change_route_requested", self, "_on_change_scene_requested")
 	SceneUtils.go_to_boards()
 	
+	call_deferred("_set_user")	
+
+func _set_user():
 	user_button.set_text(DataRepository.active_user.get_full_name())
 
 func _on_change_scene_requested(next_route : int):
