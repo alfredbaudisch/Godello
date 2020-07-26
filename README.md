@@ -30,7 +30,7 @@ A Godot Engine proof of concept for:
 - Real-time online data flow
 - Connected multi-user collaborative interfaces and interactions
 
-In the end, the idea is to showcase Godot as a viable option for native Desktop applications and tools, no matter how simple or complex the application is.
+In the end, the idea is to showcase Godot as a viable option for native Desktop applications and tools, no matter how simple or complex/advanced the application and the interface are.
 
 ## Features 🎛️
 
@@ -62,7 +62,7 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
 
 ### Work in progress
 
-- The real-time connectivity and multi-user collaboration via the integration with Elixir backend is currently a work in process in the branch [integrate_elixir](https://github.com/alfredbaudisch/Godello/tree/integrate_elixir).
+- The real-time connectivity and multi-user collaboration via the integration with the Elixir backend is currently a work in process in the branch [integrate_elixir](https://github.com/alfredbaudisch/Godello/tree/integrate_elixir).
 - Since the frontend in the `master` branch is not integrated with the backend, no data is persisted (all data is lost as soon as the application is closed and the application is opened as a blank canvas).
 - Although the data architecture is finished in the frontend, the work in the `integrate_elixir` branch is constantly making changes to it, to better accomodate the needs of the backend integration.
 
@@ -89,7 +89,7 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
 
 ## Sponsors ❤️
 
-Show appreciation and support to this project on [Patreon](https://www.patreon.com/alfredbaudisch). Patrons of any tier will have their name listed here. Patrons of the **Sponsors** tier or higher, can also have a link and a logo listed here.
+Show appreciation and support for this project on [Patreon](https://www.patreon.com/alfredbaudisch). Patrons of any tier will have their name listed here. Patrons of the **Sponsors** tier or higher, can also have a link and a logo listed here.
 
 ## Updates 📡
 
