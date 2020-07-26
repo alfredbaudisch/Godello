@@ -14,6 +14,7 @@ Trello inspired kanban board made with the [Godot Engine](http://godotengine.org
   - [Roadmap 🗺️](#roadmap-️)
   - [Sponsors ❤️](#sponsors-️)
   - [Updates 📡](#updates-)
+  - [License ⚖️](#license-%EF%B8%8F)
 
 ## Introduction Video
 
@@ -96,3 +97,7 @@ For news and more code and art experiments and prototypes:
 
 - Follow me on [Twitter 🐦](https://twitter.com/alfredbaudisch)
 - Subscribe to my [YouTube channel 📺](https://www.youtube.com/channel/UChbQcnM4z0e0c1PhHY72jgA/videos)
+
+## License ⚖️
+
+MIT License - Copyright (c) 2020 Alfred Reinold Baudisch
