@@ -58,7 +58,7 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
   - Trello-like interface and all its local interactions, including the dragging and dropping of Lists and Cards.
   - The main data architecture, with reactive, two way data bindings and the Repository design pattern.
   - Scene flow.
-- The Elixir + Phoenix Channels backend (it's in the branch [backend_elixir](https://github.com/alfredbaudisch/Godello/tree/backend_elixir), still not merged into `master`).
+- The Elixir + Phoenix Channels backend, backed by a PostgreSQL database (it's in the branch [backend_elixir](https://github.com/alfredbaudisch/Godello/tree/backend_elixir), still not merged into `master`).
 
 ### Work in progress
 
