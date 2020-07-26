@@ -1,8 +1,23 @@
 # Godello (aka GodoTrello) ![Godot 3.2](https://img.shields.io/badge/godot-v3.2-%23478cbf)
 
-Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend.
+Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with Elixir and Phoenix Channels (with the possibility of additional backend languages and frameworks).
 
 ![Godello Drag and Drop + Reactive Example](./doc/godello-drag-and-drop-example.gif)
+
+## Table of Contents
+  - [Introduction Video](#introduction-video)
+  - [Motivation 💡](#motivation-)
+  - [Features 🎛️](#features-️)
+  - [Progress 🚧](#progress-)
+    - [What is finished](#what-is-finished)
+    - [Work in progress](#work-in-progress)
+  - [Roadmap 🗺️](#roadmap-️)
+  - [Sponsors ❤️](#sponsors-️)
+  - [Updates 📡](#updates-)
+
+## Introduction Video
+
+[![Video](./doc/video_preview.png)](https://www.youtube.com/watch?v=XiZkMRwkmbs)
 
 ## Motivation 💡
 
