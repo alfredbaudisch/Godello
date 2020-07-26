@@ -1,6 +1,6 @@
 # Godello (aka GodoTrello) ![Godot 3.2](https://img.shields.io/badge/godot-v3.2-%23478cbf)
 
-Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with Elixir and Phoenix Channels (with the possibility of additional backend languages and frameworks).
+Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with [Elixir](https://elixir-lang.org/) and [Phoenix Channels](https://phoenixframework.org/) (with the possibility of additional backend languages and frameworks).
 
 ![Godello Drag and Drop + Reactive Example](./doc/godello-drag-and-drop-example.gif)
 
@@ -58,7 +58,7 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
   - Trello-like interface and all its local interactions, including the dragging and dropping of Lists and Cards.
   - The main data architecture, with reactive, two way data bindings and the Repository design pattern.
   - Scene flow.
-- The Elixir + Phoenix Channels backend, backed by a PostgreSQL database (it's in the branch [backend_elixir](https://github.com/alfredbaudisch/Godello/tree/backend_elixir), still not merged into `master`).
+- The [Elixir](https://elixir-lang.org/) + [Phoenix Channels](https://phoenixframework.org/) backend, backed by a PostgreSQL database (it's in the branch [backend_elixir](https://github.com/alfredbaudisch/Godello/tree/backend_elixir), still not merged into `master`).
 
 ### Work in progress
 
