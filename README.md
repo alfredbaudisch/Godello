@@ -1,20 +1,21 @@
 # Godello (aka GodoTrello) ![Godot 3.2](https://img.shields.io/badge/godot-v3.2-%23478cbf)
 
-Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with [Elixir](https://elixir-lang.org/) and [Phoenix Channels](https://phoenixframework.org/) (with the possibility of additional backend languages and frameworks).
+Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with [Elixir](https://elixir-lang.org/) and [Phoenix Channels](https://phoenixframework.org/) (with the possibility of additional backend languages and frameworks). **ATTENTION: 70% done. Remaining WIP in the branch [integrate_elixir](https://github.com/alfredbaudisch/Godello/tree/integrate_elixir). See "[Progress](#progress-)" below.**
 
 ![Godello Drag and Drop + Reactive Example](./doc/godello-drag-and-drop-example.gif)
 
 ## Table of Contents
-  - [Introduction Video](#introduction-video)
-  - [Motivation 💡](#motivation-)
-  - [Features 🎛️](#features-️)
-  - [Progress 🚧](#progress-)
-    - [What is finished](#what-is-finished)
-    - [Work in progress](#work-in-progress)
-  - [Roadmap 🗺️](#roadmap-️)
-  - [Sponsors ❤️](#sponsors-️)
-  - [Updates 📡](#updates-)
-  - [License ⚖️](#license-%EF%B8%8F)
+
+- [Introduction Video](#introduction-video)
+- [Motivation 💡](#motivation-)
+- [Features 🎛️](#features-️)
+- [Progress 🚧](#progress-)
+  - [What is finished](#what-is-finished)
+  - [Work in progress](#work-in-progress)
+- [Roadmap 🗺️](#roadmap-️)
+- [Sponsors ❤️](#sponsors-️)
+- [Updates 📡](#updates-)
+- [License ⚖️](#license-%EF%B8%8F)
 
 ## Introduction Video
 
