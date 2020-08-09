@@ -47,10 +47,16 @@ defmodule Godello.Kanban do
   Gets all the boards that the user `user_id` is a member of.
   """
   def get_boards(user_id) do
+    board_ids =
+      from(bu in BoardUser,
+        where: bu.user_id == ^user_id,
+        select: bu.board_id
+      )
+
     from(b in Board,
       join: bu in BoardUser,
-      on: bu.board_id == b.id and bu.user_id == ^user_id,
-      where: bu.user_id == ^user_id,
+      on: bu.board_id == b.id,
+      where: b.id in subquery(board_ids),
       join: u in assoc(bu, :user),
       preload: [
         users: {bu, [user: u]}
