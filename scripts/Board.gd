@@ -184,6 +184,5 @@ func _on_ShowMenuButton_pressed():
 func _on_AddListButton_pressed():
 	SceneUtils.create_input_field_dialog(SceneUtils.InputFieldDialogMode.CREATE_LIST, model)
 
-
 func _on_AddBoardMemberButton_pressed():
 	SceneUtils.create_input_field_dialog(SceneUtils.InputFieldDialogMode.ADD_BOARD_MEMBER, model)

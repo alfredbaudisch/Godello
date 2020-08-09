@@ -15,6 +15,8 @@ enum Event {
 	GET_BOARDS,
 	CREATE_BOARD,
 	BOARD_CREATED,
+	BOARD_MEMBERSHIP_ADDED,		
+	BOARD_MEMBERSHIP_REMOVED,
 	
 	# Board channel
 	JOIN_BOARD_CHANNEL,
@@ -22,7 +24,9 @@ enum Event {
 	UPDATE_BOARD,
 	BOARD_UPDATED,
 	DELETE_BOARD,
-	BOARD_DELETED
+	BOARD_DELETED,	
+	ADD_MEMBER,
+	REMOVE_MEMBER
 }
 
 var last_event : int = Event.IDLE setget ,get_event
@@ -66,6 +70,12 @@ func update_board(board : BoardModel):
 	
 func delete_board(board : BoardModel):
 	pass
+	
+func add_member(email: String, board : BoardModel):
+	pass
+	
+func remove_member(user: UserModel, board : BoardModel):
+	pass
 
 #
 # Helpers
@@ -92,7 +102,7 @@ func _emit_error(error_location : String, should_try_again := true, result = nul
 	_emit_requesting(false, is_global)
 	
 	var error_message = result if result and typeof(result) == TYPE_STRING else message
-	SceneUtils.create_single_error_popup(error_message, null, get_parent())
+	SceneUtils.create_single_error_popup(error_message, null, get_node("/root"))
 	
 	Events.emit_signal("backend_error", last_event, should_try_again, result)
 	_set_idle()

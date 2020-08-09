@@ -10,7 +10,10 @@ const USER_CHANNEL := "user:"
 const USER_EVENTS := {
 	create_board = "create_board",	
 	get_boards = "get_boards",
-	board_created = "board_created"
+	board_created = "board_created",
+	board_updated = "board_updated",
+	board_membership_added = "board_membership_added",
+	board_membership_removed = "board_membership_removed"
 }
 
 const BOARD_CHANNEL := "board:"
@@ -19,7 +22,9 @@ const BOARD_EVENTS := {
 	update_board = "update_board",
 	board_updated = "board_updated",
 	delete_board = "delete_board",
-	board_deleted = "board_deleted"
+	board_deleted = "board_deleted",
+	add_member = "add_member",
+	remove_member = "remove_member"
 }
 
 var socket : PhoenixSocket
@@ -157,6 +162,12 @@ func update_board(board : BoardModel):
 	
 func delete_board(board : BoardModel):
 	_push_board_channel(BOARD_EVENTS.delete_board)
+		
+func add_member(email: String, board : BoardModel):
+	_push_board_channel(BOARD_EVENTS.add_member, {email = email})
+	
+func remove_member(user: UserModel, board : BoardModel):
+	_push_board_channel(BOARD_EVENTS.remove_member, {user_id = user.id})
 
 #
 # HTTP public interface
@@ -266,6 +277,10 @@ func _get_event_for_channel_event(event : String) -> int:
 			return Event.BOARD_DELETED
 		BOARD_EVENTS.board_deleted:
 			return Event.BOARD_DELETED
+		BOARD_EVENTS.add_member:
+			return Event.BOARD_UPDATED
+		BOARD_EVENTS.remove_member:
+			return Event.BOARD_UPDATED
 		
 	return Event.ERROR
 

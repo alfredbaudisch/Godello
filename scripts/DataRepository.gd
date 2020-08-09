@@ -57,9 +57,10 @@ func add_user(user : UserModel):
 	users_by_id[user.id] = user
 	
 func add_board_member(email : String, board : BoardModel):
-	# TODO: check if member exists
-	var user_found = UserModel.new(DRAFT_ITEM_TEMP_ID, "Member", "Name", email)
-	board.add_member(user_found)
+	DI.backend().add_member(email, board)
+	
+func remove_board_member(user : UserModel, board : BoardModel):
+	DI.backend().remove_member(user, board)
 	
 func set_active_board(value : BoardModel):
 	active_board = value
@@ -268,7 +269,7 @@ func _board_from_details(details : Dictionary, should_update_lists := true) -> B
 		var user = _user_from_details(user_details["user"])
 		
 		if user_details["is_owner"]:
-			owner_user = user			
+			owner_user = user
 		else:
 			members.append(user)
 	
@@ -329,9 +330,8 @@ func _on_backend_response(action : int, is_success : bool, body):
 			add_board(board)
 			emit_signal("board_created", board)
 			
-		Backend.Event.GET_BOARD:
-			print("TODO IMPLEMENT ME - Backend.Event.GET_BOARD", body)
-			# TODO: load full board into the model
+		Backend.Event.GET_BOARD:			
+			emit_signal("board_updated", _board_from_details(body, false))
 			
 		Backend.Event.GET_BOARDS:
 			var boards := []			

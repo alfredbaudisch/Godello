@@ -36,4 +36,4 @@ func _on_BoardMemberButton_pressed():
 		SceneUtils.create_delete_confirm_popup(self, self, [], "Remove Board Member?")
 		
 func _on_delete_confirmed():
-	board.remove_member(model)
+	DataRepository.remove_board_member(model, board)
