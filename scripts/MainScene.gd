@@ -52,7 +52,8 @@ func _on_HomeButton_pressed():
 	go_home()
 	
 func _on_user_channel_joined():
-	go_home()
+	if not DataRepository.get_active_board():
+		go_home()
 	
 func _on_user_channel_left():
 	pass
