@@ -14,6 +14,6 @@ defmodule Godello.Kanban.BoardUser do
     board_user
     |> cast(attrs, [:is_owner, :board_id, :user_id])
     |> validate_required([:board_id, :user_id])
-    |> unique_constraint([:board_id, :user_id])
+    |> unique_constraint([:board_id, :user_id], message: "already has this user as a member")
   end
 end
