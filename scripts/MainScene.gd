@@ -17,8 +17,8 @@ func _ready():
 	
 	SceneUtils.connect("change_route_requested", self, "_on_change_scene_requested")
 	
-	if DataRepository.active_user:
-		user_button.set_text(DataRepository.active_user.get_full_name())
+	if DataRepository.active_user:		
+		call_deferred("_set_user")
 		DI.backend().connect_realtime(DataRepository.active_user)
 	else:
 		call_deferred("logout")
@@ -27,7 +27,10 @@ func go_home():
 	SceneUtils.go_to_boards()
 	
 func logout():
-	Events.emit_signal("user_logged_out")
+	Events.emit_signal("user_logged_out")	
+
+func _set_user():
+	user_button.set_text(DataRepository.active_user.get_full_name())
 
 func _on_change_scene_requested(next_route : int):
 	_go_ro_route(next_route)

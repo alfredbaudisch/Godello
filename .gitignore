@@ -9,3 +9,7 @@ export_presets.cfg
 data_*/
 
 *.import
+
+backend/godello_elixir/_build
+backend/godello_elixir/.elixir_ls
+backend/godello_elixir/deps
