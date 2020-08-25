@@ -87,6 +87,10 @@ run/low_processor_mode=true
 run/low_processor_mode_sleep_usec=25000
 config/icon="res://icon.png"
 
+[audio]
+
+driver="Dummy"
+
 [autoload]
 
 Events="*res://scripts/Events.gd"
