@@ -92,6 +92,8 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
 
 Show appreciation and support for this project on [Patreon](https://www.patreon.com/alfredbaudisch). Patrons of any tier will have their name listed here. Patrons of the **Sponsors** tier or higher, can also have a link and a logo listed here.
 
+- Mike King
+
 ## Updates 📡
 
 For news and more code and art experiments and prototypes:
