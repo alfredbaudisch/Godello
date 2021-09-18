@@ -1,4 +1,4 @@
-# Godello (aka GodoTrello) ![Godot 3.2](https://img.shields.io/badge/godot-v3.2-%23478cbf)
+# Godello (aka GodoTrello) ![Godot 3.2](https://img.shields.io/badge/godot-v3.2-%23478cbf) [![Donate using PayPal](https://raw.githubusercontent.com/laurent22/joplin/dev/Assets/WebsiteAssets/images/badges/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=FC5FTRRE3548C) [![Become a patron](https://raw.githubusercontent.com/laurent22/joplin/dev/Assets/WebsiteAssets/images/badges/Patreon-Badge.svg)](https://www.patreon.com/alfredbaudisch)
 
 Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with [Elixir](https://elixir-lang.org/) and [Phoenix Channels](https://phoenixframework.org/) (with the possibility of additional backend languages and frameworks). **ATTENTION: 70% done. Remaining WIP in the branch [integrate_elixir](https://github.com/alfredbaudisch/Godello/tree/integrate_elixir). See "[Progress](#progress-)" below.**
 
@@ -13,7 +13,7 @@ Trello inspired kanban board made with the [Godot Engine](http://godotengine.org
   - [What is finished](#what-is-finished)
   - [Work in progress](#work-in-progress)
 - [Roadmap 🗺️](#roadmap-️)
-- [Sponsors ❤️](#sponsors-️)
+- [Sponsorship and Donations ❤️](#sponsorship-and-donations-️)
 - [Updates 📡](#updates-)
 - [License ⚖️](#license-%EF%B8%8F)
 
@@ -88,9 +88,9 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
   - Kotlin (Ktor)
   - PHP (Laravel)
 
-## Sponsors ❤️
+## Sponsorship and Donations ❤️
 
-Show appreciation and support for this project on [Patreon](https://www.patreon.com/alfredbaudisch). Patrons of any tier will have their name listed here. Patrons of the **Sponsors** tier or higher, can also have a link and a logo listed here.
+You can support my open-source contributions and this project on [Patreon](https://www.patreon.com/alfredbaudisch) or with a [PayPal donation](https://www.paypal.com/donate?hosted_button_id=FC5FTRRE3548C). Patrons and donors of any tier will have their name listed here. Patrons of the **Sponsors** tier or higher, can also have a link and a logo listed here.
 
 - Mike King
 
