@@ -1,7 +1,7 @@
 extends Control
 
 
-const ListScene := preload("res://scenes/list_.tscn")
+const ListScene := preload("res://scenes/list.tscn")
 const MenuScene := preload("res://scenes/board_menu.tscn")
 const CardDetailsScene := preload("res://scenes/card_details.tscn")
 const MemberButtonScene := preload("res://scenes/board_member_button.tscn")

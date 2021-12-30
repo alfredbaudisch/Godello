@@ -3,7 +3,7 @@ extends PanelContainer
 
 const StyleDragged := preload("res://assets/style_panel_list_dragged.tres")
 const ListDragPreview := preload("res://scenes/list_mouse_preview.tscn")
-const CardScene := preload("res://scenes/card_.tscn")
+const CardScene := preload("res://scenes/card.tscn")
 
 var is_receiving_drag_data := false
 var model : ListModel setget set_model, get_model

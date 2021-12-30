@@ -12,42 +12,42 @@ _global_script_classes=[ {
 "base": "Model",
 "class": "BoardModel",
 "language": "GDScript",
-"path": "res://scripts/models/BoardModel.gd"
+"path": "res://scripts/models/board_model.gd"
 }, {
 "base": "Model",
 "class": "CardModel",
 "language": "GDScript",
-"path": "res://scripts/models/CardModel.gd"
+"path": "res://scripts/models/card_model.gd"
 }, {
 "base": "MarginContainer",
 "class": "CardPreview",
 "language": "GDScript",
-"path": "res://scripts/CardMousePreview.gd"
+"path": "res://scripts/card_mouse_preview.gd"
 }, {
 "base": "Object",
 "class": "DragUtils",
 "language": "GDScript",
-"path": "res://scripts/DragUtils.gd"
+"path": "res://scripts/drag_utils.gd"
 }, {
 "base": "Model",
 "class": "ListModel",
 "language": "GDScript",
-"path": "res://scripts/models/ListModel.gd"
+"path": "res://scripts/models/list_model.gd"
 }, {
 "base": "PanelContainer",
 "class": "ListPreview",
 "language": "GDScript",
-"path": "res://scripts/ListMousePreview.gd"
+"path": "res://scripts/list_mouse_preview.gd"
 }, {
 "base": "Object",
 "class": "Model",
 "language": "GDScript",
-"path": "res://scripts/models/Model.gd"
+"path": "res://scripts/models/model.gd"
 }, {
 "base": "Model",
 "class": "TaskModel",
 "language": "GDScript",
-"path": "res://scripts/models/TaskModel.gd"
+"path": "res://scripts/models/task_model.gd"
 }, {
 "base": "Node",
 "class": "UUID",
@@ -57,12 +57,12 @@ _global_script_classes=[ {
 "base": "Model",
 "class": "UserModel",
 "language": "GDScript",
-"path": "res://scripts/models/UserModel.gd"
+"path": "res://scripts/models/user_model.gd"
 }, {
 "base": "Object",
 "class": "Utils",
 "language": "GDScript",
-"path": "res://scripts/Utils.gd"
+"path": "res://scripts/utils.gd"
 } ]
 _global_script_class_icons={
 "BoardModel": "",
@@ -82,7 +82,7 @@ _global_script_class_icons={
 
 config/name="Godello"
 config/description="Trello inspired kanban board in Godot, powered by a real-time collaborative backend"
-run/main_scene="res://scenes/MainScene.tscn"
+run/main_scene="res://scenes/main_scene.tscn"
 run/low_processor_mode=true
 run/low_processor_mode_sleep_usec=25000
 config/icon="res://icon.png"
@@ -93,9 +93,9 @@ driver="Dummy"
 
 [autoload]
 
-Events="*res://scripts/Events.gd"
-DataRepository="*res://scripts/DataRepository.gd"
-SceneUtils="*res://scripts/SceneUtils.gd"
+Events="*res://scripts/events.gd"
+DataRepository="*res://scripts/data_repository.gd"
+SceneUtils="*res://scripts/scene_utils.gd"
 
 [editor_plugins]
 

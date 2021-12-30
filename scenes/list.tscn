@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/style_empty.tres" type="StyleBox" id=1]
-[ext_resource path="res://scripts/list_.gd" type="Script" id=2]
-[ext_resource path="res://assets/fonts/font_list_title.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/icons/dots.svg" type="Texture" id=4]
+[ext_resource path="res://scripts/list.gd" type="Script" id=1]
+[ext_resource path="res://assets/icons/dots.svg" type="Texture" id=2]
+[ext_resource path="res://assets/style_empty.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/fonts/font_list_title.tres" type="DynamicFont" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.721569, 0.72549, 0.756863, 1 )
@@ -19,7 +19,7 @@ margin_right = 252.0
 rect_min_size = Vector2( 280, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -53,7 +53,7 @@ margin_bottom = 25.0
 margin_right = 228.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "List Title"
 
 [node name="ListActionsButton" type="ToolButton" parent="MarginContainer/VerticalContent/TitleContainer"]
@@ -64,7 +64,7 @@ margin_bottom = 25.0
 rect_min_size = Vector2( 32, 18 )
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 1 )
-icon = ExtResource( 4 )
+icon = ExtResource( 2 )
 expand_icon = true
 
 [node name="CardContainerScroll" type="ScrollContainer" parent="MarginContainer/VerticalContent"]
@@ -74,7 +74,7 @@ margin_bottom = 558.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg = ExtResource( 1 )
+custom_styles/bg = ExtResource( 3 )
 scroll_horizontal_enabled = false
 
 [node name="CardContainer" type="VBoxContainer" parent="MarginContainer/VerticalContent/CardContainerScroll"]

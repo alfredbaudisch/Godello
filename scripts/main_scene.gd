@@ -1,8 +1,8 @@
 extends ColorRect
 
 
-const BoardsScene := preload("res://scenes/boards_.tscn")
-const BoardScene := preload("res://scenes/board_.tscn")
+const BoardsScene := preload("res://scenes/boards.tscn")
+const BoardScene := preload("res://scenes/board.tscn")
 
 var route : int
 var route_scene : Node
