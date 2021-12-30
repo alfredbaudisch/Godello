@@ -1,5 +1,7 @@
 extends Node
 
+
+# warning-ignore-all:unused_signal
 signal user_logged_in(user)
 signal user_logged_out(user)
 
