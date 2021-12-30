@@ -3,7 +3,7 @@ extends PanelContainer
 
 signal menu_close_requested()
 
-const CardScene := preload("res://scenes/Card.tscn")
+const CardScene := preload("res://scenes/card_.tscn")
 
 var board : BoardModel setget set_board
 

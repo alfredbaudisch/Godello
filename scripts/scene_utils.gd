@@ -12,13 +12,13 @@ enum InputFieldDialogMode {
 	ADD_BOARD_MEMBER
 }
 
-const InputFieldDialog := preload("res://scenes/InputFieldDialog.tscn")
+const InputFieldDialog := preload("res://scenes/input_field_dialog.tscn")
 
 var popup
 
 
 func go_to_main_route():
-	var err = get_tree().change_scene("res://scenes/MainScene.tscn")
+	var err = get_tree().change_scene("res://scenes/main_scene.tscn")
 	if err != OK:
 		print("scene_utils.gd:21 : could not change scene error code %d" % err)
 
@@ -28,7 +28,7 @@ func request_route_change(route : int):
 
 
 func go_to_login():
-	var err = get_tree().change_scene("res://scenes/LoginRegister.tscn")
+	var err = get_tree().change_scene("res://scenes/login_register.tscn")
 	if err != OK:
 		print("scene_utils.gd:31 : could not change scene error code %d" % err)
 
@@ -45,7 +45,7 @@ func create_single_error_popup(message : String, focus_after_close : Control, pa
 	if popup:
 		popup.queue_free()
 
-	popup = load("res://scenes/SingleButtonPopup.tscn").instance()
+	popup = load("res://scenes/single_button_popup.tscn").instance()
 	popup.get_node("Label").set_text(message)
 	parent.add_child(popup)
 	popup.popup_centered()

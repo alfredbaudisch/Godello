@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/fonts/Roboto-Bold.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/icons/plus-white.png" type="Texture" id=2]
-[ext_resource path="res://scripts/Board.gd" type="Script" id=3]
-[ext_resource path="res://scenes/BoardMemberButton.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/style_board_member_button.tres" type="StyleBox" id=5]
+[ext_resource path="res://scenes/board_member_button.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/board_.gd" type="Script" id=3]
+[ext_resource path="res://assets/style_board_member_button.tres" type="StyleBox" id=4]
+[ext_resource path="res://assets/icons/plus-white.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 18
@@ -93,7 +93,7 @@ margin_left = 811.0
 margin_right = 811.0
 margin_bottom = 32.0
 
-[node name="BoardOwnerButton" parent="MarginContainer/VBoxContainer/BoardInfoContainer" instance=ExtResource( 4 )]
+[node name="BoardOwnerButton" parent="MarginContainer/VBoxContainer/BoardInfoContainer" instance=ExtResource( 2 )]
 
 [node name="AddBoardMemberButton" type="Button" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
 margin_left = 855.0
@@ -105,12 +105,12 @@ mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 2 )
-custom_styles/normal = ExtResource( 5 )
+custom_styles/normal = ExtResource( 4 )
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
-icon = ExtResource( 2 )
+icon = ExtResource( 5 )
 expand_icon = true
 
 [node name="ShowMenuButton" type="Button" parent="MarginContainer/VBoxContainer/BoardInfoContainer"]
@@ -169,6 +169,7 @@ color = Color( 0, 0, 0, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/AddBoardMemberButton" to="." method="_on_AddBoardMemberButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BoardInfoContainer/ShowMenuButton" to="." method="_on_ShowMenuButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ListContainerScroll/ListContainer/AddListButton" to="." method="_on_AddListButton_pressed"]

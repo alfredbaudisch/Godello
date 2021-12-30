@@ -3,7 +3,7 @@ extends MarginContainer
 
 const StyleDefault := preload("res://assets/style_panel_card.tres")
 const StuleDragged := preload("res://assets/style_panel_card_dragged.tres")
-const CardDragPreview := preload("res://scenes/CardMousePreview.tscn")
+const CardDragPreview := preload("res://scenes/card_mouse_preview.tscn")
 
 var model : CardModel setget set_model, get_model
 var is_dragged := false setget set_is_dragged

@@ -1,10 +1,10 @@
 extends Control
 
 
-const ListScene := preload("res://scenes/List.tscn")
-const MenuScene := preload("res://scenes/BoardMenu.tscn")
-const CardDetailsScene := preload("res://scenes/CardDetails.tscn")
-const MemberButtonScene := preload("res://scenes/BoardMemberButton.tscn")
+const ListScene := preload("res://scenes/list_.tscn")
+const MenuScene := preload("res://scenes/board_menu.tscn")
+const CardDetailsScene := preload("res://scenes/card_details.tscn")
+const MemberButtonScene := preload("res://scenes/board_member_button.tscn")
 
 var model : BoardModel setget set_model
 var is_receiving_drag_data = true
@@ -21,15 +21,15 @@ onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/Tit
 
 
 func _ready():
-	# warning-ignore:return_value_discarded
+# warning-ignore:return_value_discarded
 	Events.connect("card_clicked", self, "_on_card_clicked")
-	# warning-ignore:return_value_discarded
+# warning-ignore:return_value_discarded
 	Events.connect("add_card_clicked", self, "_on_add_card_clicked")
-	# warning-ignore:return_value_discarded
+# warning-ignore:return_value_discarded
 	DataRepository.connect("list_created", self, "_on_list_created")
-	# warning-ignore:return_value_discarded
+# warning-ignore:return_value_discarded
 	DataRepository.connect("board_updated", self, "_on_board_updated")
-	# warning-ignore:return_value_discarded
+# warning-ignore:return_value_discarded
 	DataRepository.connect("board_deleted", self, "_on_board_deleted")
 
 	full_screen_overlay.set_visible(false)

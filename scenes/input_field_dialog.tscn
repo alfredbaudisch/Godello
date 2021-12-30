@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scripts/EditList.gd" type="Script" id=1]
+[ext_resource path="res://scripts/edit_list.gd" type="Script" id=1]
 
 [node name="InputFieldDialog" type="ConfirmationDialog"]
 anchor_left = 0.5
@@ -43,6 +43,7 @@ margin_bottom = 26.0
 size_flags_horizontal = 3
 placeholder_text = "List Name"
 caret_blink = true
+
 [connection signal="about_to_show" from="." to="." method="_on_InputFieldDialog_about_to_show"]
 [connection signal="confirmed" from="." to="." method="_on_InputFieldDialog_confirmed"]
 [connection signal="custom_action" from="." to="." method="_on_InputFieldDialog_custom_action"]

@@ -1,7 +1,7 @@
 extends ColorRect
 
 
-const BoardCard := preload("res://scenes/BoardCard.tscn")
+const BoardCard := preload("res://scenes/board_card.tscn")
 
 onready var personal_boards_container := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer
 onready var public_boards_container := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer

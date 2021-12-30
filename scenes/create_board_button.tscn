@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/fonts/font_regular.tres" type="DynamicFont" id=1]
-[ext_resource path="res://assets/style_board_card_button_hover.tres" type="StyleBox" id=2]
-[ext_resource path="res://assets/style_board_card_button.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/style_board_card_button.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/style_board_card_button_hover.tres" type="StyleBox" id=3]
 
 [node name="CreateBoard" type="Button"]
 margin_left = 204.0
@@ -10,11 +10,11 @@ margin_right = 398.0
 margin_bottom = 96.0
 rect_min_size = Vector2( 194, 96 )
 mouse_default_cursor_shape = 2
-custom_styles/hover = ExtResource( 2 )
-custom_styles/pressed = ExtResource( 2 )
-custom_styles/focus = ExtResource( 2 )
-custom_styles/disabled = ExtResource( 3 )
-custom_styles/normal = ExtResource( 3 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_disabled = Color( 0.0901961, 0.168627, 0.301961, 1 )
 custom_colors/font_color = Color( 0.0901961, 0.168627, 0.301961, 1 )

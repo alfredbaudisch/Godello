@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=1]
-[ext_resource path="res://scripts/Boards.gd" type="Script" id=2]
-[ext_resource path="res://assets/icons/user.svg" type="Texture" id=3]
-[ext_resource path="res://assets/icons/users.svg" type="Texture" id=4]
-[ext_resource path="res://scenes/CreateBoardButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/create_board_button.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/boards_.gd" type="Script" id=2]
+[ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/icons/user.svg" type="Texture" id=4]
+[ext_resource path="res://assets/icons/users.svg" type="Texture" id=5]
 
 [node name="Boards" type="ColorRect"]
 anchor_right = 1.0
@@ -69,7 +69,7 @@ modulate = Color( 0.34902, 0.686275, 0.882353, 1 )
 margin_right = 32.0
 margin_bottom = 37.0
 rect_min_size = Vector2( 32, 14 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 expand = true
 stretch_mode = 6
 
@@ -77,7 +77,7 @@ stretch_mode = 6
 margin_left = 42.0
 margin_right = 228.0
 margin_bottom = 37.0
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = ExtResource( 3 )
 text = "Personal Boards"
 
 [node name="PersonalBoardsContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
@@ -89,7 +89,7 @@ custom_constants/vseparation = 10
 custom_constants/hseparation = 10
 columns = 4
 
-[node name="CreateBoard" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 6 )]
+[node name="CreateBoard" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 1 )]
 margin_left = 0.0
 margin_right = 194.0
 
@@ -110,7 +110,7 @@ modulate = Color( 0.34902, 0.686275, 0.882353, 1 )
 margin_right = 32.0
 margin_bottom = 37.0
 rect_min_size = Vector2( 32, 14 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 expand = true
 stretch_mode = 6
 
@@ -118,7 +118,7 @@ stretch_mode = 6
 margin_left = 42.0
 margin_right = 210.0
 margin_bottom = 37.0
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = ExtResource( 3 )
 text = "Shared Boards"
 
 [node name="PublicBoardsContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
@@ -135,4 +135,5 @@ margin_top = 286.0
 margin_right = 810.0
 margin_bottom = 314.0
 rect_min_size = Vector2( 0, 28 )
+
 [connection signal="pressed" from="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ false ]]

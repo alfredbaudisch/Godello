@@ -1,8 +1,8 @@
 extends Control
 
 
-const CheckitemScene := preload("res://scenes/CheckItem.tscn")
-const PopupScene = preload("res://scenes/SingleButtonPopup.tscn")
+const CheckitemScene := preload("res://scenes/check_item.tscn")
+const PopupScene = preload("res://scenes/single_button_popup.tscn")
 
 var can_close := true
 var is_save_title_manually_requested := false
