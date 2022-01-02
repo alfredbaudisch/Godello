@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/main_scene.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/style_topbar_button_normal.tres" type="StyleBox" id=5]
 [ext_resource path="res://assets/icons/home-white.png" type="Texture" id=6]
 [ext_resource path="res://assets/icons/sign-out-white.png" type="Texture" id=7]
+[ext_resource path="res://assets/icons/user.svg" type="Texture" id=8]
 
 [node name="MainScene" type="ColorRect"]
 anchor_right = 1.0
@@ -42,10 +43,10 @@ __meta__ = {
 }
 
 [node name="HomeButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
-margin_right = 100.0
+margin_right = 81.0
 margin_bottom = 32.0
-rect_min_size = Vector2( 100, 0 )
 mouse_default_cursor_shape = 2
+size_flags_horizontal = 2
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
@@ -59,17 +60,10 @@ text = "Boards"
 icon = ExtResource( 6 )
 expand_icon = true
 
-[node name="HSplitContainer" type="HSplitContainer" parent="ContentContainer/TopBar/HBoxContainer"]
-margin_left = 104.0
-margin_right = 857.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-
 [node name="UserButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
 margin_left = 861.0
-margin_right = 912.0
+margin_right = 926.0
 margin_bottom = 32.0
-rect_min_size = Vector2( 32, 0 )
 mouse_default_cursor_shape = 2
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -80,14 +74,14 @@ custom_styles/hover = ExtResource( 4 )
 custom_styles/pressed = ExtResource( 3 )
 custom_styles/focus = ExtResource( 3 )
 custom_styles/normal = ExtResource( 5 )
-text = "Alfred"
+text = "User"
+icon = ExtResource( 8 )
 expand_icon = true
 
 [node name="LogOutButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
-margin_left = 916.0
+margin_left = 930.0
 margin_right = 1016.0
 margin_bottom = 32.0
-rect_min_size = Vector2( 100, 0 )
 mouse_default_cursor_shape = 2
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
