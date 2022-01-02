@@ -23,11 +23,16 @@ func _ready():
 # warning-ignore:return_value_discarded
 	Events.connect("card_dropped", self, "_on_card_dropped")
 # warning-ignore:return_value_discarded
+	Events.connect("list_dropped", self, "_on_list_dropped")
+# warning-ignore:return_value_discarded
 	Events.connect("user_logged_in", self, "_on_user_logged_in")
 # warning-ignore:return_value_discarded
 	Events.connect("user_logged_out", self, "_on_user_logged_out")
 
-	set_active_user(UserModel.new("1", "Alfred", "R Baudisch", "alfred@alfred"))
+	if AppGlobal.backend == AppGlobal.Storage.LOCAL:
+		set_active_user(AppGlobal.local_owner)
+	elif AppGlobal.backend == AppGlobal.Storage.ELIXR:
+		set_active_user(UserModel.new("1", "Alfred", "R Baudisch", "alfred@alfred"))
 
 
 func set_active_user(value : UserModel):
@@ -56,16 +61,16 @@ func get_board(id: String):
 	return boards_by_id[id]
 
 
-func get_list(id: String):
-	return lists_by_id[id]
-
-
 func add_list(list : ListModel):
 	lists_by_id[list.id] = list
 	_map_cards_by_id(list.cards)
 
 	var board = boards_by_id[list.board_id]
 	board.add_list(list)
+
+
+func get_list(id: String):
+	return lists_by_id[id]
 
 
 func move_card_to_list(card : CardModel, list : ListModel):
@@ -76,21 +81,25 @@ func move_card_to_list(card : CardModel, list : ListModel):
 		to_list.add_card(card)
 		from_list.remove_card(card)
 
+	emit_signal("board_updated", active_board)
 
-func delete_card(card):
-	var list = get_list(card.list_id)
-	list.remove_card(card)
 
-	get_board(list.board_id).remove_archived_card(card)
-	if !cards_by_id.erase(card.id):
-		print("data_repository.gd:82 : card with id d% not found!" % card.id)
-
-	emit_signal("card_deleted", card)
+func create_task(card, title, is_done := false) -> Dictionary:
+	var task = TaskModel.new(card.id + str(card.tasks.size()), card.id, title, is_done) # todo: task id
+	card.add_task(task)
+	return {
+		"task": task,
+		"card": card
+	}
 
 
 func update_card(card, was_draft := false, was_archived := false):
-	var list = get_list(card.list_id)
-	var board = get_board(list.board_id)
+	var list
+	var board
+
+	if active_board != null:
+		list = get_list(card.list_id)
+		board = get_board(list.board_id)
 
 	if was_draft and not card.is_draft:
 		list.add_card(card)
@@ -106,38 +115,15 @@ func update_card(card, was_draft := false, was_archived := false):
 	emit_signal("card_updated", card)
 
 
-func delete_list(list):
-	if !lists_by_id.erase(list.id):
-		print("data_repository.gd:107 : list with id d% not found!" % list.id)
-	list.remove_cards()
+func delete_card(card):
+	var list = get_list(card.list_id)
+	list.remove_card(card)
 
-	var board = boards_by_id[list.board_id]
-	board.remove_list(list)
+	get_board(list.board_id).remove_archived_card(card)
+	if !cards_by_id.erase(card.id):
+		push_error("deleting card with id d% not found!" % card.id)
 
-	emit_signal("list_deleted", list)
-
-
-func update_list(list):
-	emit_signal("list_updated", list)
-
-
-func update_board(board):
-	emit_signal("board_updated", board)
-
-
-func delete_board(board):
-	if !boards_by_id.erase(board.id):
-		print("data_repository.gd:126 : board with id d% not found!" % board.id)
-	emit_signal("board_deleted", board)
-
-
-func create_task(card, title, is_done := false) -> Dictionary:
-	var task = TaskModel.new(card.id + str(card.tasks.size()), card.id, title, is_done) # todo: task id
-	card.add_task(task)
-	return {
-		"task": task,
-		"card": card
-	}
+	emit_signal("card_deleted", card)
 
 
 func create_list(board, title):
@@ -146,9 +132,34 @@ func create_list(board, title):
 	emit_signal("list_created", list)
 
 
+func update_list(list):
+	emit_signal("list_updated", list)
+
+
+func delete_list(list):
+	if !lists_by_id.erase(list.id):
+		push_error("deleting list with id d% not found!" % list.id)
+	list.remove_cards()
+
+	var board = boards_by_id[list.board_id]
+	board.remove_list(list)
+
+	emit_signal("list_deleted", list)
+
+
 func create_board(board):
 	add_board(board)
 	emit_signal("board_created", board)
+
+
+func update_board(board):
+	emit_signal("board_updated", board)
+
+
+func delete_board(board):
+	if !boards_by_id.erase(board.id):
+		push_error("deleting board with id d% not found!" % board.id)
+	emit_signal("board_deleted", board)
 
 
 func get_draft_board(is_public : bool) -> BoardModel:
@@ -180,7 +191,7 @@ func _set_draft_card_for_list(list, draft_card = null):
 		list_draft_cards[list.id] = draft_card
 	else:
 		if !list_draft_cards.erase(list.id):
-			print("data_repository.gd:179 : list with id d% not found!" % list.id)
+			push_error("list with id d% not found!" % list.id)
 
 
 func _on_user_logged_in(user : UserModel):
@@ -194,6 +205,11 @@ func _on_user_logged_out():
 func _on_card_dropped(drop_data, into_list):
 	if drop_data["model"].list_id != into_list.id:
 		move_card_to_list(drop_data["model"], into_list)
+
+
+func _on_list_dropped(_drop_data) -> void:
+	# Todo save list with a sorting mechanism
+	pass
 
 
 func _map_cards_by_id(cards : Array):
