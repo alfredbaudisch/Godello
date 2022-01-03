@@ -8,9 +8,6 @@ The goal of this branch was to offer a way to store the data locally in addition
 ## Project Plans
 
 For now the project is basic and functional but additional features are planed to have a more complete featureset.\
-Additionaly features like sorting lists with drag and drop are only visually functional and a position / sorting system
-needs to be implemented first.
-
 
 ## License ⚖️
 
