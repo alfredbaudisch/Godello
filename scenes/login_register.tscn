@@ -239,6 +239,7 @@ custom_colors/font_color_pressed = Color( 0.921569, 0.92549, 0.941176, 1 )
 text = "Don't have an account? Create one!"
 
 [node name="SignInLocal" type="VBoxContainer" parent="Center" groups=["login_panel"]]
+visible = false
 margin_left = 5.0
 margin_top = 119.0
 margin_right = 355.0
@@ -282,7 +283,6 @@ __meta__ = {
 }
 
 [node name="SettingsPanel" type="VBoxContainer" parent="Center" groups=["login_panel"]]
-visible = false
 margin_left = 5.0
 margin_top = 69.0
 margin_right = 355.0
@@ -322,7 +322,7 @@ margin_bottom = 72.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 0
 group = ExtResource( 8 )
-text = "Elixr"
+text = "Elixir"
 
 [node name="CloseSettingsButton" type="Button" parent="Center/SettingsPanel"]
 margin_top = 208.0
