@@ -7,7 +7,7 @@ The goal of this branch was to offer a way to store the data locally in addition
 
 ## Project Plans
 
-For now the project is basic and functional but additional features are planed to have a more complete featureset.\
+For now the project is basic and functional but additional features are planed in order to have a more complete featureset.
 
 ## License ⚖️
 
