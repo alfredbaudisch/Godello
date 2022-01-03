@@ -23,7 +23,7 @@ func _ready():
 # warning-ignore:return_value_discarded
 	Events.connect("card_dropped", self, "_on_card_dropped")
 # warning-ignore:return_value_discarded
-	Events.connect("list_dropped", self, "_on_list_dropped")
+	Events.connect("list_order_updated", self, "_on_list_order_updated")
 # warning-ignore:return_value_discarded
 	Events.connect("user_logged_in", self, "_on_user_logged_in")
 # warning-ignore:return_value_discarded
@@ -31,7 +31,7 @@ func _ready():
 
 	if AppGlobal.backend == AppGlobal.Storage.LOCAL:
 		set_active_user(AppGlobal.local_owner)
-	elif AppGlobal.backend == AppGlobal.Storage.ELIXR:
+	elif AppGlobal.backend == AppGlobal.Storage.ELIXIR:
 		set_active_user(UserModel.new("1", "Alfred", "R Baudisch", "alfred@alfred"))
 
 
@@ -207,9 +207,13 @@ func _on_card_dropped(drop_data, into_list):
 		move_card_to_list(drop_data["model"], into_list)
 
 
-func _on_list_dropped(_drop_data) -> void:
-	# Todo save list with a sorting mechanism
-	pass
+func _on_list_order_updated(nodes : Array) -> void:
+	if nodes.pop_back():
+		active_board.lists.clear()
+		for node in nodes:
+			active_board.lists.append(node.model)
+
+	emit_signal("board_updated", active_board)
 
 
 func _map_cards_by_id(cards : Array):
