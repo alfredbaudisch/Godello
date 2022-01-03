@@ -1,7 +1,7 @@
 extends Node
 
 
-enum Storage {LOCAL,ELIXR}
+enum Storage {LOCAL,ELIXIR}
 var backend : int = Storage.LOCAL setget _set_backend	# Default setting to local
 var local_repository : String = "user://repository"
 var executable_path : String
@@ -36,7 +36,6 @@ func save_config() -> void:
 
 	if err != OK:
 		push_error("couldn't save config file error %d" % err)
-
 
 
 func _set_backend(value) -> void:

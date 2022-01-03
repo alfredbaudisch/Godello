@@ -173,4 +173,4 @@ func _on_local_button_toggled(toggled: bool) -> void:
 
 func _on_elixr_button_toggled(toggled: bool) -> void:
 	if toggled:
-		AppGlobal.backend = AppGlobal.Storage.ELIXR
+		AppGlobal.backend = AppGlobal.Storage.ELIXIR
