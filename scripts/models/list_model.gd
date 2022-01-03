@@ -53,3 +53,10 @@ func _map_cards_by_id():
 
 func _notify_updated():
 	DataRepository.update_list(self)
+
+
+func _to_string() -> String:
+	return to_json({
+		"title":title,
+		"id":id
+	})
