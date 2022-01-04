@@ -16,7 +16,7 @@ func _ready():
 	if AppGlobal.backend == AppGlobal.Storage.LOCAL:
 		public_boards_title.hide()
 		public_boards_container.hide()
-		LocalStorage.load_boards()
+		Events.emit_signal("boards_loaded")
 
 	_refresh_boards()
 

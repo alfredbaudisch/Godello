@@ -5,7 +5,13 @@ var board : BoardModel
 var file_format = ".tres"
 
 
+func _init() -> void:
+	name = "LocalStorage"
+
+
 func _ready() -> void:
+# warning-ignore:return_value_discarded
+	Events.connect("boards_loaded", self, "_load_boards")
 # warning-ignore:return_value_discarded
 	DataRepository.connect("board_created", self, "_on_board_created")
 # warning-ignore:return_value_discarded
@@ -28,7 +34,7 @@ func _ready() -> void:
 	_check_repository_exist()
 
 
-func load_boards() -> void:
+func _load_boards() -> void:
 	var dir = Directory.new()
 
 	if dir.open(AppGlobal.local_repository) == OK:
