@@ -154,6 +154,8 @@ func _on_settings_mouse_entered() -> void:
 			Tween.EASE_OUT
 		)
 		tween.start()
+		yield(tween,"tween_all_completed")
+		tween.queue_free()
 
 
 func _on_settings_mouse_exited() -> void:
