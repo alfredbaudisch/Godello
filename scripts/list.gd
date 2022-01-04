@@ -158,7 +158,7 @@ func _on_list_dropped(drop_data):
 
 	if drop_data and drop_data["node"] == self:
 		set_is_dragged(false)
-		Events.emit_signal("list_order_updated", get_parent().get_children())
+		Events.emit_signal("order_updated", get_parent().get_children(), Model.ModelTypes.LIST)
 
 
 func _on_AddCardButton_pressed():

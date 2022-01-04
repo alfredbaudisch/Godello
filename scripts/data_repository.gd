@@ -23,7 +23,7 @@ func _ready():
 # warning-ignore:return_value_discarded
 	Events.connect("card_dropped", self, "_on_card_dropped")
 # warning-ignore:return_value_discarded
-	Events.connect("list_order_updated", self, "_on_list_order_updated")
+	Events.connect("order_updated", self, "_on_order_updated")
 # warning-ignore:return_value_discarded
 	Events.connect("user_logged_in", self, "_on_user_logged_in")
 # warning-ignore:return_value_discarded
@@ -207,12 +207,20 @@ func _on_card_dropped(drop_data, into_list):
 		move_card_to_list(drop_data["model"], into_list)
 
 
-func _on_list_order_updated(nodes : Array) -> void:
-	# removes the last element of the array since it is always the add list button.
-	if nodes.pop_back():
+func _on_order_updated(nodes : Array, type) -> void:
+# warning-ignore:unassigned_variable
+	var new_order : Array
+	for node in nodes:
+		if "model" in node:
+			new_order.append(node.model)
+
+	if type == Model.ModelTypes.LIST:
 		active_board.lists.clear()
-		for node in nodes:
-			active_board.lists.append(node.model)
+		active_board.lists = new_order
+	elif type == Model.ModelTypes.CARD:
+		var list = active_board.lists_by_id[new_order[0].list_id] as ListModel
+		list.cards.clear()
+		list.cards = new_order
 
 	emit_signal("board_updated", active_board)
 
