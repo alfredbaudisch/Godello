@@ -208,6 +208,7 @@ func _on_card_dropped(drop_data, into_list):
 
 
 func _on_list_order_updated(nodes : Array) -> void:
+	# removes the last element of the array since it is always the add list button.
 	if nodes.pop_back():
 		active_board.lists.clear()
 		for node in nodes:
