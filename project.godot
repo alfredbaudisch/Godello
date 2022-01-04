@@ -97,7 +97,6 @@ AppGlobal="*res://scripts/app_global.gd"
 Events="*res://scripts/events.gd"
 DataRepository="*res://scripts/data_repository.gd"
 SceneUtils="*res://scripts/scene_utils.gd"
-LocalStorage="*res://scripts/local_storage.gd"
 
 [editor_plugins]
 
