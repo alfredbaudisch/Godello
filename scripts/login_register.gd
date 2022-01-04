@@ -12,7 +12,7 @@ export(NodePath) onready var settings_panel = get_node(settings_panel) as VBoxCo
 export(NodePath) onready var settings_button = get_node(settings_button) as TextureButton
 export(NodePath) onready var settings_label = get_node(settings_label) as Label
 export(NodePath) onready var backend_local_button = get_node(backend_local_button) as Button
-export(NodePath) onready var backend_elixr_button = get_node(backend_elixr_button) as Button
+export(NodePath) onready var backend_elixir_button = get_node(backend_elixir_button) as Button
 export(NodePath) onready var first_name_input = get_node(first_name_input) as LineEdit
 export(NodePath) onready var last_name_input = get_node(last_name_input) as LineEdit
 export(NodePath) onready var email_input = get_node(email_input) as LineEdit
@@ -64,8 +64,8 @@ func _load_form() -> void:
 	if AppGlobal.backend == AppGlobal.Storage.LOCAL:
 		backend_local_button.pressed = true
 		_show_form(sign_in_local)
-	elif AppGlobal.backend == AppGlobal.Storage.ELIXR:
-		backend_elixr_button.pressed = true
+	elif AppGlobal.backend == AppGlobal.Storage.ELIXIR:
+		backend_elixir_button.pressed = true
 		_show_form(sign_in_form)
 
 
