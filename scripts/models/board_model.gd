@@ -31,7 +31,7 @@ func add_archived_card(card):
 
 func remove_archived_card(card):
 	if !archived_cards.erase(card.id):
-		print("board_model.gd:33 : card with id %d not found" % card.id)
+		print("[board_model.remove_archived_card] card with id not found: ", card.id)
 
 
 func get_archived_cards() -> Dictionary:
@@ -56,7 +56,7 @@ func remove_list(list):
 		lists.remove(list_idx)
 
 	if !lists_by_id.erase(list.id):
-		print("board_model.gd:58 : list with id d% not found!" % list.id)
+		print("[board_model.remove_list] list with id not found: ", list.id)
 
 
 func add_member(user : UserModel):

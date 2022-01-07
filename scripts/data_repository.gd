@@ -84,7 +84,7 @@ func delete_card(card):
 	if card.is_archived:
 		get_board(list.board_id).remove_archived_card(card)
 	if !cards_by_id.erase(card.id):
-		print("data_repository.gd:82 : card with id d% not found!" % card.id)
+		print("[data_repository.delete_card] card id not found: ", card.id)
 
 	emit_signal("card_deleted", card)
 
@@ -109,7 +109,7 @@ func update_card(card, was_draft := false, was_archived := false):
 
 func delete_list(list):
 	if !lists_by_id.erase(list.id):
-		print("data_repository.gd:107 : list with id d% not found!" % list.id)
+		print("[data_repository.delete_list] list with id not found: ", list.id)
 	list.remove_cards()
 
 	var board = boards_by_id[list.board_id]
@@ -128,7 +128,7 @@ func update_board(board):
 
 func delete_board(board):
 	if !boards_by_id.erase(board.id):
-		print("data_repository.gd:126 : board with id d% not found!" % board.id)
+		print("[data_repository.delete_board] board with id not found: ", board.id)
 	emit_signal("board_deleted", board)
 
 
@@ -181,7 +181,7 @@ func _set_draft_card_for_list(list, draft_card = null):
 		list_draft_cards[list.id] = draft_card
 	else:
 		if !list_draft_cards.erase(list.id):
-			print("data_repository.gd:179 : list with id d% not found!" % list.id)
+			print("[data_repository._set_draft_card_for_list] list with id not found: ", list.id)
 
 
 func _on_user_logged_in(user : UserModel):
