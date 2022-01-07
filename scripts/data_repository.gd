@@ -81,7 +81,8 @@ func delete_card(card):
 	var list = get_list(card.list_id)
 	list.remove_card(card)
 
-	get_board(list.board_id).remove_archived_card(card)
+	if card.is_archived:
+		get_board(list.board_id).remove_archived_card(card)
 	if !cards_by_id.erase(card.id):
 		print("data_repository.gd:82 : card with id d% not found!" % card.id)
 
