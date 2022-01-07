@@ -1,0 +1,426 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/fonts/Roboto-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scripts/card_details.gd" type="Script" id=2]
+[ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/icons/description.svg" type="Texture" id=5]
+[ext_resource path="res://assets/icons/checklist.svg" type="Texture" id=6]
+[ext_resource path="res://assets/icons/close.svg" type="Texture" id=7]
+[ext_resource path="res://assets/icons/card.svg" type="Texture" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 1, 0.996078, 0.92549, 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 10
+font_data = ExtResource( 1 )
+
+[node name="CardDetails" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_top = -1.47212
+margin_right = -1.0
+margin_bottom = -1.47211
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -300.0
+margin_top = 40.0
+margin_right = 300.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 600, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="ScrollContainer"]
+margin_right = 600.0
+margin_bottom = 530.0
+rect_min_size = Vector2( 600, 400 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer"]
+margin_right = 600.0
+margin_bottom = 530.0
+custom_constants/margin_right = 18
+custom_constants/margin_top = 18
+custom_constants/margin_left = 18
+custom_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer"]
+margin_left = 18.0
+margin_top = 18.0
+margin_right = 582.0
+margin_bottom = 490.0
+custom_constants/separation = 24
+
+[node name="ArchivedNoticeLabel" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+margin_right = 564.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/normal = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "This card is Archived."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 564.0
+margin_bottom = 118.0
+rect_min_size = Vector2( 0, 60 )
+custom_constants/separation = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
+margin_right = 16.0
+margin_bottom = 64.0
+custom_constants/margin_top = 6
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/MarginContainer"]
+modulate = Color( 0.439216, 0.509804, 0.627451, 1 )
+margin_top = 6.0
+margin_right = 16.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 16, 22 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 1
+
+[node name="TitleContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
+margin_left = 24.0
+margin_right = 540.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
+visible = false
+margin_right = 516.0
+margin_bottom = 37.0
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+custom_fonts/font = ExtResource( 3 )
+text = "Card Title, do this"
+autowrap = true
+
+[node name="TitleEdit" type="TextEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
+margin_right = 516.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 3 )
+wrap_enabled = true
+caret_blink = true
+
+[node name="Subtitle" type="RichTextLabel" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer"]
+margin_top = 44.0
+margin_right = 516.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 20 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/default_color = Color( 0.368627, 0.423529, 0.517647, 1 )
+bbcode_enabled = true
+bbcode_text = " in list [b][u]Foo[/u]	[/b]"
+text = " in list Foo	"
+
+[node name="CloseButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow"]
+modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
+margin_left = 548.0
+margin_right = 564.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 16, 22 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 7 )
+expand = true
+
+[node name="ContentRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 142.0
+margin_right = 564.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="DetailsCol" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
+margin_right = 464.0
+margin_bottom = 330.0
+size_flags_horizontal = 3
+custom_constants/separation = 24
+
+[node name="DescriptionRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
+margin_right = 464.0
+margin_bottom = 159.0
+custom_constants/separation = 8
+
+[node name="TextureRect2" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
+modulate = Color( 0.439216, 0.509804, 0.627451, 1 )
+margin_right = 16.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 16, 22 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 1
+flip_v = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
+margin_left = 24.0
+margin_right = 464.0
+margin_bottom = 159.0
+size_flags_horizontal = 3
+custom_constants/separation = 6
+
+[node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
+margin_right = 440.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 4 )
+text = "Description"
+autowrap = true
+
+[node name="DescriptionEdit" type="TextEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
+margin_top = 31.0
+margin_right = 440.0
+margin_bottom = 131.0
+rect_min_size = Vector2( 0, 100 )
+wrap_enabled = true
+caret_blink = true
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
+margin_top = 137.0
+margin_right = 440.0
+margin_bottom = 159.0
+custom_constants/separation = 12
+
+[node name="SaveDescriptionButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer"]
+margin_right = 41.0
+margin_bottom = 22.0
+size_flags_horizontal = 0
+text = "Save"
+
+[node name="CancelDescriptionButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer"]
+visible = false
+modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
+margin_left = 53.0
+margin_right = 69.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 16, 22 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 7 )
+expand = true
+
+[node name="ChecklistRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
+margin_top = 183.0
+margin_right = 464.0
+margin_bottom = 330.0
+custom_constants/separation = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
+margin_right = 16.0
+margin_bottom = 147.0
+custom_constants/margin_top = 3
+
+[node name="TextureRect2" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/MarginContainer"]
+modulate = Color( 0.439216, 0.509804, 0.627451, 1 )
+margin_top = 3.0
+margin_right = 16.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 16, 18 )
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="ChecklistContent" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
+margin_left = 24.0
+margin_right = 464.0
+margin_bottom = 147.0
+size_flags_horizontal = 3
+custom_constants/separation = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_right = 440.0
+margin_bottom = 25.0
+
+[node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/HBoxContainer"]
+margin_right = 315.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+text = "Checklist"
+autowrap = true
+
+[node name="TaskTip" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/HBoxContainer"]
+margin_left = 319.0
+margin_right = 440.0
+margin_bottom = 21.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.368627, 0.423529, 0.517647, 1 )
+text = "Right click a Task to edit it."
+
+[node name="Content" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 31.0
+margin_right = 440.0
+margin_bottom = 31.0
+
+[node name="EditContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 37.0
+margin_right = 440.0
+margin_bottom = 89.0
+custom_constants/separation = 6
+
+[node name="CheckItemEdit" type="LineEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer"]
+margin_right = 440.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+caret_blink = true
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer"]
+margin_top = 30.0
+margin_right = 440.0
+margin_bottom = 52.0
+custom_constants/separation = 6
+
+[node name="SaveCheckItemButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer"]
+margin_right = 41.0
+margin_bottom = 22.0
+size_flags_horizontal = 0
+text = "Save"
+
+[node name="DeleteCheckItemButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer"]
+margin_left = 47.0
+margin_right = 102.0
+margin_bottom = 22.0
+size_flags_horizontal = 0
+text = "Delete"
+
+[node name="CancelCheckItemButton" type="TextureButton" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer"]
+modulate = Color( 0.619608, 0.686275, 0.796078, 1 )
+margin_left = 108.0
+margin_right = 124.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 16, 22 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 7 )
+expand = true
+
+[node name="CreateContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
+margin_top = 95.0
+margin_right = 440.0
+margin_bottom = 147.0
+custom_constants/separation = 6
+
+[node name="CheckItemEdit" type="LineEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer"]
+margin_right = 440.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+caret_blink = true
+
+[node name="CreateCheckItemButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer"]
+margin_top = 30.0
+margin_right = 37.0
+margin_bottom = 52.0
+size_flags_horizontal = 0
+text = "Add"
+
+[node name="ActionsCol" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
+margin_left = 484.0
+margin_right = 564.0
+margin_bottom = 330.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+visible = false
+margin_right = 98.0
+margin_bottom = 22.0
+text = "ADD TO CARD"
+
+[node name="Button" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+visible = false
+margin_top = 26.0
+margin_right = 98.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 0, 30 )
+text = "Labels"
+
+[node name="Button2" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+visible = false
+margin_top = 60.0
+margin_right = 98.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 0, 30 )
+text = "Checklist"
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+visible = false
+margin_right = 65.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+dragger_visibility = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+margin_right = 80.0
+margin_bottom = 22.0
+text = "ACTIONS"
+
+[node name="ArchiveCardButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+margin_top = 26.0
+margin_right = 80.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 0, 30 )
+text = "Archive"
+
+[node name="DeleteCardButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]
+margin_top = 60.0
+margin_right = 80.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 0, 30 )
+text = "Delete"
+
+[connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/Title" to="." method="_on_Title_gui_input"]
+[connection signal="focus_exited" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/TitleEdit" to="." method="_on_TitleEdit_focus_exited"]
+[connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/TitleContainer/TitleEdit" to="." method="_on_TitleEdit_gui_input"]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/TitleRow/CloseButton" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer/SaveDescriptionButton" to="." method="_on_SaveDescriptionButton_pressed"]
+[connection signal="focus_entered" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_entered"]
+[connection signal="focus_exited" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_exited"]
+[connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_gui_input" binds= [ false ]]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer/SaveCheckItemButton" to="." method="_on_SaveCheckItemButton_pressed" binds= [ false ]]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer/DeleteCheckItemButton" to="." method="_on_DeleteCheckItemButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer/ButtonsContainer/CancelCheckItemButton" to="." method="_on_CancelCheckItemButton_pressed"]
+[connection signal="focus_entered" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_entered"]
+[connection signal="focus_exited" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_focus_exited"]
+[connection signal="gui_input" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CheckItemEdit" to="." method="_on_CheckItemEdit_gui_input" binds= [ true ]]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer/CreateCheckItemButton" to="." method="_on_SaveCheckItemButton_pressed" binds= [ true ]]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol/ArchiveCardButton" to="." method="_on_ArchiveCardButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol/DeleteCardButton" to="." method="_on_DeleteCardButton_pressed"]

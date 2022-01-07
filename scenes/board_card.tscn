@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/board_card.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/font_board_card.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/style_board_card.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/style_board_card_hover.tres" type="StyleBox" id=4]
+
+[node name="BoardCard" type="Button"]
+margin_right = 194.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 194, 96 )
+mouse_default_cursor_shape = 2
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_disabled = Color( 0.8, 0.8, 0.8, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+clip_text = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 6.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_vertical = 5
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Godello Course Roadmap"
+autowrap = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

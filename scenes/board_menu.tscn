@@ -1,0 +1,171 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/theme_trello_default.tres" type="Theme" id=1]
+[ext_resource path="res://assets/style_empty.tres" type="StyleBox" id=2]
+[ext_resource path="res://scenes/close_button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/board_menu.gd" type="Script" id=4]
+[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/style_panel_not_rounded.tres" type="StyleBox" id=6]
+[ext_resource path="res://assets/icons/dots.svg" type="Texture" id=7]
+[ext_resource path="res://assets/icons/chevron-left-solid.svg" type="Texture" id=8]
+[ext_resource path="res://assets/icons/archive.svg" type="Texture" id=9]
+[ext_resource path="res://assets/icons/home.svg" type="Texture" id=10]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0901961, 0.168627, 0.286275, 0.317647 )
+corner_detail = 1
+
+[node name="Menu" type="PanelContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 280, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 6 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 280.0
+margin_bottom = 600.0
+mouse_filter = 1
+size_flags_vertical = 3
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VerticalContent" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 272.0
+margin_bottom = 592.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VerticalContent"]
+margin_right = 264.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+
+[node name="BackButtonHolder" type="HSplitContainer" parent="MarginContainer/VerticalContent/HBoxContainer"]
+margin_right = 16.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 16, 22 )
+
+[node name="BackButton" parent="MarginContainer/VerticalContent/HBoxContainer" instance=ExtResource( 3 )]
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 16, 24 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 8 )
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VerticalContent/HBoxContainer"]
+margin_left = 40.0
+margin_right = 244.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "Menu"
+align = 1
+
+[node name="CloseButton" parent="MarginContainer/VerticalContent/HBoxContainer" instance=ExtResource( 3 )]
+margin_left = 248.0
+margin_right = 264.0
+mouse_default_cursor_shape = 2
+
+[node name="VSplitContainer2" type="VSplitContainer" parent="MarginContainer/VerticalContent"]
+margin_top = 29.0
+margin_right = 264.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 0, 5 )
+size_flags_horizontal = 3
+custom_constants/separation = 5
+collapsed = true
+dragger_visibility = 1
+
+[node name="Panel" type="Panel" parent="MarginContainer/VerticalContent"]
+margin_top = 38.0
+margin_right = 264.0
+margin_bottom = 39.0
+rect_min_size = Vector2( 0, 1 )
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/VerticalContent"]
+margin_top = 43.0
+margin_right = 264.0
+margin_bottom = 53.0
+rect_min_size = Vector2( 0, 10 )
+size_flags_horizontal = 3
+custom_constants/separation = 10
+collapsed = true
+dragger_visibility = 1
+
+[node name="MenuActionsContainer" type="VBoxContainer" parent="MarginContainer/VerticalContent"]
+margin_top = 57.0
+margin_right = 264.0
+margin_bottom = 143.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+custom_constants/separation = 10
+
+[node name="ArchivedCardsButton" type="ToolButton" parent="MarginContainer/VerticalContent/MenuActionsContainer"]
+margin_right = 264.0
+margin_bottom = 22.0
+mouse_default_cursor_shape = 2
+text = "Archived Cards"
+icon = ExtResource( 9 )
+align = 0
+expand_icon = true
+
+[node name="EditBoardButton" type="ToolButton" parent="MarginContainer/VerticalContent/MenuActionsContainer"]
+margin_top = 32.0
+margin_right = 264.0
+margin_bottom = 54.0
+mouse_default_cursor_shape = 2
+text = "Edit Board"
+icon = ExtResource( 7 )
+align = 0
+expand_icon = true
+
+[node name="HomeButton" type="ToolButton" parent="MarginContainer/VerticalContent/MenuActionsContainer"]
+margin_top = 64.0
+margin_right = 264.0
+margin_bottom = 86.0
+mouse_default_cursor_shape = 2
+text = "Boards"
+icon = ExtResource( 10 )
+align = 0
+expand_icon = true
+
+[node name="CardContainerScroll" type="ScrollContainer" parent="MarginContainer/VerticalContent"]
+margin_top = 147.0
+margin_right = 264.0
+margin_bottom = 584.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg = ExtResource( 2 )
+scroll_horizontal_enabled = false
+
+[node name="CardContainer" type="VBoxContainer" parent="MarginContainer/VerticalContent/CardContainerScroll"]
+margin_right = 264.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="MarginContainer/VerticalContent/HBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VerticalContent/HBoxContainer/CloseButton" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VerticalContent/MenuActionsContainer/ArchivedCardsButton" to="." method="_on_ArchivedCardsButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VerticalContent/MenuActionsContainer/EditBoardButton" to="." method="_on_EditBoardButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VerticalContent/MenuActionsContainer/HomeButton" to="." method="_on_HomeButton_pressed"]

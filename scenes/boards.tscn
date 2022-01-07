@@ -1,0 +1,139 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/create_board_button.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/boards.gd" type="Script" id=2]
+[ext_resource path="res://assets/icons/user.svg" type="Texture" id=3]
+[ext_resource path="res://assets/icons/users.svg" type="Texture" id=4]
+[ext_resource path="res://assets/fonts/font_card_title.tres" type="DynamicFont" id=5]
+
+[node name="Boards" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 94
+custom_constants/margin_top = 0
+custom_constants/margin_left = 94
+custom_constants/margin_bottom = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="ScrollContainer/MarginContainer"]
+margin_left = 94.0
+margin_right = 930.0
+margin_bottom = 314.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/CenterContainer"]
+margin_left = 13.0
+margin_right = 823.0
+margin_bottom = 314.0
+rect_min_size = Vector2( 810, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="VSplitContainer3" type="VSplitContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_right = 810.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 0, 28 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 38.0
+margin_right = 810.0
+margin_bottom = 75.0
+custom_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+modulate = Color( 0.34902, 0.686275, 0.882353, 1 )
+margin_right = 32.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 32, 14 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 42.0
+margin_right = 228.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 5 )
+text = "Personal Boards"
+
+[node name="PersonalBoardsContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 85.0
+margin_right = 810.0
+margin_bottom = 181.0
+size_flags_vertical = 3
+custom_constants/vseparation = 10
+custom_constants/hseparation = 10
+columns = 4
+
+[node name="CreateBoard" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer" instance=ExtResource( 1 )]
+margin_left = 0.0
+margin_right = 194.0
+
+[node name="VSplitContainer4" type="VSplitContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 191.0
+margin_right = 810.0
+margin_bottom = 219.0
+rect_min_size = Vector2( 0, 28 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 229.0
+margin_right = 810.0
+margin_bottom = 266.0
+custom_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color( 0.34902, 0.686275, 0.882353, 1 )
+margin_right = 32.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 32, 14 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 42.0
+margin_right = 210.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 5 )
+text = "Shared Boards"
+
+[node name="PublicBoardsContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 276.0
+margin_right = 810.0
+margin_bottom = 276.0
+size_flags_vertical = 3
+custom_constants/vseparation = 10
+custom_constants/hseparation = 10
+columns = 4
+
+[node name="VSplitContainer5" type="VSplitContainer" parent="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 286.0
+margin_right = 810.0
+margin_bottom = 314.0
+rect_min_size = Vector2( 0, 28 )
+
+[connection signal="pressed" from="ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard" to="." method="_on_CreateBoard_pressed" binds= [ false ]]

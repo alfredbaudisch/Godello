@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/board_member_button.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/style_board_member_button.tres" type="StyleBox" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color( 1, 1, 1, 0.235294 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="BoardMemberButton" type="Button"]
+margin_left = 815.0
+margin_right = 851.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 36, 0 )
+hint_tooltip = "Alfred"
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/focus = SubResource( 1 )
+custom_styles/normal = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+text = "A"
+expand_icon = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="gui_input" from="." to="." method="_on_BoardOwnerButton_gui_input"]
+[connection signal="pressed" from="." to="." method="_on_BoardMemberButton_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -1,0 +1,106 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/main_scene.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/font_bold.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/style_topbar_button_pressed.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/style_topbar_button_hover.tres" type="StyleBox" id=4]
+[ext_resource path="res://assets/style_topbar_button_normal.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/icons/home-white.png" type="Texture" id=6]
+[ext_resource path="res://assets/icons/sign-out-white.png" type="Texture" id=7]
+
+[node name="MainScene" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ContentContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopBar" type="ColorRect" parent="ContentContainer"]
+margin_right = 1024.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+color = Color( 0.00784314, 0.415686, 0.654902, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ContentContainer/TopBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HomeButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 100, 0 )
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/normal = ExtResource( 5 )
+text = "Boards"
+icon = ExtResource( 6 )
+expand_icon = true
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ContentContainer/TopBar/HBoxContainer"]
+margin_left = 104.0
+margin_right = 857.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="UserButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
+margin_left = 861.0
+margin_right = 912.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 0 )
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/normal = ExtResource( 5 )
+text = "Alfred"
+expand_icon = true
+
+[node name="LogOutButton" type="Button" parent="ContentContainer/TopBar/HBoxContainer"]
+margin_left = 916.0
+margin_right = 1016.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 100, 0 )
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/normal = ExtResource( 5 )
+text = "Log Out"
+icon = ExtResource( 7 )
+expand_icon = true
+
+[connection signal="pressed" from="ContentContainer/TopBar/HBoxContainer/HomeButton" to="." method="_on_HomeButton_pressed"]
+[connection signal="pressed" from="ContentContainer/TopBar/HBoxContainer/LogOutButton" to="." method="_on_LogOutButton_pressed"]
