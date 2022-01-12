@@ -46,7 +46,7 @@ __meta__ = {
 
 [node name="PanelContainer" type="PanelContainer" parent="ScrollContainer"]
 margin_right = 600.0
-margin_bottom = 530.0
+margin_bottom = 538.0
 rect_min_size = Vector2( 600, 400 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -54,7 +54,7 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer"]
 margin_right = 600.0
-margin_bottom = 530.0
+margin_bottom = 538.0
 custom_constants/margin_right = 18
 custom_constants/margin_top = 18
 custom_constants/margin_left = 18
@@ -64,7 +64,7 @@ custom_constants/margin_bottom = 40
 margin_left = 18.0
 margin_top = 18.0
 margin_right = 582.0
-margin_bottom = 490.0
+margin_bottom = 498.0
 custom_constants/separation = 24
 
 [node name="ArchivedNoticeLabel" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -73,8 +73,8 @@ margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "This card is Archived."
 align = 1
 valign = 1
@@ -158,20 +158,20 @@ expand = true
 [node name="ContentRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 142.0
 margin_right = 564.0
-margin_bottom = 472.0
+margin_bottom = 480.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 20
 
 [node name="DetailsCol" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
 margin_right = 464.0
-margin_bottom = 330.0
+margin_bottom = 338.0
 size_flags_horizontal = 3
 custom_constants/separation = 24
 
 [node name="DescriptionRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
 margin_right = 464.0
-margin_bottom = 159.0
+margin_bottom = 163.0
 custom_constants/separation = 8
 
 [node name="TextureRect2" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
@@ -189,30 +189,30 @@ flip_v = true
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow"]
 margin_left = 24.0
 margin_right = 464.0
-margin_bottom = 159.0
+margin_bottom = 163.0
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
 [node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
 margin_right = 440.0
-margin_bottom = 25.0
+margin_bottom = 29.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 4 )
 text = "Description"
 autowrap = true
 
 [node name="DescriptionEdit" type="TextEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
-margin_top = 31.0
+margin_top = 35.0
 margin_right = 440.0
-margin_bottom = 131.0
+margin_bottom = 135.0
 rect_min_size = Vector2( 0, 100 )
 wrap_enabled = true
 caret_blink = true
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer"]
-margin_top = 137.0
+margin_top = 141.0
 margin_right = 440.0
-margin_bottom = 159.0
+margin_bottom = 163.0
 custom_constants/separation = 12
 
 [node name="SaveDescriptionButton" type="Button" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/DescriptionRow/VBoxContainer/ButtonsContainer"]
@@ -234,14 +234,14 @@ texture_normal = ExtResource( 7 )
 expand = true
 
 [node name="ChecklistRow" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol"]
-margin_top = 183.0
+margin_top = 187.0
 margin_right = 464.0
-margin_bottom = 330.0
+margin_bottom = 338.0
 custom_constants/separation = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
 margin_right = 16.0
-margin_bottom = 147.0
+margin_bottom = 151.0
 custom_constants/margin_top = 3
 
 [node name="TextureRect2" type="TextureRect" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/MarginContainer"]
@@ -259,17 +259,17 @@ stretch_mode = 1
 [node name="ChecklistContent" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow"]
 margin_left = 24.0
 margin_right = 464.0
-margin_bottom = 147.0
+margin_bottom = 151.0
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
 margin_right = 440.0
-margin_bottom = 25.0
+margin_bottom = 29.0
 
 [node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/HBoxContainer"]
 margin_right = 315.0
-margin_bottom = 25.0
+margin_bottom = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 4 )
@@ -282,19 +282,19 @@ margin_right = 440.0
 margin_bottom = 21.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.368627, 0.423529, 0.517647, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Right click a Task to edit it."
 
 [node name="Content" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 31.0
+margin_top = 35.0
 margin_right = 440.0
-margin_bottom = 31.0
+margin_bottom = 35.0
 
 [node name="EditContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 37.0
+margin_top = 41.0
 margin_right = 440.0
-margin_bottom = 89.0
+margin_bottom = 93.0
 custom_constants/separation = 6
 
 [node name="CheckItemEdit" type="LineEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/EditContainer"]
@@ -335,9 +335,9 @@ texture_normal = ExtResource( 7 )
 expand = true
 
 [node name="CreateContainer" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent"]
-margin_top = 95.0
+margin_top = 99.0
 margin_right = 440.0
-margin_bottom = 147.0
+margin_bottom = 151.0
 custom_constants/separation = 6
 
 [node name="CheckItemEdit" type="LineEdit" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/DetailsCol/ChecklistRow/ChecklistContent/CreateContainer"]
@@ -356,7 +356,7 @@ text = "Add"
 [node name="ActionsCol" type="VBoxContainer" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow"]
 margin_left = 484.0
 margin_right = 564.0
-margin_bottom = 330.0
+margin_bottom = 338.0
 rect_min_size = Vector2( 80, 0 )
 
 [node name="Label" type="Label" parent="ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/ContentRow/ActionsCol"]

@@ -52,6 +52,9 @@ custom_constants/separation = 5
 
 [node name="TitleContainer" parent="CardContent/InnerPadding/VBoxContainer" instance=ExtResource( 2 )]
 
+[node name="Split" parent="CardContent/InnerPadding/VBoxContainer/TitleContainer" index="1"]
+margin_bottom = 22.0
+
 [node name="IndicatorsContainer" type="HBoxContainer" parent="CardContent/InnerPadding/VBoxContainer"]
 margin_top = 27.0
 margin_right = 224.0
@@ -86,8 +89,8 @@ margin_left = 48.0
 margin_right = 75.0
 margin_bottom = 23.0
 rect_min_size = Vector2( 0, 14 )
-custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color = Color( 0.368627, 0.423529, 0.517647, 1 )
+custom_fonts/font = ExtResource( 4 )
 text = "0/1"
 
 [node name="SizePlaceholder" type="HSeparator" parent="CardContent/InnerPadding/VBoxContainer/IndicatorsContainer"]
