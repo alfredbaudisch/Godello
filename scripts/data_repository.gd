@@ -121,7 +121,7 @@ func delete_card(card):
 
 	get_board(list.board_id).remove_archived_card(card)
 	if !cards_by_id.erase(card.id):
-		push_error("deleting card with id d% not found!" % card.id)
+		push_error("[data_repository.delete_card] deleting card with id d% not found!" % card.id)
 
 	emit_signal("card_deleted", card)
 
@@ -138,7 +138,7 @@ func update_list(list):
 
 func delete_list(list):
 	if !lists_by_id.erase(list.id):
-		push_error("deleting list with id d% not found!" % list.id)
+		push_error("[data_repository.delete_list] deleting list with id d% not found!" % list.id)
 	list.remove_cards()
 
 	var board = boards_by_id[list.board_id]
@@ -158,7 +158,7 @@ func update_board(board):
 
 func delete_board(board):
 	if !boards_by_id.erase(board.id):
-		push_error("deleting board with id d% not found!" % board.id)
+		push_error("[data_repository.delete_board] deleting board with id d% not found!" % board.id)
 	emit_signal("board_deleted", board)
 
 
@@ -191,7 +191,7 @@ func _set_draft_card_for_list(list, draft_card = null):
 		list_draft_cards[list.id] = draft_card
 	else:
 		if !list_draft_cards.erase(list.id):
-			push_error("list with id d% not found!" % list.id)
+			push_error("[data_repository.set_draft_card_for_list] list with id d% not found!" % list.id)
 
 
 func _on_user_logged_in(user : UserModel):

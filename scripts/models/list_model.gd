@@ -43,7 +43,7 @@ func remove_card(card):
 		cards.remove(card_idx)
 
 	if !cards_by_id.erase(card.id):
-		push_error("remove card with id %d not found" % card.id)
+		push_error("[list_model.remove_card] remove card with id %d not found" % card.id)
 
 
 func _map_cards_by_id():

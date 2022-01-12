@@ -32,7 +32,7 @@ func add_archived_card(card):
 
 func remove_archived_card(card):
 	if !archived_cards.erase(card.id):
-		push_error("remove card with id %d not found" % card.id)
+		push_error("[board_model.remove_archived_card] remove card with id %d not found" % card.id)
 
 
 func get_archived_cards() -> Dictionary:
@@ -57,7 +57,7 @@ func remove_list(list):
 		lists.remove(list_idx)
 
 	if !lists_by_id.erase(list.id):
-		push_error("remove list with id d% not found!" % list.id)
+		push_error("[board_model.remove_list] remove list with id d% not found!" % list.id)
 
 
 func add_member(user : UserModel):

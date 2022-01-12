@@ -23,7 +23,7 @@ func load_config() -> void:
 	var err = config.load(config_file_path)
 
 	if err != OK:
-		push_error("couldn't load config file error %d" % err)
+		push_error("[app_global.load_config] couldn't load config file error %d" % err)
 	else:
 		backend = config.get_value("server","backend")
 		local_repository = config.get_value("local","repository_path")
@@ -38,7 +38,7 @@ func save_config() -> void:
 	var err = config.save(config_file_path)
 
 	if err != OK:
-		push_error("couldn't save config file error %d" % err)
+		push_error("app_global.save_config] couldn't save config file error %d" % err)
 
 
 func _set_backend(value) -> void:

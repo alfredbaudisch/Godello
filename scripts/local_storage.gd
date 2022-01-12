@@ -51,14 +51,14 @@ func _load_boards() -> void:
 
 			file_name = dir.get_next()
 	else:
-		push_error("An error occurred when trying to access %s." % AppGlobal.local_repository)
+		push_error("[local_storage._load_boards] an error occurred when trying to access %s." % AppGlobal.local_repository)
 
 
 func _save_data() -> void:
 	var err = ResourceSaver.save(AppGlobal.local_repository.plus_file(str(board.id,file_format)),board)
 
 	if err != OK:
-		push_error("couldn't save resource error %d" % err)
+		push_error("[local_storage._save_data] couldn't save resource error %d" % err)
 
 
 func _on_board_created(board_ : BoardModel) -> void:
@@ -72,7 +72,7 @@ func _on_board_deleted(board_ : BoardModel) -> void:
 		var err = dir.remove(AppGlobal.local_repository.plus_file(str(board_.id,file_format)))
 
 		if err != OK:
-			push_error("couldn't delete resource error %d" % err)
+			push_error("[local_storage._on_board_delted] couldn't delete resource error %d" % err)
 
 
 func _on_data_event(_model) -> void:
@@ -88,4 +88,4 @@ func _check_repository_exist() -> void:
 		var err = dir.make_dir(AppGlobal.local_repository)
 
 		if err != OK:
-			push_error("couldn't create directory %s error %d" % [AppGlobal.local_repository,err])
+			push_error("[local_storage._check_repository_exist] couldn't create directory %s error %d" % [AppGlobal.local_repository,err])
