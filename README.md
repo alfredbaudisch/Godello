@@ -99,7 +99,7 @@ You can support my open-source contributions and this project on [Patreon](https
 For news and more code and art experiments and prototypes:
 
 - Follow me on [Twitter 🐦](https://twitter.com/alfredbaudisch)
-- Subscribe to my [YouTube channel 📺](https://www.youtube.com/channel/UChbQcnM4z0e0c1PhHY72jgA/videos)
+- Subscribe to my [YouTube channel 📺](https://www.youtube.com/alfredbaudischcreations)
 
 ## License ⚖️
 
