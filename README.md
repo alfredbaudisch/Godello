@@ -19,7 +19,7 @@ Trello inspired kanban board made with the [Godot Engine](http://godotengine.org
 
 ## Introduction Video
 
-[![Video](./doc/video_preview.png)](https://www.youtube.com/watch?v=XiZkMRwkmbs)
+[![Video](./doc/video_preview.png)](https://www.youtube.com/watch?v=Ckc8zEEjyfo)
 
 ## Motivation 💡
 
