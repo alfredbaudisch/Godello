@@ -13,6 +13,7 @@ Trello inspired kanban board made with the [Godot Engine](http://godotengine.org
   - [What is finished](#what-is-finished)
   - [Work in progress](#work-in-progress)
 - [Roadmap 🗺️](#roadmap-️)
+- [FAQ](#faq)
 - [Sponsorship and Donations ❤️](#sponsorship-and-donations-️)
 - [Updates 📡](#updates-)
 - [License ⚖️](#license-%EF%B8%8F)
@@ -89,6 +90,10 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
   - PHP (Laravel)
 
 **NOTICE:** The roadmap implementation is stalled since this project went open-source in 2019. It's unlikely that at this stage the roadmap will be implemented. But other than that, the core of the project is already implemented, i.e. the Trello-like user interface with Godot.
+
+## FAQ
+### Why is list and card movement stuttering? Why does list and card movement have low FPS?
+Disable "Low Processor Mode" (in Project Settings, Application, Run).
 
 ## Sponsorship and Donations ❤️
 
