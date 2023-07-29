@@ -3,14 +3,21 @@ extends ColorRect
 
 const BoardCard := preload("res://scenes/board_card.tscn")
 
-onready var personal_boards_container := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer
-onready var public_boards_container := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer
-onready var create_personal_board_button := $ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard
+export(NodePath) onready var personal_boards_container = get_node(personal_boards_container) as GridContainer
+export(NodePath) onready var public_boards_container = get_node(public_boards_container) as GridContainer
+export(NodePath) onready var public_boards_title = get_node(public_boards_title) as HBoxContainer
+export(NodePath) onready var create_personal_board_button = get_node(create_personal_board_button) as Button
 
 
 func _ready():
 # warning-ignore:return_value_discarded
 	DataRepository.connect("board_created", self, "_on_board_created")
+
+	if AppGlobal.backend == AppGlobal.Storage.LOCAL:
+		public_boards_title.hide()
+		public_boards_container.hide()
+		Events.emit_signal("boards_loaded")
+
 	_refresh_boards()
 
 

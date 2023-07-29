@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/login_register_input.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/style_account_button_hover.tres" type="StyleBox" id=2]
@@ -6,13 +6,72 @@
 [ext_resource path="res://assets/style_account_button_pressed.tres" type="StyleBox" id=4]
 [ext_resource path="res://scripts/login_register.gd" type="Script" id=5]
 [ext_resource path="res://assets/fonts/font_board_card.tres" type="DynamicFont" id=6]
-
+[ext_resource path="res://assets/icons/gear.svg" type="Texture" id=7]
+[ext_resource path="res://assets/backend_buttongroup.tres" type="ButtonGroup" id=8]
+[ext_resource path="res://assets/theme_style_login.tres" type="Theme" id=9]
 
 [node name="LoginRegister" type="ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 9 )
 color = Color( 0.054902, 0.462745, 0.752941, 1 )
 script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+sign_up_form = NodePath("Center/SignUpForm")
+sign_in_form = NodePath("Center/SignInForm")
+sign_in_local = NodePath("Center/SignInLocal")
+settings_panel = NodePath("Center/SettingsPanel")
+settings_button = NodePath("Settings")
+settings_label = NodePath("SettingsLabel")
+backend_local_button = NodePath("Center/SettingsPanel/HBoxContainer/LocalButton")
+backend_elixir_button = NodePath("Center/SettingsPanel/HBoxContainer/ElixrButton")
+first_name_input = NodePath("Center/SignUpForm/FirstName")
+last_name_input = NodePath("Center/SignUpForm/LastName")
+email_input = NodePath("Center/SignUpForm/Email")
+password_input = NodePath("Center/SignUpForm/Password")
+confirm_password_input = NodePath("Center/SignUpForm/ConfirmPassword")
+login_email_input = NodePath("Center/SignInForm/SignInEmail")
+login_password_input = NodePath("Center/SignInForm/SignInPassword")
+
+[node name="SettingsLabel" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -164.0
+margin_top = 28.0
+margin_right = -79.0
+margin_bottom = 60.0
+text = "Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VersionLabel" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -96.0
+margin_top = -46.0
+margin_right = -21.0
+margin_bottom = -14.0
+text = "version"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="TextureButton" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -72.0
+margin_top = 25.0
+margin_right = -32.0
+margin_bottom = 65.0
+rect_pivot_offset = Vector2( 20, 20 )
+toggle_mode = true
+texture_normal = ExtResource( 7 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -31,79 +90,81 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SignUpForm" type="VBoxContainer" parent="Center"]
+[node name="SignUpForm" type="VBoxContainer" parent="Center" groups=["login_panel"]]
+visible = false
 margin_left = 5.0
+margin_top = -5.0
 margin_right = 355.0
-margin_bottom = 488.0
+margin_bottom = 493.0
 rect_min_size = Vector2( 350, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="Center/SignUpForm"]
 margin_right = 350.0
-margin_bottom = 30.0
-custom_fonts/font = ExtResource( 6 )
+margin_bottom = 40.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 6 )
 text = "Create an Account"
 align = 1
 
 [node name="VSplitContainer" type="VSplitContainer" parent="Center/SignUpForm"]
-margin_top = 34.0
+margin_top = 44.0
 margin_right = 350.0
-margin_bottom = 54.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="FirstName" parent="Center/SignUpForm" instance=ExtResource( 1 )]
-margin_top = 58.0
-margin_bottom = 116.0
+margin_top = 68.0
+margin_bottom = 126.0
 placeholder_text = "First Name"
 
 [node name="LastName" parent="Center/SignUpForm" instance=ExtResource( 1 )]
-margin_top = 120.0
-margin_bottom = 178.0
+margin_top = 130.0
+margin_bottom = 188.0
 placeholder_text = "Last Name"
 
 [node name="Email" parent="Center/SignUpForm" instance=ExtResource( 1 )]
-margin_top = 182.0
-margin_bottom = 240.0
+margin_top = 192.0
+margin_bottom = 250.0
 placeholder_text = "Email"
 
 [node name="Password" parent="Center/SignUpForm" instance=ExtResource( 1 )]
-margin_top = 244.0
-margin_bottom = 302.0
+margin_top = 254.0
+margin_bottom = 312.0
 secret = true
 placeholder_text = "Password"
 
 [node name="ConfirmPassword" parent="Center/SignUpForm" instance=ExtResource( 1 )]
-margin_top = 306.0
-margin_bottom = 364.0
+margin_top = 316.0
+margin_bottom = 374.0
 secret = true
 placeholder_text = "Confirm Password"
 
 [node name="SignUpButton" type="Button" parent="Center/SignUpForm"]
-margin_top = 368.0
+margin_top = 378.0
 margin_right = 350.0
-margin_bottom = 426.0
+margin_bottom = 436.0
 rect_min_size = Vector2( 0, 58 )
 mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = ExtResource( 4 )
 custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 text = "Sign up"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GoToSignInButton" type="ToolButton" parent="Center/SignUpForm"]
-margin_top = 430.0
+margin_top = 440.0
 margin_right = 350.0
-margin_bottom = 488.0
+margin_bottom = 498.0
 rect_min_size = Vector2( 0, 58 )
 mouse_default_cursor_shape = 2
 custom_colors/font_color = Color( 0.784314, 0.788235, 0.803922, 1 )
@@ -111,72 +172,174 @@ custom_colors/font_color_hover = Color( 0.921569, 0.92549, 0.941176, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0.92549, 0.941176, 1 )
 text = "Already have an account? Sign in!"
 
-[node name="SignInForm" type="VBoxContainer" parent="Center"]
+[node name="SignInForm" type="VBoxContainer" parent="Center" groups=["login_panel"]]
 visible = false
 margin_left = 5.0
-margin_top = 93.0
+margin_top = 88.0
 margin_right = 355.0
-margin_bottom = 395.0
+margin_bottom = 400.0
 rect_min_size = Vector2( 350, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label2" type="Label" parent="Center/SignInForm"]
 margin_right = 350.0
-margin_bottom = 30.0
-custom_fonts/font = ExtResource( 6 )
+margin_bottom = 40.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 6 )
 text = "Log in to Godello"
 align = 1
 
 [node name="VSplitContainer2" type="VSplitContainer" parent="Center/SignInForm"]
-margin_top = 34.0
+margin_top = 44.0
 margin_right = 350.0
-margin_bottom = 54.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="SignInEmail" parent="Center/SignInForm" instance=ExtResource( 1 )]
-margin_top = 58.0
-margin_bottom = 116.0
+margin_top = 68.0
+margin_bottom = 126.0
 placeholder_text = "Email"
 
 [node name="SignInPassword" parent="Center/SignInForm" instance=ExtResource( 1 )]
-margin_top = 120.0
-margin_bottom = 178.0
+margin_top = 130.0
+margin_bottom = 188.0
 secret = true
 placeholder_text = "Password"
 
 [node name="SignInButton" type="Button" parent="Center/SignInForm"]
-margin_top = 182.0
+margin_top = 192.0
 margin_right = 350.0
-margin_bottom = 240.0
+margin_bottom = 250.0
 rect_min_size = Vector2( 0, 58 )
 mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = ExtResource( 4 )
 custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 text = "Log in"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GoToSignUpButton" type="ToolButton" parent="Center/SignInForm"]
-margin_top = 244.0
+margin_top = 254.0
 margin_right = 350.0
-margin_bottom = 302.0
+margin_bottom = 312.0
 rect_min_size = Vector2( 0, 58 )
 mouse_default_cursor_shape = 2
 custom_colors/font_color = Color( 0.784314, 0.788235, 0.803922, 1 )
 custom_colors/font_color_hover = Color( 0.921569, 0.92549, 0.941176, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0.92549, 0.941176, 1 )
 text = "Don't have an account? Create one!"
+
+[node name="SignInLocal" type="VBoxContainer" parent="Center" groups=["login_panel"]]
+margin_left = 5.0
+margin_top = 119.0
+margin_right = 355.0
+margin_bottom = 369.0
+rect_min_size = Vector2( 350, 250 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Center/SignInLocal"]
+margin_right = 350.0
+margin_bottom = 40.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "Welcome to Godello"
+align = 1
+
+[node name="VSplitContainer2" type="VSplitContainer" parent="Center/SignInLocal"]
+margin_top = 44.0
+margin_right = 350.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="SignInButton" type="Button" parent="Center/SignInLocal"]
+margin_top = 68.0
+margin_right = 350.0
+margin_bottom = 126.0
+rect_min_size = Vector2( 0, 58 )
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/focus = ExtResource( 4 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "Enter"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsPanel" type="VBoxContainer" parent="Center" groups=["login_panel"]]
+visible = false
+margin_left = 5.0
+margin_top = 69.0
+margin_right = 355.0
+margin_bottom = 419.0
+rect_min_size = Vector2( 350, 350 )
+
+[node name="PanelContainer" type="PanelContainer" parent="Center/SettingsPanel"]
+margin_right = 350.0
+margin_bottom = 36.0
+
+[node name="PanelLabel" type="Label" parent="Center/SettingsPanel/PanelContainer"]
+margin_left = 5.0
+margin_top = 2.0
+margin_right = 345.0
+margin_bottom = 34.0
+custom_colors/font_color_shadow = Color( 0.054902, 0.462745, 0.752941, 1 )
+text = "Backend Storage"
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Center/SettingsPanel"]
+margin_top = 40.0
+margin_right = 350.0
+margin_bottom = 112.0
+
+[node name="LocalButton" type="CheckButton" parent="Center/SettingsPanel/HBoxContainer"]
+margin_right = 150.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 0
+pressed = true
+group = ExtResource( 8 )
+text = "Local"
+
+[node name="ElixrButton" type="CheckButton" parent="Center/SettingsPanel/HBoxContainer"]
+margin_top = 38.0
+margin_right = 150.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 0
+group = ExtResource( 8 )
+text = "Elixir"
+
+[node name="CloseSettingsButton" type="Button" parent="Center/SettingsPanel"]
+margin_top = 208.0
+margin_right = 350.0
+margin_bottom = 258.0
+rect_min_size = Vector2( 0, 50 )
+size_flags_vertical = 6
+text = "Close"
+
+[connection signal="mouse_entered" from="Settings" to="." method="_on_settings_mouse_entered"]
+[connection signal="mouse_exited" from="Settings" to="." method="_on_settings_mouse_exited"]
+[connection signal="toggled" from="Settings" to="." method="_on_settings_toggled"]
 [connection signal="pressed" from="Center/SignUpForm/SignUpButton" to="." method="_on_SignUpButton_pressed"]
 [connection signal="pressed" from="Center/SignUpForm/GoToSignInButton" to="." method="_on_GoToSignInButton_pressed"]
 [connection signal="pressed" from="Center/SignInForm/SignInButton" to="." method="_on_SignInButton_pressed"]
 [connection signal="pressed" from="Center/SignInForm/GoToSignUpButton" to="." method="_on_GoToSignUpButton_pressed"]
+[connection signal="pressed" from="Center/SignInLocal/SignInButton" to="." method="_on_sign_in_local_pressed"]
+[connection signal="toggled" from="Center/SettingsPanel/HBoxContainer/LocalButton" to="." method="_on_local_button_toggled"]
+[connection signal="toggled" from="Center/SettingsPanel/HBoxContainer/ElixrButton" to="." method="_on_elixr_button_toggled"]
+[connection signal="pressed" from="Center/SettingsPanel/CloseSettingsButton" to="." method="_on_settings_toggled" binds= [ false ]]

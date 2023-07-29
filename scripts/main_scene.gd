@@ -14,9 +14,6 @@ onready var user_button := $ContentContainer/TopBar/HBoxContainer/UserButton
 
 func _ready():
 # warning-ignore:return_value_discarded
-	Events.connect("user_logged_out", self, "_on_user_logged_out")
-
-# warning-ignore:return_value_discarded
 	SceneUtils.connect("change_route_requested", self, "_on_change_scene_requested")
 	SceneUtils.go_to_boards()
 
@@ -52,9 +49,6 @@ func _on_HomeButton_pressed():
 	SceneUtils.go_to_boards()
 
 
-func _on_user_logged_out():
-	SceneUtils.go_to_login()
-
-
 func _on_LogOutButton_pressed():
 	Events.emit_signal("user_logged_out")
+	SceneUtils.go_to_login()

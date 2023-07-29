@@ -67,10 +67,19 @@ custom_styles/hover = SubResource( 1 )
 icon = ExtResource( 2 )
 expand_icon = true
 
-[node name="CardContainerScroll" type="ScrollContainer" parent="MarginContainer/VerticalContent"]
+[node name="AddCardButton" type="ToolButton" parent="MarginContainer/VerticalContent"]
 margin_top = 29.0
 margin_right = 264.0
-margin_bottom = 558.0
+margin_bottom = 51.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 2 )
+text = "+ Add a card"
+align = 0
+
+[node name="CardContainerScroll" type="ScrollContainer" parent="MarginContainer/VerticalContent"]
+margin_top = 55.0
+margin_right = 264.0
+margin_bottom = 584.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -82,15 +91,6 @@ margin_right = 264.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
-
-[node name="AddCardButton" type="ToolButton" parent="MarginContainer/VerticalContent"]
-margin_top = 562.0
-margin_right = 264.0
-margin_bottom = 584.0
-mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 2 )
-text = "+ Add a card"
-align = 0
 
 [connection signal="pressed" from="MarginContainer/VerticalContent/TitleContainer/ListActionsButton" to="." method="_on_ListActionsButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VerticalContent/AddCardButton" to="." method="_on_AddCardButton_pressed"]

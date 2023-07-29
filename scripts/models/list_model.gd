@@ -1,15 +1,21 @@
 class_name ListModel extends Model
 
 
-var title : String = ""
-var cards : Array = []
-var cards_by_id : Dictionary = {}
-var board_id : String = ""
+export(String) var board_id = ""
+export(String) var title = ""
+export(Array) var cards = []
+export(Dictionary) var cards_by_id = {}
 
 
-func _init(_id : String, _board_id : String, _title : String, _cards : Array = []).(ModelTypes.LIST, _id):
-	title = _title
+# Needs default values to be loaded as custom resource
+func _init(
+	_id : String = "",
+	_board_id : String  = "",
+	_title : String = "",
+	_cards : Array = []
+).(ModelTypes.LIST, _id):
 	board_id = _board_id
+	title = _title
 	cards = _cards
 	_map_cards_by_id()
 
@@ -37,7 +43,7 @@ func remove_card(card):
 		cards.remove(card_idx)
 
 	if !cards_by_id.erase(card.id):
-		print("list_model.gd:39 : card with id %d not found" % card.id)
+		push_error("[list_model.remove_card] remove card with id %s not found" % card.id)
 
 
 func _map_cards_by_id():
@@ -47,3 +53,10 @@ func _map_cards_by_id():
 
 func _notify_updated():
 	DataRepository.update_list(self)
+
+
+func _to_string() -> String:
+	return to_json({
+		"title":title,
+		"id":id
+	})

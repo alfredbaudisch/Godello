@@ -163,6 +163,8 @@ func _on_card_dropped(drop_data, _new_owner):
 
 	if drop_data and drop_data["node"] == self:
 		set_is_dragged(false)
+		Events.emit_signal("order_updated", get_parent().get_children(), Model.ModelTypes.CARD)
+
 
 
 func _on_list_dragged(_node, _model):

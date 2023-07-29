@@ -1,18 +1,30 @@
 class_name CardModel extends Model
 
 
-var title : String = ""
-var description : String = "" setget set_description
-var list_id : String = ""
-var tasks : Array = []
-var is_archived := false
-var is_draft := false setget set_draft
+export(String) var list_id = ""
+export(String) var title = ""
+export(String) var description = "" setget set_description
+export(Array) var tasks = []
+export(bool) var is_archived := false
+export(bool) var is_draft := false setget set_draft
 
 
-func _init(_id : String, _list_id : String, _title : String = "", _description : String = "").(ModelTypes.CARD, _id):
+# Needs default values to be loaded as custom resource
+func _init(
+	_id : String = "",
+	_list_id : String = "",
+	_title : String = "",
+	_description : String = "",
+	_tasks : Array = [],
+	_is_archived : bool = false,
+	_is_draft : bool = false
+).(ModelTypes.CARD, _id):
 	list_id = _list_id
 	title = _title
 	description = _description
+	tasks = _tasks
+	is_archived = _is_archived
+	is_draft = _is_draft
 
 
 func set_title(_title: String):

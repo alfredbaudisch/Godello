@@ -51,12 +51,12 @@ size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VerticalContent"]
 margin_right = 264.0
-margin_bottom = 25.0
+margin_bottom = 29.0
 size_flags_horizontal = 3
 
 [node name="BackButtonHolder" type="HSplitContainer" parent="MarginContainer/VerticalContent/HBoxContainer"]
 margin_right = 16.0
-margin_bottom = 25.0
+margin_bottom = 29.0
 rect_min_size = Vector2( 16, 22 )
 
 [node name="BackButton" parent="MarginContainer/VerticalContent/HBoxContainer" instance=ExtResource( 3 )]
@@ -70,7 +70,7 @@ texture_normal = ExtResource( 8 )
 [node name="TitleLabel" type="Label" parent="MarginContainer/VerticalContent/HBoxContainer"]
 margin_left = 40.0
 margin_right = 244.0
-margin_bottom = 25.0
+margin_bottom = 29.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 5 )
@@ -83,9 +83,9 @@ margin_right = 264.0
 mouse_default_cursor_shape = 2
 
 [node name="VSplitContainer2" type="VSplitContainer" parent="MarginContainer/VerticalContent"]
-margin_top = 29.0
+margin_top = 33.0
 margin_right = 264.0
-margin_bottom = 34.0
+margin_bottom = 38.0
 rect_min_size = Vector2( 0, 5 )
 size_flags_horizontal = 3
 custom_constants/separation = 5
@@ -93,17 +93,17 @@ collapsed = true
 dragger_visibility = 1
 
 [node name="Panel" type="Panel" parent="MarginContainer/VerticalContent"]
-margin_top = 38.0
+margin_top = 42.0
 margin_right = 264.0
-margin_bottom = 39.0
+margin_bottom = 43.0
 rect_min_size = Vector2( 0, 1 )
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 1 )
 
 [node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/VerticalContent"]
-margin_top = 43.0
+margin_top = 47.0
 margin_right = 264.0
-margin_bottom = 53.0
+margin_bottom = 57.0
 rect_min_size = Vector2( 0, 10 )
 size_flags_horizontal = 3
 custom_constants/separation = 10
@@ -111,9 +111,9 @@ collapsed = true
 dragger_visibility = 1
 
 [node name="MenuActionsContainer" type="VBoxContainer" parent="MarginContainer/VerticalContent"]
-margin_top = 57.0
+margin_top = 61.0
 margin_right = 264.0
-margin_bottom = 143.0
+margin_bottom = 147.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
@@ -149,7 +149,7 @@ align = 0
 expand_icon = true
 
 [node name="CardContainerScroll" type="ScrollContainer" parent="MarginContainer/VerticalContent"]
-margin_top = 147.0
+margin_top = 151.0
 margin_right = 264.0
 margin_bottom = 584.0
 mouse_filter = 1

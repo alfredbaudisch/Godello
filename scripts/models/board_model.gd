@@ -1,18 +1,19 @@
 class_name BoardModel extends Model
 
 
-var title : String = ""
-var archived_cards : Dictionary = {} setget ,get_archived_cards
-var is_public : bool = false
+export(String) var title = ""
+export(Dictionary) var archived_cards = {} setget ,get_archived_cards
+export(bool) var is_public = false
 
-var user_owner : UserModel
-var members : Array = []
+export(Resource) var user_owner = user_owner as UserModel
+export(Array) var members = []
 
-var lists : Array = []
-var lists_by_id : Dictionary = {}
+export(Array) var lists = []
+export(Dictionary) var lists_by_id = {}
 
 
-func _init(_id : String, _owner : UserModel, _is_public := false, _title := "", _lists := []).(ModelTypes.BOARD, _id):
+# Needs default values to be loaded as custom resource
+func _init(_id : String = "", _owner : UserModel = UserModel.new(), _is_public := false, _title := "", _lists := []).(ModelTypes.BOARD, _id):
 	title = _title
 	user_owner = _owner
 	is_public = _is_public
@@ -31,7 +32,7 @@ func add_archived_card(card):
 
 func remove_archived_card(card):
 	if !archived_cards.erase(card.id):
-		print("[board_model.remove_archived_card] card with id not found: ", card.id)
+		push_error("[board_model.remove_archived_card] remove card with id %s not found" % card.id)
 
 
 func get_archived_cards() -> Dictionary:
@@ -56,7 +57,7 @@ func remove_list(list):
 		lists.remove(list_idx)
 
 	if !lists_by_id.erase(list.id):
-		print("[board_model.remove_list] list with id not found: ", list.id)
+		push_error("[board_model.remove_list] remove list with id %s not found!" % list.id)
 
 
 func add_member(user : UserModel):

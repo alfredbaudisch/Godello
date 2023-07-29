@@ -129,6 +129,14 @@ func _on_card_created(_model):
 		add_card(_model)
 
 
+func _on_card_dragged(_node, _model):
+	is_any_data_dragged = true
+
+
+func _on_card_dropped(_drop_data, _into_list):
+	is_any_data_dragged = false
+
+
 func _on_list_updated(_model):
 	if _model.id == model.id:
 		set_model(_model, true)
@@ -137,14 +145,6 @@ func _on_list_updated(_model):
 func _on_list_deleted(_model):
 	if _model.id == model.id:
 		queue_free()
-
-
-func _on_card_dragged(_node, _model):
-	is_any_data_dragged = true
-
-
-func _on_card_dropped(_drop_data, _into_list):
-	is_any_data_dragged = false
 
 
 func _on_list_dragged(_node, _model):
@@ -158,6 +158,7 @@ func _on_list_dropped(drop_data):
 
 	if drop_data and drop_data["node"] == self:
 		set_is_dragged(false)
+		Events.emit_signal("order_updated", get_parent().get_children(), Model.ModelTypes.LIST)
 
 
 func _on_AddCardButton_pressed():

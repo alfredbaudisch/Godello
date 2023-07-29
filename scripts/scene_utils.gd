@@ -20,7 +20,7 @@ var popup
 func go_to_main_route():
 	var err = get_tree().change_scene("res://scenes/main_scene.tscn")
 	if err != OK:
-		print("[scene_utils.go_to_main_route] could not change scene error code: ", err)
+		push_error("[scene_utils.go_to_main_route] could not change scene error code %d" % err)
 
 
 func request_route_change(route : int):
@@ -30,7 +30,7 @@ func request_route_change(route : int):
 func go_to_login():
 	var err = get_tree().change_scene("res://scenes/login_register.tscn")
 	if err != OK:
-		print("[scene_utils.go_to_login] could not change scene error code: ", err)
+		push_error("[scene_utils.go_to_login] could not change scene error code %d" % err)
 
 
 func go_to_boards():

@@ -18,6 +18,7 @@ onready var full_screen_overlay := $FullScreenOverlay
 onready var board_members_container := $MarginContainer/VBoxContainer/BoardInfoContainer/BoardMembers
 onready var board_owner_button := $MarginContainer/VBoxContainer/BoardInfoContainer/BoardOwnerButton
 onready var title_label := $MarginContainer/VBoxContainer/BoardInfoContainer/TitleLabel
+onready var add_board_mamber_button = $MarginContainer/VBoxContainer/BoardInfoContainer/AddBoardMemberButton
 
 
 func _ready():
@@ -37,6 +38,9 @@ func _ready():
 	var board = DataRepository.get_active_board()
 	assert(board)
 	set_model(board)
+
+	if AppGlobal.backend == AppGlobal.Storage.LOCAL:
+		add_board_mamber_button.hide()
 
 
 func set_model(_model : BoardModel):

@@ -15,6 +15,10 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+personal_boards_container = NodePath("ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer")
+public_boards_container = NodePath("ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PublicBoardsContainer")
+public_boards_title = NodePath("ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer2")
+create_personal_board_button = NodePath("ScrollContainer/MarginContainer/CenterContainer/VBoxContainer/PersonalBoardsContainer/CreateBoard")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchor_right = 1.0

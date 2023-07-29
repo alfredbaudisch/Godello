@@ -39,7 +39,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/list_mouse_preview.gd"
 }, {
-"base": "Object",
+"base": "Resource",
 "class": "Model",
 "language": "GDScript",
 "path": "res://scripts/models/model.gd"
@@ -82,7 +82,7 @@ _global_script_class_icons={
 
 config/name="Godello"
 config/description="Trello inspired kanban board in Godot, powered by a real-time collaborative backend"
-run/main_scene="res://scenes/main_scene.tscn"
+run/main_scene="res://scenes/login_register.tscn"
 run/low_processor_mode=true
 run/low_processor_mode_sleep_usec=25000
 config/icon="res://icon.png"
@@ -93,6 +93,7 @@ driver="Dummy"
 
 [autoload]
 
+AppGlobal="*res://scripts/app_global.gd"
 Events="*res://scripts/events.gd"
 DataRepository="*res://scripts/data_repository.gd"
 SceneUtils="*res://scripts/scene_utils.gd"
@@ -105,6 +106,7 @@ enabled=PoolStringArray( "open-external-editor" )
 
 low=false
 processor=false
+version="0.0.1"
 
 [gui]
 
@@ -124,6 +126,10 @@ edit_accept={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[logging]
+
+file_logging/enable_file_logging=true
 
 [rendering]
 
