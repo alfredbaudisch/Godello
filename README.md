@@ -1,6 +1,6 @@
 # Godello (aka GodoTrello) ![Godot 3.5](https://img.shields.io/badge/godot-v3.5-%23478cbf) [![Donate using PayPal](https://raw.githubusercontent.com/laurent22/joplin/dev/Assets/WebsiteAssets/images/badges/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=FC5FTRRE3548C) [![Become a patron](https://raw.githubusercontent.com/laurent22/joplin/dev/Assets/WebsiteAssets/images/badges/Patreon-Badge.svg)](https://www.patreon.com/alfredbaudisch)
 
-Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with [Elixir](https://elixir-lang.org/) and [Phoenix Channels](https://phoenixframework.org/) (with the possibility of additional backend languages and frameworks). **ATTENTION: 70% done. Remaining WIP in the branch [integrate_elixir](https://github.com/alfredbaudisch/Godello/tree/integrate_elixir). See "[Progress](#progress-)" below.**
+Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with [Elixir](https://elixir-lang.org/) and [Phoenix Channels](https://phoenixframework.org/). It also features a [local backend](https://github.com/alfredbaudisch/Godello/tree/local-backend) data store with custom Godot Resources, for offline usage, and Settings screen to toggle between backends and data stores.
 
 ![Godello Drag and Drop + Reactive Example](./doc/godello-drag-and-drop-example.gif)
 
@@ -31,6 +31,7 @@ A Godot Engine proof of concept for:
 - Complex data architecture and data modeling
 - Real-time online data flow
 - Connected multi-user collaborative interfaces and interactions
+- Multiple backends and data stores adapter
 
 In the end, the idea is to showcase Godot as a viable option for native Desktop applications and tools, no matter how simple or complex/advanced the application and the interface are.
 
@@ -51,6 +52,9 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
 - User account flow (sign-up and login)
 - Multi-resolution responsive and expansible interface
   - Interface elements are all implemented with [Godot's Control](https://docs.godotengine.org/en/stable/classes/class_control.html) nodes, inside Container nodes, there is no usage of Node2D's nodes.
+- Local backend for offline usage without any connectivity or external dependencies:
+  - Local data storage (local backend) with custom Godot Resources for offline usage (thanks to [CptFubar](https://github.com/CptFubar) [#23](https://github.com/alfredbaudisch/Godello/pull/23)).
+  - Data store and backend settings toggle (thanks to [CptFubar](https://github.com/CptFubar) [#23](https://github.com/alfredbaudisch/Godello/pull/23)).
 
 ## Progress 🚧
 
@@ -61,6 +65,7 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
   - The main data architecture, with reactive, two way data bindings and the Repository design pattern.
   - Scene flow.
 - The [Elixir](https://elixir-lang.org/) + [Phoenix Channels](https://phoenixframework.org/) backend, backed by a PostgreSQL database (it's in the branch [backend_elixir](https://github.com/alfredbaudisch/Godello/tree/backend_elixir), still not merged into `master`).
+- The local storage offline backend with Godot custom Resources (it's in the branch [local-backend](https://github.com/alfredbaudisch/Godello/tree/local-backend), still not merged into `master`, the breaking bug [#28](https://github.com/alfredbaudisch/Godello/issues/28) must be fixed before it is merged into master).
 
 ### Work in progress
 
@@ -89,7 +94,7 @@ In the end, the idea is to showcase Godot as a viable option for native Desktop 
   - Kotlin (Ktor)
   - PHP (Laravel)
 
-**NOTICE:** The roadmap implementation is stalled since this project went open-source in 2019. It's unlikely that at this stage the roadmap will be implemented. But other than that, the core of the project is already implemented, i.e. the Trello-like user interface with Godot.
+**NOTICE**: The roadmap implementation is stalled since this project went open-source in 2019. It's unlikely that at this stage the roadmap will be implemented. But other than that, the core of the project is already implemented, i.e. the Trello-like user interface with Godot. But feel free to open a PR if you want to contribute with these features :)
 
 ## FAQ
 ### Why is list and card movement stuttering? Why does list and card movement have low FPS?
