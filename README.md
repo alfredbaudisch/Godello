@@ -2,6 +2,8 @@
 
 Trello inspired kanban board made with the [Godot Engine](http://godotengine.org/) and GDScript, powered by an online real-time collaborative backend made with [Elixir](https://elixir-lang.org/) and [Phoenix Channels](https://phoenixframework.org/). It also features a local backend data store with custom Godot Resources, for offline usage, and Settings screen to toggle between backends and data stores.
 
+**WARNING: 🚧** in this branch, with the Local Backend, there's a breaking bug (#28) which must be fixed before it is merged into master.
+
 ![Godello Drag and Drop + Reactive Example](./doc/godello-drag-and-drop-example.gif)
 
 ## Table of Contents
